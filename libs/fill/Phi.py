@@ -1,4 +1,4 @@
-def fill_transportProperties(fd, path, params):
+def fill_Phi(fd, path, params):
     file = open(path, 'a')
     keys = list(params.keys())
     for key in keys:
