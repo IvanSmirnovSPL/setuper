@@ -1,13 +1,29 @@
-def fill_U(fd, path, params):
-    file = open(path, 'a')
-    keys = list(params.keys())
-    for key in keys:
-        if type(params[key]) is dict:
-            fd.part_of_dict_is_dict(params, key, file)
-        elif type(params[key]) is tuple:
-            fd.part_of_dict_is_tuple(params, key, file)
-        else:
-            fd.part_of_dictionary(params, key, file)
-    file.write(fd.line())
-    file.write(fd.separator)
-    file.close()
+def fill_U(params):
+    return ' dimensions      [0 1 -1 0 0]; '  + '\n' + \
+ '  '  + '\n' + \
+ ' internalField   uniform (0 0 20); '  + '\n' + \
+ '  '  + '\n' + \
+ ' boundaryField '  + '\n' + \
+ ' { '  + '\n' + \
+ '     inlet '  + '\n' + \
+ '     { '  + '\n' + \
+ '         type            fixedValue; '  + '\n' + \
+ '         value           $internalField; '  + '\n' + \
+ '     } '  + '\n' + \
+ '  '  + '\n' + \
+ '     outlet '  + '\n' + \
+ '     { '  + '\n' + \
+ '         type            pressureInletOutletVelocity; '  + '\n' + \
+ '         value           $internalField; '  + '\n' + \
+ '     } '  + '\n' + \
+ '  '  + '\n' + \
+ '     walls '  + '\n' + \
+ '     { '  + '\n' + \
+ '         type            symmetry; '  + '\n' + \
+ '     } '  + '\n' + \
+ '  '  + '\n' + \
+ '     bullet '  + '\n' + \
+ '     { '  + '\n' + \
+ '         type            noSlip; '  + '\n' + \
+ '     } '  + '\n' + \
+ ' } '
