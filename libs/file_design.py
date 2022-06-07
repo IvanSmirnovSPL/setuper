@@ -11,10 +11,51 @@ class FileDesign:
 
         self.separator = r'// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //' + '\n'
 
+        self.clean = r'#!/bin/sh' + '\n' + \
+                       'cd "${0%/*}" || exit                                # Run from this directory' + '\n' + \
+                       '. ${WM_PROJECT_DIR:?}/bin/tools/CleanFunctions      # Tutorial clean functions' + '\n' + \
+                       '#------------------------------------------------------------------------------' + '\n' + \
+                       ' ' + '\n' + \
+                       'cleanCase0' + '\n' + \
+                       ' ' + '\n' + \
+                       'rm -rf constant/triSurface' + '\n' + \
+                       ' ' + '\n' + \
+                       '#------------------------------------------------------------------------------'
+
+        self.run = '#!/bin/sh' + '\n' + \
+                   'cd "${0%/*}" || exit                                # Run from this directory' + '\n' + \
+                   '. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions' + '\n' + \
+                   '#------------------------------------------------------------------------------' + '\n' + \
+                   ' ' + '\n' + \
+                   'mkdir -p constant/triSurface' + '\n' + \
+                   ' ' + '\n' + \
+                   '# Copy bullet surface from resources directory' + '\n' + \
+                   'cp -f \\' + '\n' + \
+                   '    "$FOAM_TUTORIALS"/resources/geometry/bullet.stl.gz \\' + '\n' + \
+                   r'    constant/triSurface/' + '\n' + \
+                   ' ' + '\n' + \
+                   '# Generate the base block mesh' + '\n' + \
+                   'runApplication blockMesh' + '\n' + \
+                   ' ' + '\n' + \
+                   '# Generate the snappy mesh' + '\n' + \
+                   'runApplication snappyHexMesh -overwrite' + '\n' + \
+                   ' ' + '\n' + \
+                   'restore0Dir' + '\n' + \
+                   ' ' + '\n' + \
+                   '# Initialise with potentialFoam solution' + '\n' + \
+                   'runApplication potentialFoam -pName p_rgh -writephi' + '\n' + \
+                   ' ' + '\n' + \
+                   '# Run the solver' + '\n' + \
+                   'runApplication $(getApplication)' + '\n' + \
+                   ' ' + '\n' + \
+                   '#------------------------------------------------------------------------------'
+
     def init_file(self, filename):
         file = open(filename, 'w')
         file.write(self.preamble)
         file.close()
+
+
 
     @staticmethod
     def line(string=''):

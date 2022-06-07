@@ -1,5 +1,0 @@
-#!/bin/bash
-
-name=my_new_case
-python3 main.py -n $name
-cd ./$name/ && blockMesh && icoFoam && paraFoam -vtk 

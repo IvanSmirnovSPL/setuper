@@ -1,8 +1,33 @@
-def fill_cohntrolDict(fd, path, params):
-    file = open(path, 'a')
-    keys = list(params.keys())
-    for key in keys:
-        fd.part_of_dictionary(params, key, file)
-    file.write(fd.line())
-    file.write(fd.separator)
-    file.close()
+def fill_controlDict(params):
+    return '  '  + '\n' + \
+ ' application     interPhaseChangeFoam; '  + '\n' + \
+ '  '  + '\n' + \
+ ' startFrom       latestTime; '  + '\n' + \
+ '  '  + '\n' + \
+ ' startTime       0; '  + '\n' + \
+ '  '  + '\n' + \
+ ' stopAt          endTime; '  + '\n' + \
+ '  '  + '\n' + \
+ ' endTime         0.05; '  + '\n' + \
+ '  '  + '\n' + \
+ ' deltaT          1e-8; '  + '\n' + \
+ '  '  + '\n' + \
+ ' writeControl    adjustable; '  + '\n' + \
+ '  '  + '\n' + \
+ ' writeInterval   0.001; '  + '\n' + \
+ '  '  + '\n' + \
+ ' purgeWrite      0; '  + '\n' + \
+ '  '  + '\n' + \
+ ' writeFormat     ascii; '  + '\n' + \
+ '  '  + '\n' + \
+ ' writePrecision  6; '  + '\n' + \
+ '  '  + '\n' + \
+ ' writeCompression off; '  + '\n' + \
+ '  '  + '\n' + \
+ ' timeFormat      general; '  + '\n' + \
+ '  '  + '\n' + \
+ ' runTimeModifiable yes; '  + '\n' + \
+ '  '  + '\n' + \
+ ' adjustTimeStep  on; '  + '\n' + \
+ '  '  + '\n' + \
+ ' maxCo           5; '

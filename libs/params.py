@@ -130,22 +130,7 @@ files_data = {
                         'default': 'limited corrected 0.5'
                     }
 
-            }, 'fvSolution': {'solvers': {
-            'p': {'solver': 'PCG', 'preconditioner': 'DIC', 'tolerance': 1e-6, 'relTol': 0.05},
-            'pFinal': {'$p': '', 'relTol': 0},
-            'U': {'solver': 'smoothSolver', 'smoother': 'symGaussSeidel', 'tolerance': 1e-5, 'relTol': 0}},
-            'PISO': {'nCorrectors': 2, 'nNonOrthogonalCorrectors': 0, 'pRefCell': 0, 'pRefValue': 0}
-        }, 'PDRblockMeshDict': {
-            'scale': 0.1,
-            'x': {'points': '(0 1)', 'nCells': '(20)', 'ratios': '(1)'},
-            'y': {'points': '(0 1)', 'nCells': '(20)', 'ratios': '(1)'},
-            'z': {'points': '(0 0.1)', 'nCells': '(1)', 'ratios': '(1)'},
-            'boundary': ({
-                             'movingWall': {'type': 'wall', 'faces': '(3)'},
-                             'fixedWalls': {'type': 'wall', 'faces': '(0 1 2)'},
-                             'frontAndBack': {'type': 'empty', 'faces': '(4 5)'}},
-            )
-        }
+            }, 'fvSolution': {'cAlpha': 0, 'nAlphaCorr': 2}, 'snappyHexMeshDict': {}
         },
     'constant':
         {'transportProperties': {'phases': '(water vapour)',
@@ -177,7 +162,7 @@ files_data = {
                                  },
          'turbulenceProperties': {'simulationType': 'laminar'},
          'g': {'dimensions': '[0 1 -2 0 0 0 0]',
-               'value': '(0 -9.81 0)'}},
+               'g': '(0 -9.81 0)'}},
     '0.orig':
         {'p_rgh': {'dimensions': '[1 -1 -2 0 0]',
 
