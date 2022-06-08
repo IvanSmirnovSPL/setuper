@@ -1,4 +1,4 @@
 def fill_g(params):
    return '  '  + '\n' + \
- ' dimensions      [0 1 -2 0 0 0 0]; '  + '\n' + \
+ ' dimensions      {}; '.format(params['dimensions_g'])  + '\n' + \
  ' value           (0 {} 0); '.format(params['g'])
