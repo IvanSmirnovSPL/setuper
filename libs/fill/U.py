@@ -1,29 +1,29 @@
 def fill_U(params):
-    return ' dimensions      [0 1 -1 0 0]; '  + '\n' + \
- '  '  + '\n' + \
- ' internalField   uniform (0 0 20); '  + '\n' + \
- '  '  + '\n' + \
- ' boundaryField '  + '\n' + \
- ' { '  + '\n' + \
- '     inlet '  + '\n' + \
- '     { '  + '\n' + \
- '         type            fixedValue; '  + '\n' + \
- '         value           $internalField; '  + '\n' + \
- '     } '  + '\n' + \
- '  '  + '\n' + \
- '     outlet '  + '\n' + \
- '     { '  + '\n' + \
- '         type            pressureInletOutletVelocity; '  + '\n' + \
- '         value           $internalField; '  + '\n' + \
- '     } '  + '\n' + \
- '  '  + '\n' + \
- '     walls '  + '\n' + \
- '     { '  + '\n' + \
- '         type            symmetry; '  + '\n' + \
- '     } '  + '\n' + \
- '  '  + '\n' + \
- '     bullet '  + '\n' + \
- '     { '  + '\n' + \
- '         type            noSlip; '  + '\n' + \
- '     } '  + '\n' + \
- ' } '
+    return ' dimensions      {}; '.format(params['dimensions_U']) + '\n' + \
+           '  ' + '\n' + \
+           ' internalField   {}; '.format(params['internalField_U']) + '\n' + \
+           '  ' + '\n' + \
+           ' boundaryField ' + '\n' + \
+           ' { ' + '\n' + \
+           '     inlet ' + '\n' + \
+           '     { ' + '\n' + \
+           '         type            {}; '.format(params['type_inlet_U']) + '\n' + \
+           '         value           {}; '.format(params['value_inlet_U']) + '\n' + \
+           '     } ' + '\n' + \
+           '  ' + '\n' + \
+           '     outlet ' + '\n' + \
+           '     { ' + '\n' + \
+           '         type            {}; '.format(params['type_outlet_U']) + '\n' + \
+           '         value           {}; '.format(params['value_outlet_U']) + '\n' + \
+           '     } ' + '\n' + \
+           '  ' + '\n' + \
+           '     walls ' + '\n' + \
+           '     { ' + '\n' + \
+           '         type            {}; '.format(params['type_walls_U']) + '\n' + \
+           '     } ' + '\n' + \
+           '  ' + '\n' + \
+           '     bullet ' + '\n' + \
+           '     { ' + '\n' + \
+           '         type            {}; '.format(params['type_bullet_U']) + '\n' + \
+           '     } ' + '\n' + \
+           ' } '

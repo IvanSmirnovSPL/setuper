@@ -65,7 +65,9 @@ class PathsOfCase:
             out_stream.close()
 
     def make_files_in_system_dir(self):
-        files = list(self.files_data['system'].keys())  # blockMeshDict, controlDict, decomposeParDict, fvSchemes, fvSolution, snappyHexMeshDict
+        files = list(self.files_data['system'].keys())  # blockMeshDict, controlDict,
+                                                        # decomposeParDict, fvSchemes,
+                                                        # fvSolution, snappyHexMeshDict
         data = self.files_data['system']
         functions = {'blockMeshDict': fill_blockMeshDict, 'controlDict': fill_controlDict,
                      'decomposeParDict': fill_decomposeParDict, 'fvSchemes': fill_fvSchemes,

@@ -1,4 +1,118 @@
-files_data = {
+system = \
+    {
+        'blockMeshDict':
+            {
+
+            },
+        'controlDict':
+            {
+
+            },
+        'decomposeParDict':
+            {
+
+            },
+        'fvSchemes':
+            {
+
+            },
+        'fvSolution':
+            {
+                'cAlpha': 0,
+                'nAlphaCorr': 2
+            },
+        'snappyHexMeshDict':
+            {
+
+            }
+
+    }
+
+constant = \
+    {
+        'transportProperties':
+            {
+                'phaseChangeTwoPhaseMixture': 'SchnerrSauer',
+                'pSat': 2300,
+                'sigma': 0.07,
+                'nu_water': 9e-07,
+                'rho_water': 1000,
+                'transportModel': 'Newtonian',
+                'nu_vapour': 4.273e-04,
+                'rho_vapour': 0.02308,
+                'UInf_Kunz': 'U20.0',
+                'tInf_Kunz': 0.005,
+                'Cc_Kunz': 'C1000',
+                'Cv_Kunz': 'C1000',
+                'UInf_Merkle': 20.0,
+                'tInf_Merkle': 0.005,
+                'Cc_Merkle': 80,
+                'Cv_Merkle': 1e-03,
+                'n': 1.6e13,
+                'dNuc': 2.0e-06,
+                'Cc_SchnerrSauer': 1,
+                'Cv_SchnerrSauer': 1
+            },
+        'turbulenceProperties':
+            {
+                'simulationType': 'laminar'
+            },
+        'g':
+            {
+                'dimensions_g': '[0 1 -2 0 0 0 0]',
+                'g': '(0 -9.81 0)'
+            }
+    }
+
+zero = \
+    {
+        'p_rgh':
+            {
+                'dimensions_p_rgh': '[1 -1 -2 0 0]',
+                'internalField_p_rgh': 'uniform 100000',
+                'type_inlet_p_rgh': 'zeroGradient',
+                'type_outlet_p_rgh': 'fixedValue',
+                'value_outlet_p_rgh': '$internalField',
+                'type_walls_p_rgh': 'symmetry',
+                'type_bullet_p_rgh': 'fixedFluxPressure'
+            },
+        'U':
+            {
+                'dimensions_U': '[0 1 -1 0 0]',
+                'internalField_U': 'uniform (0 0 20)',
+                'type_inlet_U': 'fixedValue',
+                'value_inlet_U': '$internalField',
+                'type_outlet_U': 'pressureInletOutletVelocity',
+                'value_outlet_U': '$internalField',
+                'type_walls_U': 'symmetry',
+                'type_bullet_U': 'noSlip',
+            },
+        'Phi':
+            {
+                'dimensions_Phi': '[0 2 -1 0 0]',
+                'internalField_Phi': 'uniform 0',
+                'type_inlet_Phi': 'zeroGradient',
+                'type_outlet_Phi': 'fixedValue',
+                'value_outlet_Phi': '$internalField',
+                'type_walls_Phi': 'symmetry',
+                'type_bullet_Phi': 'zeroGradient'
+            },
+        'alpha.water':
+            {
+                 'dimensions_alpha': '[0 0 0 0 0]',
+                 'internalField_alpha': 'uniform 1',
+                 'type_inlet_alpha': 'fixedValue',
+                 'value_inlet_alpha': '$internalField',
+                 'type_outlet_alpha': 'inletOutlet',
+                 'inletValue_outlet_alpha': '$internalField',
+                 'type_walls_alpha': 'symmetry',
+                 'type_bullet_alpha': 'zeroGradient'
+            }
+    }
+
+files_data = {'system': system, 'constant': constant, '0.orig': zero}
+
+'''files_data = {
     'system':
         {
             'blockMeshDict': {'scale': '0.001',
@@ -132,37 +246,34 @@ files_data = {
 
             }, 'fvSolution': {'cAlpha': 0, 'nAlphaCorr': 2}, 'snappyHexMeshDict': {}
         },
+
     'constant':
-        {'transportProperties': {'phases': '(water vapour)',
-                                 'phaseChangeTwoPhaseMixture': 'SchnerrSauer',
-                                 'pSat': 2300,
-                                 'sigma': 0.07,
-                                 'water': {'transportModel': 'Newtonian',
-                                           'nu': 9e-07,
-                                           'rho': 1000},
-                                 'vapour': {'transportModel': 'Newtonian',
-                                            'nu': 4.273e-04,
-                                            'rho': 0.02308},
-                                 'KunzCoeffs': {'UInf': 'U20.0',
-                                                'tInf': 0.005,
-                                                'Cc': 'C1000',
-                                                'Cv': 'C1000'
-                                                },
-                                 'MerkleCoeffs': {'UInf': 20.0,
-                                                  'tInf': 0.005,
-                                                  'Cc': 80,
-                                                  'Cv': 1e-03
-                                                  },
-                                 'SchnerrSauerCoeffs': {
-                                     'n': 1.6e13,
-                                     'dNuc': 2.0e-06,
-                                     'Cc': 1,
-                                     'Cv': 1
-                                 }
-                                 },
-         'turbulenceProperties': {'simulationType': 'laminar'},
-         'g': {'dimensions': '[0 1 -2 0 0 0 0]',
-               'g': '(0 -9.81 0)'}},
+        {'transportProperties': {
+            'phaseChangeTwoPhaseMixture': 'SchnerrSauer',
+            'pSat': 2300,
+            'sigma': 0.07,
+            'nu_water': 9e-07,
+            'rho_water': 1000,
+            'transportModel': 'Newtonian',
+            'nu_vapour': 4.273e-04,
+            'rho_vapour': 0.02308,
+            'UInf_Kunz': 'U20.0',
+            'tInf_Kunz': 0.005,
+            'Cc_Kunz': 'C1000',
+            'Cv_Kunz': 'C1000',
+            'UInf_Merkle': 20.0,
+            'tInf_Merkle': 0.005,
+            'Cc_Merkle': 80,
+            'Cv_Merkle': 1e-03,
+            'n': 1.6e13,
+            'dNuc': 2.0e-06,
+            'Cc_SchnerrSauer': 1,
+            'Cv_SchnerrSauer': 1
+        },
+            'turbulenceProperties': {'simulationType': 'laminar'},
+            'g': {'dimensions': '[0 1 -2 0 0 0 0]',
+                  'g': '(0 -9.81 0)'}},
+
     '0.orig':
         {'p_rgh': {'dimensions': '[1 -1 -2 0 0]',
 
@@ -277,3 +388,4 @@ files_data = {
                              }}
          }
 }
+'''
