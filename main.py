@@ -2,6 +2,7 @@ from pathlib import Path
 import os
 import glob
 import argparse
+import subprocess
 
 from libs.fill.g import fill_g
 from libs.fill.transportProperties import fill_transportProperties
@@ -26,7 +27,7 @@ from libs import params
 files_data = params.files_data
 
 class PathsOfCase:
-    def __init__(self, name='new_case', files_data={}):
+    def __init__(self, name='new_case', files_data={}, output_path="", grid_path=""):
         self.fd = FileDesign()
         self.files_data = files_data
         self.home_directory = Path.cwd()
@@ -34,6 +35,21 @@ class PathsOfCase:
         self.constant_dir_path = Path(self.case_directory, 'constant')
         self.zero_dir_path = Path(self.case_directory, '0.orig')
         self.system_dir_path = Path(self.case_directory, 'system')
+        self.output_path = output_path
+        if grid_path == "":
+            self.grid_path = Path(self.constant_dir_path, "polyMesh")
+        else:
+            self.grid_path = grid_path #path to /polymesh
+        if output_path == "":
+            self.output_path = Path(self.case_directory, "output.txt")
+        else:
+            self.output_path = output_path
+
+    def start_case(self):
+        list_files = subprocess.run(["ln", "-s", self.grid_path, Path(self.constant_dir_path, "polyMesh")])
+        list_files = subprocess.run(["cp", "-r", self.zero_dir_path, Path(self.case_directory, "0")])
+        os.system("potentialFoam -case {case} -pName p_rgh -writephi > {output}".format(case=self.case_directory, output=self.output_path))
+        os.system('interPhaseChangeFoam -case {case} >> {output}'.format(case=self.case_directory, output=self.output_path))
 
     def make_directories(self):
         self.existence_check_and_make(self.case_directory)
@@ -103,6 +119,8 @@ class PathsOfCase:
             os.mkdir(path)
 
 
+
+
 def main():
 
 
@@ -119,16 +137,18 @@ def main():
                             files_data[dir][file_][key] = data
         break
 
-    parser = argparse.ArgumentParser(description="A program for generating files for cavity case")
+    parser = argparse.ArgumentParser(description="A program for generating files for cavitation case")
     parser.add_argument('-n', '--name_case', metavar='', type=str, default='new_case', help="A path to place results.")
+    parser.add_argument('-grid', '--grid_path', metavar='', type=str, default='', help="A path to grid.")
     args = parser.parse_args()
 
-    paths = PathsOfCase(name=args.name_case, files_data=files_data)
+    paths = PathsOfCase(name=args.name_case, files_data=files_data, grid_path=args.grid_path)
     paths.make_directories()
     paths.make_clean_run()
     paths.make_files_in_system_dir()
     paths.make_files_in_constant_dir()
     paths.make_files_in_zero_dir()
+    paths.start_case()
 
     os.system('chmod 777 {} && chmod 777 {}'.format(Path(paths.case_directory, 'Allclean'),
                                                     Path(paths.case_directory), 'Allrun'))
