@@ -139,10 +139,12 @@ def main():
 
     parser = argparse.ArgumentParser(description="A program for generating files for cavitation case")
     parser.add_argument('-n', '--name_case', metavar='', type=str, default='new_case', help="A path to place results.")
-    parser.add_argument('-grid', '--grid_path', metavar='', type=str, default='', help="A path to grid.")
+    parser.add_argument('-grid', '--grid_path', metavar='', type=str, default='../polyMesh', help="A path to grid.")
+    parser.add_argument('-output', '--output_path', metavar='', type=str, default='output.txt', help="A path to grid.")
     args = parser.parse_args()
 
-    paths = PathsOfCase(name=args.name_case, files_data=files_data, grid_path=args.grid_path)
+    paths = PathsOfCase(name=args.name_case, files_data=files_data, grid_path=args.grid_path,
+                        output_path=args.output_path)
     paths.make_directories()
     paths.make_clean_run()
     paths.make_files_in_system_dir()
