@@ -68,45 +68,32 @@ zero = \
     {
         'p_rgh':
             {
-                'dimensions_p_rgh': '[1 -1 -2 0 0]',
-                'internalField_p_rgh': 'uniform 100000',
-                'type_inlet_p_rgh': 'zeroGradient',
-                'type_outlet_p_rgh': 'fixedValue',
-                'value_outlet_p_rgh': '$internalField',
-                'type_walls_p_rgh': 'symmetry',
-                'type_bullet_p_rgh': 'fixedFluxPressure'
+               'internal_value': '100000',
+               'boundary_types': ['in', 'out_with_value', 'symmetry', 'wall'],
+               'boundary_name': {'out_with_value': 'fixedValue', 'wall': 'fixedFluxPressure'},
+               'value': {'out_with_value': '$internalField'}
             },
         'U':
             {
-                'dimensions_U': '[0 1 -1 0 0]',
-                'internalField_U': 'uniform (0 0 20)',
-                'type_inlet_U': 'fixedValue',
-                'value_inlet_U': '$internalField',
-                'type_outlet_U': 'pressureInletOutletVelocity',
-                'value_outlet_U': '$internalField',
-                'type_walls_U': 'symmetry',
-                'type_bullet_U': 'noSlip',
+               'internal_value': '(0 0 20)',
+               'boundary_types': ['in_with_value', 'out_with_value', 'symmetry', 'wall'],
+               'boundary_name': {'out_with_value': 'pressureInletOutletVelocity'},
+               'value': {'in_with_value': '$internalField', 'out_with_value': '$internalField'}
             },
         'Phi':
             {
-                'dimensions_Phi': '[0 2 -1 0 0]',
-                'internalField_Phi': 'uniform 0',
-                'type_inlet_Phi': 'zeroGradient',
-                'type_outlet_Phi': 'fixedValue',
-                'value_outlet_Phi': '$internalField',
-                'type_walls_Phi': 'symmetry',
-                'type_bullet_Phi': 'zeroGradient'
+               'internal_value': '0',
+               'boundary_types': ['in', 'out_with_value', 'symmetry', 'wall'],
+               'boundary_name': {'wall': 'zeroGradient'},
+               'value': {'out_with_value': '$internalField'}
             },
         'alpha.water':
             {
-                 'dimensions_alpha': '[0 0 0 0 0]',
-                 'internalField_alpha': 'uniform 1',
-                 'type_inlet_alpha': 'fixedValue',
-                 'value_inlet_alpha': '$internalField',
-                 'type_outlet_alpha': 'inletOutlet',
-                 'inletValue_outlet_alpha': '$internalField',
-                 'type_walls_alpha': 'symmetry',
-                 'type_bullet_alpha': 'zeroGradient'
+
+               'internal_value': '1',
+               'boundary_types': ['in_with_value', 'out_with_value', 'symmetry', 'wall'],
+               'boundary_name': {'wall': 'zeroGradient', 'out_with_value': 'inletOutlet'},
+               'value': {'in_with_value': '$internalField', 'out_with_value': '$internalField'}
             }
     }
 

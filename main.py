@@ -21,6 +21,8 @@ from libs.fill.fvSchemes import fill_fvSchemes
 from libs.fill.fvSolution import fill_fvSolution
 from libs.fill.snappyHexMeshDict import fill_snappyHexMeshDict
 
+from libs.fields import Fields
+
 from libs.file_design import FileDesign
 from libs import params
 
@@ -46,9 +48,11 @@ class PathsOfCase:
             self.output_path = output_path
 
     def start_case(self):
-        list_files = subprocess.run(["ln", "-s", self.grid_path, Path(self.constant_dir_path, "polyMesh")])
+        if not os.path.exists(Path(self.constant_dir_path, "polyMesh")):
+            list_files = subprocess.run(["ln", "-s", self.grid_path, Path(self.constant_dir_path, "polyMesh")])
         list_files = subprocess.run(["cp", "-r", self.zero_dir_path, Path(self.case_directory, "0")])
-        os.system("potentialFoam -case {case} -pName p_rgh -writephi > {output}".format(case=self.case_directory, output=self.output_path))
+        #os.system("potentialFoam -case {case} -pName p_rgh -writephi > {output}".format(case=self.case_directory, output=self.output_path))
+        (open(self.output_path, 'w')).close() #clear output file
         os.system('interPhaseChangeFoam -case {case} >> {output}'.format(case=self.case_directory, output=self.output_path))
 
     def make_directories(self):
@@ -110,8 +114,10 @@ class PathsOfCase:
             self.fd.foamfile(path=path, class_=classes[file_], object_=file_)
             out_stream = open(path, 'a')
             params = data[file_]
-            out_stream.write(functions[file_](params))
+            functions[file_](params, fp=out_stream)
             out_stream.close()
+
+
 
     @staticmethod
     def existence_check_and_make(path):
@@ -146,14 +152,11 @@ def main():
     paths = PathsOfCase(name=args.name_case, files_data=files_data, grid_path=args.grid_path,
                         output_path=args.output_path)
     paths.make_directories()
-    paths.make_clean_run()
+    #paths.make_clean_run()
     paths.make_files_in_system_dir()
     paths.make_files_in_constant_dir()
     paths.make_files_in_zero_dir()
     paths.start_case()
-
-    os.system('chmod 777 {} && chmod 777 {}'.format(Path(paths.case_directory, 'Allclean'),
-                                                    Path(paths.case_directory), 'Allrun'))
 
 
 if __name__ == '__main__':
