@@ -1,5 +1,26 @@
 import copy
 
+'''
+Field boundary condition structure( [...] means optional ):
+
+<parse_name>
+{
+    type <name>
+    [value <value>]
+}
+
+option 'value' may be another, for example 'inletValue',
+thus it can be changed by dictionary parameter <value_name>:
+{<boundary_type>: <vn>}
+'''
+
+'''
+class Boundary() have information of specific boundary_type:
+-- parse_name [String] - the template, which is parsing in mesh
+-- name [String] - name of type 
+-- value [Bool] - is value option necessary for this condition
+'''
+
 
 class Boundary:
     def __init__(self, name='', parse_name='', value=False):
@@ -8,14 +29,16 @@ class Boundary:
         self.parse_name = parse_name
 
 
+'''dictionary of fields and its' dimensions'''
 dimensions = {'p': '[1 -1 -2 0 0 0 0]',
               'p_rgh': '[1 -1 -2 0 0 0 0]',
               'T': '[0 0 0 1 0 0 0]',
               'U': '[0 1 -1 0 0 0 0]',
               'Phi': '[0 2 -1 0 0 0 0]',
               'other': '[0 0 0 0 0 0 0]'}
-# dictionary of boundary types, which consists of boundary names and other information
-boundaries_types = {
+
+'''dictionary of boundary types, every boundary type is class Boundary()'''
+boundaries = {
     'wall': Boundary('noSlip', "(wall|WALL|Wall|originalPatch|Created).*"),
     'empty': Boundary('empty', "(empty|bottomEmpty|topEmpty).*"),
     'symmetry': Boundary('symmetry', "(symmetry).*"),
@@ -29,13 +52,63 @@ boundaries_types = {
     'in_with_value': Boundary('fixedValue', "(inlet).*", value=True)
 }
 
+'''
+class Fields:
+
+#
+__init__(field_name, internal_value, boundary_types=None,
+                 boundary_name=None, value=None)
+Input:
+-- field_name [String] - field name from dimensions dictionary
+-- internal value [String] - internal field value
+-- boundary_types [List of String] - list of boundaries, which is necessary fill
+                                                       for this field
+-- boundary_name [Dictionary of String] - list of boundary names
+(if it is necessary to change [type <name>] for some boundaries from boundary_types list)
+-- value [Dictionary of String] - list of values for boundaries, which require them 
+
+#
+write_field_type(field)
+Input:
+-- field [String] - fild from dimensions dictionary
+Output:
+[String] dimension line
+
+#
+write_internal_field(field)
+Input:
+-- field [String] - fild from dimensions dictionary
+Output:
+[String] internal_field line 
+
+#
+write_condition(boundary_type, boundary_name=None, value=None, value_name='value')
+Input:
+-- boundary_type [String] - boundary type from boundaries dictionary
+-- boundary_name [String] - optional parameter if it is necessary to change
+                                            default [type <name>] for this boundary 
+-- value [String] - optional parameter if boundary requires value
+-- value_name [String] - optional parameter if it is necessary to change 'value' for smth
+Output:
+[String] line in Field boundary condition structure
+
+#
+make_boundary_conditions(filename=None, fp=None, value_name=None)
+Input:
+-- filename [Path/String] - path to output file(where write field info)
+-- fp [File pointer] - open(filename) object
+-- value [Dictionary of String] - if it is necessary to change 'value' in some boundaries
+(filename or fp interchangeable)
+Output: nothing
+'''
+
 
 class Fields:
 
     def __init__(self, field_name, internal_value, boundary_types=None,
-                                 boundary_name=None, value=None):
+                 boundary_name=None, value=None):
         self.dimensions = dimensions
-        self.boundaries = boundaries_types
+        self.boundaries = boundaries
         self.field_name = field_name
         self.internal_value = internal_value
         self.boundary_types = boundary_types
@@ -88,10 +161,3 @@ class Fields:
             f.write(self.write_condition(boundary, bn, v, value_name=vn))
         f.write('}\n')
         f.close()
-
-
-'''U = Fields(field_name='U', internal_value='(0 0 20)',
-           boundary_types=['in_with_value', 'out_with_value', 'symmetry', 'wall'],
-           boundary_name={'out_with_value': 'pressureInletOutletVelocity'},
-           value={'in_with_value': '$internalField', 'out_with_value': '$internalField'})
-U.make_boundary_conditions('/home/ivan/Documents/TEST_OpenFoam/setuper/test.txt')'''
