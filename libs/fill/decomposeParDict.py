@@ -1,9 +1,14 @@
 def fill_decomposeParDict(params):
-    return  ' numberOfSubdomains 4; '  + '\n' + \
- '  '  + '\n' + \
- ' method          simple; '  + '\n' + \
- '  '  + '\n' + \
- ' coeffs '  + '\n' + \
- ' { '  + '\n' + \
- '     n           (2 2 1); '  + '\n' + \
- ' } '
+    return  ' numberOfSubdomains {} ; '.format(params['numberOfSubdomains']) + '\n' + \
+ ' method          scotch; '  + '\n'
+
+
+# /*
+# 1. Расчёт на одном ядре.
+# interPhaseChangeFoam
+#
+# 2. Расчёт на нескольких ядрах.
+# decomposeParDict
+# mpirun -np number interPhaseChangeFoam -parallel
+# reconstractPar
+# */

@@ -6,20 +6,42 @@ system = \
             },
         'controlDict':
             {
+                'startFrom': 'latestTime',
+                'startTime': '0',
+                'stopAt': 'endTime',
+                'endTime': '0.05',
+                'deltaT': '1e-8',
+                'writeControl': 'adjustable',
+                'writeInterval': '0.001',
+                'purgeWrite': '0',
+                'writeFormat': 'ascii',
+                'writePrecision': '6',
+                'writeCompression': 'off',
+                'timeFormat': 'general',
+                'runTimeModifiable': 'yes',
+                'adjustTimeStep': 'on',
+                'maxCo': '5'
 
             },
         'decomposeParDict':
             {
-
+                'numberOfSubdomains': '1'
             },
         'fvSchemes':
             {
-
+                'Gllc': '0.5'
             },
         'fvSolution':
             {
                 'cAlpha': 0,
-                'nAlphaCorr': 2
+                'nAlphaCorr': 2,
+                'tolerance': '1e-6',
+                'relTol': '0.1',
+                'momentumPredictor': 'no',
+                'nOuterCorrectors': '1',
+                'nCorrectors': '3',
+                'nNonOrthogonalCorrectors': '0',
+                'U.*': '1',
             },
         'snappyHexMeshDict':
             {
@@ -68,32 +90,25 @@ zero = \
     {
         'p_rgh':
             {
-               'internal_value': '100000',
-               'boundary_types': ['in', 'out_with_value', 'symmetry', 'wall'],
-               'boundary_name': {'out_with_value': 'fixedValue', 'wall': 'fixedFluxPressure'},
-               'value': {'out_with_value': '$internalField'}
+                'internal_value': '100000',
+                'boundary_types': ['in', 'out_with_value', 'symmetry', 'wall'],
+                'boundary_name': {'out_with_value': 'fixedValue', 'wall': 'fixedFluxPressure'},
+                'value': {'out_with_value': '$internalField'}
             },
         'U':
             {
-               'internal_value': '(0 0 20)',
-               'boundary_types': ['in_with_value', 'out_with_value', 'symmetry', 'wall'],
-               'boundary_name': {'out_with_value': 'pressureInletOutletVelocity'},
-               'value': {'in_with_value': '$internalField', 'out_with_value': '$internalField'}
-            },
-        'Phi':
-            {
-               'internal_value': '0',
-               'boundary_types': ['in', 'out_with_value', 'symmetry', 'wall'],
-               'boundary_name': {'wall': 'zeroGradient'},
-               'value': {'out_with_value': '$internalField'}
+                'internal_value': '(0 0 20)',
+                'boundary_types': ['in_with_value', 'out_with_value', 'symmetry', 'wall'],
+                'boundary_name': {'out_with_value': 'pressureInletOutletVelocity'},
+                'value': {'in_with_value': '$internalField', 'out_with_value': '$internalField'}
             },
         'alpha.water':
             {
 
-               'internal_value': '1',
-               'boundary_types': ['in_with_value', 'out_with_value', 'symmetry', 'wall'],
-               'boundary_name': {'wall': 'zeroGradient', 'out_with_value': 'inletOutlet'},
-               'value': {'in_with_value': '$internalField', 'out_with_value': '$internalField'}
+                'internal_value': '1',
+                'boundary_types': ['in_with_value', 'out_with_value', 'symmetry', 'wall'],
+                'boundary_name': {'wall': 'zeroGradient', 'out_with_value': 'inletOutlet'},
+                'value': {'in_with_value': '$internalField', 'out_with_value': '$internalField'}
             }
     }
 
