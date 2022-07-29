@@ -25,6 +25,7 @@ from libs.fields import Fields
 
 from libs.file_design import FileDesign
 from libs import params
+from libs.parseArgs import fillFromUserDict
 
 files_data = params.files_data
 
@@ -39,6 +40,7 @@ class PathsOfCase:
         self.zero_dir_path = Path(self.case_directory, '0.orig')
         self.system_dir_path = Path(self.case_directory, 'system')
         self.output_path = output_path
+        self.reConstract = False
         if grid_path == "":
             self.grid_path = Path(self.constant_dir_path, "polyMesh")
         else:
@@ -54,8 +56,17 @@ class PathsOfCase:
         list_files = subprocess.run(["cp", "-r", self.zero_dir_path, Path(self.case_directory, "0")])
         # os.system("potentialFoam -case {case} -pName p_rgh -writephi > {output}".format(case=self.case_directory, output=self.output_path))
         (open(self.output_path, 'w')).close()  # clear output file
-        os.system(
-            'interPhaseChangeFoam -case {case} >> {output}'.format(case=self.case_directory, output=self.output_path))
+        np = int(self.files_data['system']['decomposeParDict']['numberOfSubdomains'])
+        if np == 1 and True:
+            os.system('interPhaseChangeFoam -case {case} >> {output}'.format(case=self.case_directory,                                                                         output=self.output_path))
+        else:
+            self.reConstract = True
+            os.system('mpirun -np {np} interPhaseChangeFoam -case {case} -parallel  >> {output}'.format(
+                case=self.case_directory,
+                output=self.output_path, np=np))
+        if self.reConstract:
+            os.system('reconstractPar')
+
 
     def make_directories(self):
         self.existence_check_and_make(self.case_directory)
@@ -89,6 +100,8 @@ class PathsOfCase:
         files = list(self.files_data['system'].keys())  # blockMeshDict, controlDict,
         # decomposeParDict, fvSchemes,
         # fvSolution, snappyHexMeshDict
+        files.remove('blockMeshDict')
+        files.remove('snappyHexMeshDict')
         data = self.files_data['system']
         functions = {'blockMeshDict': fill_blockMeshDict, 'controlDict': fill_controlDict,
                      'decomposeParDict': fill_decomposeParDict, 'fvSchemes': fill_fvSchemes,
@@ -105,9 +118,9 @@ class PathsOfCase:
     def make_files_in_zero_dir(self):
         files = list(self.files_data['0.orig'].keys())  # p_rgh, U, Phi, alpha.water
         data = self.files_data['0.orig']
-        functions = {'p_rgh': fill_p_rgh, 'U': fill_U, 'Phi': fill_Phi, 'alpha.water': fill_alpha_water}
+        functions = {'p_rgh': fill_p_rgh, 'U': fill_U, 'alpha.water': fill_alpha_water}
         field = ['volScalarField', 'volVectorField']
-        classes = {'p_rgh': field[0], 'U': field[1], 'Phi': field[0], 'alpha.water': field[0]}
+        classes = {'p_rgh': field[0], 'U': field[1], 'alpha.water': field[0]}
 
         for file_ in files:
             path = Path(self.zero_dir_path, file_)
@@ -135,25 +148,21 @@ def clear_case(path):
                 shutil.rmtree(fullname, ignore_errors=True)
 
 
-
 def main():
+    userDict = {}
     for filename in glob.glob('*param*'):
         with open(Path(Path.cwd(), filename), 'r') as f:
-            dirs = files_data.keys()
             for line in f:
                 key, data = line.split(':', 1)
-                for dir in dirs:
-                    files = files_data[dir].keys()
-                    for file_ in files:
-                        keys = files_data[dir][file_].keys()
-                        if key in keys:
-                            files_data[dir][file_][key] = data
+                userDict[key] = data
         break
+
+    fillFromUserDict(userDict, files_data)  # add parse from terminal line!
 
     parser = argparse.ArgumentParser(description="A program for generating files for cavitation case")
     parser.add_argument('-n', '--name_case', metavar='', type=str, default='new_case', help="A path to case directory.")
     parser.add_argument('-grid', '--grid_path', metavar='', type=str, default='../polyMesh', help="A path to grid.")
-    parser.add_argument('-output', '--output_path', metavar='', type=str, default='output.txt', help="A path to grid.")
+    parser.add_argument('-output', '--output_path', metavar='', type=str, default='output.txt', help="A path to log.")
     parser.add_argument('-clear', '--case_path', metavar='', type=str, default=None,
                         help="A path to case directory, which is necessary to clear.")
     args = parser.parse_args()
@@ -175,5 +184,10 @@ def main():
         paths.start_case()
 
 
+
 if __name__ == '__main__':
     main()
+
+#
+# 1. add parsing from terminal line
+# 2. mpi?

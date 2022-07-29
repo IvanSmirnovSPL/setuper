@@ -28,7 +28,7 @@ def fill_fvSchemes(params):
  '  '  + '\n' + \
  ' laplacianSchemes '  + '\n' + \
  ' { '  + '\n' + \
- '     default             Gauss linear limited corrected 0.5; '  + '\n' + \
+ '     default             Gauss linear limited corrected {}; '.format(params['Gllc'])  + '\n' + \
  ' } '  + '\n' + \
  '  '  + '\n' + \
  ' snGradSchemes '  + '\n' + \

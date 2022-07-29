@@ -1,33 +1,33 @@
 def fill_controlDict(params):
-    return '  '  + '\n' + \
- ' application     interPhaseChangeFoam; '  + '\n' + \
- '  '  + '\n' + \
- ' startFrom       latestTime; '  + '\n' + \
- '  '  + '\n' + \
- ' startTime       0; '  + '\n' + \
- '  '  + '\n' + \
- ' stopAt          endTime; '  + '\n' + \
- '  '  + '\n' + \
- ' endTime         0.05; '  + '\n' + \
- '  '  + '\n' + \
- ' deltaT          1e-8; '  + '\n' + \
- '  '  + '\n' + \
- ' writeControl    adjustable; '  + '\n' + \
- '  '  + '\n' + \
- ' writeInterval   0.001; '  + '\n' + \
- '  '  + '\n' + \
- ' purgeWrite      0; '  + '\n' + \
- '  '  + '\n' + \
- ' writeFormat     ascii; '  + '\n' + \
- '  '  + '\n' + \
- ' writePrecision  6; '  + '\n' + \
- '  '  + '\n' + \
- ' writeCompression off; '  + '\n' + \
- '  '  + '\n' + \
- ' timeFormat      general; '  + '\n' + \
- '  '  + '\n' + \
- ' runTimeModifiable yes; '  + '\n' + \
- '  '  + '\n' + \
- ' adjustTimeStep  on; '  + '\n' + \
- '  '  + '\n' + \
- ' maxCo           5; '
+    return '  ' + '\n' + \
+           ' application     interPhaseChangeFoam; ' + '\n' + \
+           '  ' + '\n' + \
+           ' startFrom       {}; '.format(params['startFrom']) + '\n' + \
+           '  ' + '\n' + \
+           ' startTime       {}; '.format(params['startTime']) + '\n' + \
+           '  ' + '\n' + \
+           ' stopAt          {}; '.format(params['stopAt']) + '\n' + \
+           '  ' + '\n' + \
+           ' endTime         {}; '.format(params['endTime']) + '\n' + \
+           '  ' + '\n' + \
+           ' deltaT          {}; '.format(params['deltaT']) + '\n' + \
+           '  ' + '\n' + \
+           ' writeControl    {}; '.format(params['writeControl']) + '\n' + \
+           '  ' + '\n' + \
+           ' writeInterval   {}; '.format(params['writeInterval']) + '\n' + \
+           '  ' + '\n' + \
+           ' purgeWrite      {}; '.format(params['purgeWrite']) + '\n' + \
+           '  ' + '\n' + \
+           ' writeFormat     {}; '.format(params['writeFormat']) + '\n' + \
+           '  ' + '\n' + \
+           ' writePrecision  {}; '.format(params['writePrecision']) + '\n' + \
+           '  ' + '\n' + \
+           ' writeCompression {}; '.format(params['writeCompression']) + '\n' + \
+           '  ' + '\n' + \
+           ' timeFormat      {}; '.format(params['timeFormat']) + '\n' + \
+           '  ' + '\n' + \
+           ' runTimeModifiable {}; '.format(params['runTimeModifiable']) + '\n' + \
+           '  ' + '\n' + \
+           ' adjustTimeStep  {}; '.format(params['adjustTimeStep']) + '\n' + \
+           '  ' + '\n' + \
+           ' maxCo           {}; '.format(params['maxCo'])
