@@ -1,7 +1,6 @@
 def fill_decomposeParDict(params):
-    return  ' numberOfSubdomains {} ; '.format(params['numberOfSubdomains']) + '\n' + \
- ' method          scotch; '  + '\n'
-
+    return ' numberOfSubdomains {} ; '.format(params['numberOfSubdomains']) + '\n' + \
+           ' method          scotch; ' + '\n'
 
 # /*
 # 1. Расчёт на одном ядре.
