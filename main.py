@@ -1,31 +1,29 @@
 from pathlib import Path
 import os
 import glob
-import argparse
 import subprocess
 import shutil
 
+# constant
 from libs.fill.g import fill_g
 from libs.fill.transportProperties import fill_transportProperties
 from libs.fill.turbulenceProperties import fill_turbulenceProperties
 
+# 0.orig
 from libs.fill.p_rgh import fill_p_rgh
-from libs.fill.Phi import fill_Phi
 from libs.fill.alpha_water import fill_alpha_water
 from libs.fill.U import fill_U
 
-from libs.fill.blockMeshDict import fill_blockMeshDict
+# system
 from libs.fill.controlDict import fill_controlDict
 from libs.fill.decomposeParDict import fill_decomposeParDict
 from libs.fill.fvSchemes import fill_fvSchemes
 from libs.fill.fvSolution import fill_fvSolution
-from libs.fill.snappyHexMeshDict import fill_snappyHexMeshDict
 
-from libs.fields import Fields
-
+# support
 from libs.file_design import FileDesign
 from libs import params
-from libs.parseArgs import fillFromUserDict
+from libs.parseArgs import fillFromUserDict, userFlags, dictFromUserFlags
 
 files_data = params.files_data
 
@@ -54,11 +52,11 @@ class PathsOfCase:
         if not os.path.exists(Path(self.constant_dir_path, "polyMesh")):
             list_files = subprocess.run(["ln", "-s", self.grid_path, Path(self.constant_dir_path, "polyMesh")])
         list_files = subprocess.run(["cp", "-r", self.zero_dir_path, Path(self.case_directory, "0")])
-        # os.system("potentialFoam -case {case} -pName p_rgh -writephi > {output}".format(case=self.case_directory, output=self.output_path))
         (open(self.output_path, 'w')).close()  # clear output file
         np = int(self.files_data['system']['decomposeParDict']['numberOfSubdomains'])
         if np == 1 and True:
-            os.system('interPhaseChangeFoam -case {case} >> {output}'.format(case=self.case_directory,                                                                         output=self.output_path))
+            os.system('interPhaseChangeFoam -case {case} >> {output}'.format(case=self.case_directory,
+                                                                             output=self.output_path))
         else:
             self.reConstract = True
             os.system('mpirun -np {np} interPhaseChangeFoam -case {case} -parallel  >> {output}'.format(
@@ -67,20 +65,11 @@ class PathsOfCase:
         if self.reConstract:
             os.system('reconstractPar')
 
-
     def make_directories(self):
         self.existence_check_and_make(self.case_directory)
         self.existence_check_and_make(self.constant_dir_path)
         self.existence_check_and_make(self.zero_dir_path)
         self.existence_check_and_make(self.system_dir_path)
-
-    def make_clean_run(self):
-        file = open(Path(self.case_directory, "Allclean"), 'w')
-        file.write(self.fd.clean)
-        file.close()
-        file = open(Path(self.case_directory, "Allrun"), 'w')
-        file.write(self.fd.run)
-        file.close()
 
     def make_files_in_constant_dir(self):
         files = list(self.files_data['constant'].keys())  # g, transportProperties, turbulenceProperties
@@ -97,15 +86,14 @@ class PathsOfCase:
             out_stream.close()
 
     def make_files_in_system_dir(self):
-        files = list(self.files_data['system'].keys())  # blockMeshDict, controlDict,
-        # decomposeParDict, fvSchemes,
-        # fvSolution, snappyHexMeshDict
+        files = list(self.files_data['system'].keys())  # controlDict,
+        # decomposeParDict, fvSchemes, fvSolution
         files.remove('blockMeshDict')
         files.remove('snappyHexMeshDict')
         data = self.files_data['system']
-        functions = {'blockMeshDict': fill_blockMeshDict, 'controlDict': fill_controlDict,
+        functions = {'controlDict': fill_controlDict,
                      'decomposeParDict': fill_decomposeParDict, 'fvSchemes': fill_fvSchemes,
-                     'fvSolution': fill_fvSolution, 'snappyHexMeshDict': fill_snappyHexMeshDict}
+                     'fvSolution': fill_fvSolution}
         for file_ in files:
             path = Path(self.system_dir_path, file_)
             self.fd.init_file(path)
@@ -116,7 +104,7 @@ class PathsOfCase:
             out_stream.close()
 
     def make_files_in_zero_dir(self):
-        files = list(self.files_data['0.orig'].keys())  # p_rgh, U, Phi, alpha.water
+        files = list(self.files_data['0.orig'].keys())  # p_rgh, U, alpha.water
         data = self.files_data['0.orig']
         functions = {'p_rgh': fill_p_rgh, 'U': fill_U, 'alpha.water': fill_alpha_water}
         field = ['volScalarField', 'volVectorField']
@@ -157,15 +145,11 @@ def main():
                 userDict[key] = data
         break
 
-    fillFromUserDict(userDict, files_data)  # add parse from terminal line!
-
-    parser = argparse.ArgumentParser(description="A program for generating files for cavitation case")
-    parser.add_argument('-n', '--name_case', metavar='', type=str, default='new_case', help="A path to case directory.")
-    parser.add_argument('-grid', '--grid_path', metavar='', type=str, default='../polyMesh', help="A path to grid.")
-    parser.add_argument('-output', '--output_path', metavar='', type=str, default='output.txt', help="A path to log.")
-    parser.add_argument('-clear', '--case_path', metavar='', type=str, default=None,
-                        help="A path to case directory, which is necessary to clear.")
+    fillFromUserDict(userDict, files_data)
+    parser = userFlags()
     args = parser.parse_args()
+    userDict = dictFromUserFlags(args)
+    fillFromUserDict(userDict, files_data)
 
     if args.case_path is not None:
         try:
@@ -177,17 +161,11 @@ def main():
         paths = PathsOfCase(name=args.name_case, files_data=files_data, grid_path=args.grid_path,
                             output_path=args.output_path)
         paths.make_directories()
-        # paths.make_clean_run()
         paths.make_files_in_system_dir()
         paths.make_files_in_constant_dir()
         paths.make_files_in_zero_dir()
         paths.start_case()
 
 
-
 if __name__ == '__main__':
     main()
-
-#
-# 1. add parsing from terminal line
-# 2. mpi?
