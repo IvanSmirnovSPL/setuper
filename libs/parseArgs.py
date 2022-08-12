@@ -157,7 +157,7 @@ def userFlags():
     parser.add_argument('-output', '--output_path', metavar='', type=str, default='output.txt', help="A path to log.")
     parser.add_argument('-clear', '--clear_case_path', metavar='', type=str, default=None,
                         help="A path to case directory, which is necessary to clear.")
-    parser.add_argument('-reconstract', '--reconstract_case_path', metavar='', type=str, default=None,
+    parser.add_argument('-reconstract', '--reconstruct_case_path', metavar='', type=str, default=None,
                         help="A path to case directory, which is necessary to clear.")
     programmSettings(parser)
     return parser
