@@ -59,11 +59,14 @@ class PathsOfCase:
                                                                              output=self.output_path))
         else:
             self.reConstract = True
+            os.system('decomposePar -case {case} >> {output}'.format(
+                case=self.case_directory,
+                output=self.output_path, np=np))
             os.system('mpirun -np {np} interPhaseChangeFoam -case {case} -parallel  >> {output}'.format(
                 case=self.case_directory,
                 output=self.output_path, np=np))
-        if self.reConstract:
-            os.system('reconstractPar')
+        #if self.reConstract:
+        #    os.system('reconstractPar')
 
     def make_directories(self):
         self.existence_check_and_make(self.case_directory)
