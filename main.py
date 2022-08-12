@@ -154,11 +154,13 @@ def main():
     userDict = dictFromUserFlags(args)
     fillFromUserDict(userDict, files_data)
 
-    if args.case_path is not None:
+    if args.clear_case_path is not None:
         try:
-            clear_case(args.case_path)
+            clear_case(args.clear_case_path)
         except Exception:
-            print('The case in {} does not exist'.format(args.case_path))
+            print('The case in {} does not exist'.format(args.clear_case_path))
+    elif args.reconstract_case_path is not None:
+        os.system('reconstractPar -case {}'.format(args.reconstract_case_path))
     else:
 
         paths = PathsOfCase(name=args.name_case, files_data=files_data, grid_path=args.grid_path,
