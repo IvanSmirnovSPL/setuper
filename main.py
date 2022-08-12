@@ -54,7 +54,7 @@ class PathsOfCase:
         list_files = subprocess.run(["cp", "-r", self.zero_dir_path, Path(self.case_directory, "0")])
         (open(self.output_path, 'w')).close()  # clear output file
         np = int(self.files_data['system']['decomposeParDict']['numberOfSubdomains'])
-        if np == 1 and True:
+        if np == 1:
             os.system('interPhaseChangeFoam -case {case} >> {output}'.format(case=self.case_directory,
                                                                              output=self.output_path))
         else:
