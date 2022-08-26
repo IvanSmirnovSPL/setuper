@@ -1,33 +1,40 @@
-def fill_controlDict(params):
-    return '  ' + '\n' + \
-           ' application     interPhaseChangeFoam; ' + '\n' + \
-           '  ' + '\n' + \
-           ' startFrom       {}; '.format(params['startFrom']) + '\n' + \
-           '  ' + '\n' + \
-           ' startTime       {}; '.format(params['startTime']) + '\n' + \
-           '  ' + '\n' + \
-           ' stopAt          {}; '.format(params['stopAt']) + '\n' + \
-           '  ' + '\n' + \
-           ' endTime         {}; '.format(params['endTime']) + '\n' + \
-           '  ' + '\n' + \
-           ' deltaT          {}; '.format(params['deltaT']) + '\n' + \
-           '  ' + '\n' + \
-           ' writeControl    {}; '.format(params['writeControl']) + '\n' + \
-           '  ' + '\n' + \
-           ' writeInterval   {}; '.format(params['writeInterval']) + '\n' + \
-           '  ' + '\n' + \
-           ' purgeWrite      {}; '.format(params['purgeWrite']) + '\n' + \
-           '  ' + '\n' + \
-           ' writeFormat     {}; '.format(params['writeFormat']) + '\n' + \
-           '  ' + '\n' + \
-           ' writePrecision  {}; '.format(params['writePrecision']) + '\n' + \
-           '  ' + '\n' + \
-           ' writeCompression {}; '.format(params['writeCompression']) + '\n' + \
-           '  ' + '\n' + \
-           ' timeFormat      {}; '.format(params['timeFormat']) + '\n' + \
-           '  ' + '\n' + \
-           ' runTimeModifiable {}; '.format(params['runTimeModifiable']) + '\n' + \
-           '  ' + '\n' + \
-           ' adjustTimeStep  {}; '.format(params['adjustTimeStep']) + '\n' + \
-           '  ' + '\n' + \
-           ' maxCo           {}; '.format(params['maxCo'])
+def fill_controlDict(param):
+    return '  \n' + \
+           ' libs {}; \n'.format(param['libs']) + \
+           '  \n' + \
+           ' application     {}; \n'.format(param['application']) + \
+           '  \n' + \
+           ' startFrom       {}; \n'.format(param['startFrom']) + \
+           '  \n' + \
+           ' startTime       {}; \n'.format(param['startTime']) + \
+           '  \n' + \
+           ' stopAt          {}; \n'.format(param['stopAt']) + \
+           '  \n' + \
+           ' endTime         {}; \n'.format(param['endTime']) + \
+           '  \n' + \
+           ' deltaT          {}; \n'.format(param['deltaT']) + \
+           '  \n' + \
+           ' writeControl    {}; \n'.format(param['writeControl']) + \
+           '  \n' + \
+           ' writeInterval   {}; \n'.format(param['writeInterval']) + \
+           '  \n' + \
+           ' purgeWrite      {}; \n'.format(param['purgeWrite']) + \
+           '  \n' + \
+           ' writeFormat     {}; \n'.format(param['writeFormat']) + \
+           '  \n' + \
+           ' writePrecision  {}; \n'.format(param['writePrecision']) + \
+           '  \n' + \
+           ' writeCompression {}; \n'.format(param['writeCompression']) + \
+           '  \n' + \
+           ' timeFormat      {}; \n'.format(param['timeFormat']) + \
+           '  \n' + \
+           ' timePrecision   {}; \n'.format(param['timePrecision']) + \
+           '  \n' + \
+           ' runTimeModifiable {}; \n'.format(param['runTimeModifiable']) + \
+           '  \n' + \
+           ' adjustTimeStep  {}; \n'.format(param['adjustTimeStep']) + \
+           '  \n' + \
+           ' maxCo           {}; \n'.format(param['maxCo']) + \
+           '  \n' + \
+           ' maxDeltaT       {}; \n'.format(param['maxDeltaT']) + \
+           '  \n'
