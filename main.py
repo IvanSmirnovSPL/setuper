@@ -6,13 +6,14 @@ import shutil
 
 # constant
 from libs.fill.g import fill_g
-from libs.fill.transportProperties import fill_transportProperties
+from libs.fill.thermophysicalProperties import fill_thermophysicalProperties
 from libs.fill.turbulenceProperties import fill_turbulenceProperties
 
 # 0.orig
-from libs.fill.p_rgh import fill_p_rgh
+from libs.fill.p import fill_p
 from libs.fill.alpha_water import fill_alpha_water
 from libs.fill.U import fill_U
+from libs.fill.T import fill_T
 
 # system
 from libs.fill.controlDict import fill_controlDict
@@ -29,7 +30,7 @@ files_data = params.files_data
 
 
 class PathsOfCase:
-    def __init__(self, name='new_case', files_data={}, output_path="", grid_path=""):
+    def __init__(self, name='new_case', files_data={}, output_path="", grid_path="", table_path=""):
         self.fd = FileDesign()
         self.files_data = files_data
         self.home_directory = Path.cwd()
@@ -43,14 +44,22 @@ class PathsOfCase:
             self.grid_path = Path(self.constant_dir_path, "polyMesh")
         else:
             self.grid_path = grid_path  # path to /polymesh
+        if table_path == "":
+            self.table = Path(self.constant_dir_path, "tables")
+        else:
+            self.table_path = table_path  # path to /polymesh
         if output_path == "":
             self.output_path = Path(self.case_directory, "output.txt")
         else:
             self.output_path = output_path
 
-    def start_case(self):
+    def add_paths(self):
         if not os.path.exists(Path(self.constant_dir_path, "polyMesh")):
             list_files = subprocess.run(["ln", "-s", self.grid_path, Path(self.constant_dir_path, "polyMesh")])
+        if not os.path.exists(Path(self.constant_dir_path, "tables")):
+            list_files = subprocess.run(["ln", "-s", self.table_path, Path(self.constant_dir_path, "tables")])
+
+    def start_case(self):
         list_files = subprocess.run(["cp", "-r", self.zero_dir_path, Path(self.case_directory, "0")])
         (open(self.output_path, 'w')).close()  # clear output file
         np = int(self.files_data['system']['decomposeParDict']['numberOfSubdomains'])
@@ -74,8 +83,9 @@ class PathsOfCase:
 
     def make_files_in_constant_dir(self):
         files = list(self.files_data['constant'].keys())  # g, transportProperties, turbulenceProperties
+        files.remove('transportProperties')
         data = self.files_data['constant']
-        functions = {'g': fill_g, 'transportProperties': fill_transportProperties,
+        functions = {'g': fill_g, 'thermophysicalProperties': fill_thermophysicalProperties,
                      'turbulenceProperties': fill_turbulenceProperties}
         for file_ in files:
             path = Path(self.constant_dir_path, file_)
@@ -91,9 +101,10 @@ class PathsOfCase:
         # decomposeParDict, fvSchemes, fvSolution
         files.remove('blockMeshDict')
         files.remove('snappyHexMeshDict')
+        files.remove('decomposeParDict')
         data = self.files_data['system']
         functions = {'controlDict': fill_controlDict,
-                     'decomposeParDict': fill_decomposeParDict, 'fvSchemes': fill_fvSchemes,
+                     'fvSchemes': fill_fvSchemes,
                      'fvSolution': fill_fvSolution}
         for file_ in files:
             path = Path(self.system_dir_path, file_)
@@ -107,9 +118,9 @@ class PathsOfCase:
     def make_files_in_zero_dir(self):
         files = list(self.files_data['0.orig'].keys())  # p_rgh, U, alpha.water
         data = self.files_data['0.orig']
-        functions = {'p_rgh': fill_p_rgh, 'U': fill_U, 'alpha.water': fill_alpha_water}
+        functions = {'p': fill_p, 'U': fill_U, 'alpha.water': fill_alpha_water, 'T': fill_T}
         field = ['volScalarField', 'volVectorField']
-        classes = {'p_rgh': field[0], 'U': field[1], 'alpha.water': field[0]}
+        classes = {'p': field[0], 'U': field[1], 'alpha.water': field[0], 'T': field[0]}
 
         for file_ in files:
             path = Path(self.zero_dir_path, file_)
@@ -149,8 +160,8 @@ def main():
     fillFromUserDict(userDict, files_data)
     parser = userFlags()
     args = parser.parse_args()
-    userDict = dictFromUserFlags(args)
-    fillFromUserDict(userDict, files_data)
+    #userDict = dictFromUserFlags(args)
+    #fillFromUserDict(userDict, files_data)
 
     if args.clear_case_path is not None:
         try:
@@ -162,12 +173,14 @@ def main():
     else:
 
         paths = PathsOfCase(name=args.name_case, files_data=files_data, grid_path=args.grid_path,
+                            table_path=args.table_path,
                             output_path=args.output_path)
         paths.make_directories()
         paths.make_files_in_system_dir()
         paths.make_files_in_constant_dir()
         paths.make_files_in_zero_dir()
-        paths.start_case()
+        paths.add_paths()
+        # paths.start_case()
 
 
 if __name__ == '__main__':

@@ -6,22 +6,25 @@ system = \
             },
         'controlDict':
             {
-                'startFrom': 'latestTime',
-                'startTime': '0',
-                'stopAt': 'endTime',
-                'endTime': '0.05',
-                'deltaT': '1e-8',
-                'writeControl': 'adjustable',
-                'writeInterval': '0.001',
-                'purgeWrite': '0',
-                'writeFormat': 'ascii',
-                'writePrecision': '6',
-                'writeCompression': 'off',
-                'timeFormat': 'general',
-                'runTimeModifiable': 'yes',
-                'adjustTimeStep': 'on',
-                'maxCo': '5'
-
+                'libs': 0,
+                'application': 0,
+                'startFrom': 0,
+                'startTime': 0,
+                'stopAt': 0,
+                'endTime': 0,
+                'deltaT': 0,
+                'writeControl': 0,
+                'writeInterval': 0,
+                'purgeWrite': 0,
+                'writeFormat': 0,
+                'writePrecision': 0,
+                'writeCompression': 0,
+                'timeFormat': 0,
+                'timePrecision': 0,
+                'runTimeModifiable': 0,
+                'adjustTimeStep': 0,
+                'maxCo': 0,
+                'maxDeltaT': 0,
             },
         'decomposeParDict':
             {
@@ -29,20 +32,30 @@ system = \
             },
         'fvSchemes':
             {
-                'Gllc': '0.5'
+                'fluxScheme': 0,
+                'ddtSchemes': 0,
+                'fluxIntegrator': 0,
+                'gradSchemes': 0,
+                'divSchemes': 0,
+                'div(tauMC)': 0,
+                'laplacianSchemes': 0,
+                'interpolationSchemes': 0,
+                'reconstruct_U': 0,
+                'reconstruct_p': 0,
+                'reconstruct_thermo': 0,
+                'snGradSchemes': 0,
             },
         'fvSolution':
             {
-                'cAlpha': 0,
-                'nAlphaCorr': 2,
-                'tolerance': '1e-6',
-                'relTol': '0.1',
-                'momentumPredictor': 'no',
-                'nOuterCorrectors': '1',
-                'nCorrectors': '3',
-                'nNonOrthogonalCorrectors': '0',
-                'U.*': '1',
+                'solver': 0,
+                'U_solver': 0,
+                'smoother': 0,
+                'nSweeps': 0,
+                'tolerance': 0,
+                'relTol': 0,
+                '$U;': 0,
             },
+
         'snappyHexMeshDict':
             {
 
@@ -79,6 +92,23 @@ constant = \
             {
                 'simulationType': 'laminar'
             },
+        'thermophysicalProperties':
+            {
+                'phases': 0,
+                'Tmin': 0,
+                'Tmax': 0,
+                'relTol': 0,
+                'maxIter': 0,
+                'logPSatFile': 0,
+                'TSatFile': 0,
+                'rho1SatFile': 0,
+                'rho2SatFile': 0,
+                'rho1SatDerFile': 0,
+                'rho2SatDerFile': 0,
+                'gvFile': 0,
+                'glFile': 0,
+                'TstepFile': 0,
+            },
         'g':
             {
                 'dimensions_g': '[0 1 -2 0 0 0 0]',
@@ -88,30 +118,27 @@ constant = \
 
 zero = \
     {
-        'p_rgh':
+        'p':
             {
                 'internal_value': '100000',
-                'boundary_types': ['in', 'out_with_value', 'symmetry', 'wall'],
-                'boundary_name': {'out_with_value': 'fixedValue', 'wall': 'fixedFluxPressure'},
-                'value': {'out_with_value': '$internalField'}
+                'boundary_types': ['empty', 'out'],
+            },
+        'T':
+            {
+                'internal_value': '100000',
+                'boundary_types': ['empty', 'out'],
             },
         'U':
             {
                 'internal_value': '(0 0 20)',
-                'boundary_types': ['in_with_value', 'out_with_value', 'symmetry', 'wall'],
-                'boundary_name': {'out_with_value': 'pressureInletOutletVelocity'},
-                'value': {'in_with_value': '$internalField', 'out_with_value': '$internalField'}
+                'boundary_types': ['empty', 'out'],
             },
         'alpha.water':
             {
 
                 'internal_value': '1',
-                'boundary_types': ['in_with_value', 'out_with_value', 'symmetry', 'wall'],
-                'boundary_name': {'wall': 'zeroGradient', 'out_with_value': 'inletOutlet'},
-                'value': {'in_with_value': '$internalField', 'out_with_value': '$internalField'}
+                'boundary_types': ['empty', 'out'],
             }
     }
 
 files_data = {'system': system, 'constant': constant, '0.orig': zero}
-
-

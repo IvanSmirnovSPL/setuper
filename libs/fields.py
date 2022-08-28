@@ -40,7 +40,7 @@ dimensions = {'p': '[1 -1 -2 0 0 0 0]',
 '''dictionary of boundary types, every boundary type is class Boundary()'''
 boundaries = {
     'wall': Boundary('noSlip', "(wall|WALL|Wall|originalPatch|Created).*"),
-    'empty': Boundary('empty', "(empty|bottomEmpty|topEmpty).*"),
+    'empty': Boundary('empty', "(empty|bottomEmpty|topEmpty|emptywalls).*"),
     'symmetry': Boundary('symmetry', "(symmetry).*"),
     'overset': Boundary('overset', "(overset).*"),
     'wedge': Boundary('wedge', "(wedge).*"),

@@ -1,11 +1,11 @@
 from libs.fields import Fields
 
 
-def fill_p_rgh(params, fn=None, fp=None):
-    p_rgh = Fields(field_name='p_rgh', internal_value=params['internal_value'],
-                   boundary_types=params['boundary_types'],
-                   boundary_name=params['boundary_name'],
-                   value=params['value'])
+def fill_p(params, fn=None, fp=None):
+    p_rgh = Fields(field_name='p', internal_value=params['internal_value'],
+                   boundary_types=params.get('boundary_types', None),
+                   boundary_name=params.get('boundary_name', None),
+                   value=params.get('value', None))
     p_rgh.make_boundary_conditions(filename=fn, fp=fp)
 
 

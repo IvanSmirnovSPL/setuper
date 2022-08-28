@@ -3,9 +3,9 @@ from libs.fields import Fields
 
 def fill_U(params, fn=None, fp=None):
     U = Fields(field_name='U', internal_value=params['internal_value'],
-               boundary_types=params['boundary_types'],
-               boundary_name=params['boundary_name'],
-               value=params['value'])
+               boundary_types=params.get('boundary_types', None),
+               boundary_name=params.get('boundary_name', None),
+               value=params.get('value', None))
     U.make_boundary_conditions(filename=fn, fp=fp)
 
 

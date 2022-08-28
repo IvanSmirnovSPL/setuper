@@ -85,37 +85,38 @@ def fillFromUserDict(userDict, files_data):
         elif key == 'adjustTimeStep':
             files_data['system']['controlDict']['adjustTimeStep'] = str(userDict[key])
 
-
 def programmSettings(parser):
-    parser.add_argument('-a', '--alpha', metavar='', type=str, default='1', help="alpha.water")
-    parser.add_argument('-U', '--U', metavar='', type=str, default='(0 0 20)', help="U")
-    parser.add_argument('-p', '--p', metavar='', type=str, default='100000', help="p")
-    parser.add_argument('-np', '--np', metavar='', type=str, default='1', help="Number of processes.")
-    parser.add_argument('-tol', '--tolerance', metavar='', type=str, default='1e-6', help="tolerance")
-    parser.add_argument('-relTol', '--relTol', metavar='', type=str, default='0.1', help="relTol")
-    parser.add_argument('-mP', '--momentumPredictor', metavar='', type=str, default='no', help="momentumPredictor")
-    parser.add_argument('-nOC', '--nOuterCorrectors', metavar='', type=str, default='1', help="nOuterCorrectors")
-    parser.add_argument('-nC', '--nCorrectors', metavar='', type=str, default='3', help="nCorrectors")
-    parser.add_argument('-nNOC', '--nNonOrthogonalCorrectors', metavar='', type=str, default='0',
-                        help="nNonOrthogonalCorrectors")
-    parser.add_argument('-rF', '--rF', metavar='', type=str, default='1', help="Relaxation factors, equations, 'U.*'")
-    parser.add_argument('-Gllc', '--Gllc', metavar='', type=str, default='0.5', help="Gauss linear limited corrector.")
-    parser.add_argument('-sF', '--startFrom', metavar='', type=str, default='latestTime', help="startFrom")
-    parser.add_argument('-sT', '--startTime', metavar='', type=str, default='0', help="startTime")
-    parser.add_argument('-sA', '--stopAt', metavar='', type=str, default='endTime', help="stopAt")
-    parser.add_argument('-eT', '--endTime', metavar='', type=str, default='0.05', help="endTime")
-    parser.add_argument('-dT', '--deltaT', metavar='', type=str, default='1e-8', help="deltaT")
-    parser.add_argument('-wCon', '--writeControl', metavar='', type=str, default='adjustable', help="writeControl")
-    parser.add_argument('-wI', '--writeInterval', metavar='', type=str, default='0.001', help="writeInterval")
-    parser.add_argument('-wCom', '--writeCompression', metavar='', type=str, default='off',
-                        help="writeCompression")
-    parser.add_argument('-pW', '--purgeWrite', metavar='', type=str, default='0', help="purgeWrite")
-    parser.add_argument('-wF', '--writeFormat', metavar='', type=str, default='ascii', help="writeFormat")
-    parser.add_argument('-wP', '--writePrecision', metavar='', type=str, default='6', help="writePrecision")
-    parser.add_argument('-tF', '--timeFormat', metavar='', type=str, default='general', help="timeFormat")
-    parser.add_argument('-rTM', '--runTimeModifiable', metavar='', type=str, default='yes', help="runTimeModifiable")
-    parser.add_argument('-aTS', '--adjustTimeStep', metavar='', type=str, default='on', help="adjustTimeStep")
-    parser.add_argument('-mC', '--maxCo', metavar='', type=str, default='5', help="maxCo")
+    pass
+# def programmSettings(parser):
+#     parser.add_argument('-a', '--alpha', metavar='', type=str, default='1', help="alpha.water")
+#     parser.add_argument('-U', '--U', metavar='', type=str, default='(0 0 20)', help="U")
+#     parser.add_argument('-p', '--p', metavar='', type=str, default='100000', help="p")
+#     parser.add_argument('-np', '--np', metavar='', type=str, default='1', help="Number of processes.")
+#     parser.add_argument('-tol', '--tolerance', metavar='', type=str, default='1e-6', help="tolerance")
+#     parser.add_argument('-relTol', '--relTol', metavar='', type=str, default='0.1', help="relTol")
+#     parser.add_argument('-mP', '--momentumPredictor', metavar='', type=str, default='no', help="momentumPredictor")
+#     parser.add_argument('-nOC', '--nOuterCorrectors', metavar='', type=str, default='1', help="nOuterCorrectors")
+#     parser.add_argument('-nC', '--nCorrectors', metavar='', type=str, default='3', help="nCorrectors")
+#     parser.add_argument('-nNOC', '--nNonOrthogonalCorrectors', metavar='', type=str, default='0',
+#                         help="nNonOrthogonalCorrectors")
+#     parser.add_argument('-rF', '--rF', metavar='', type=str, default='1', help="Relaxation factors, equations, 'U.*'")
+#     parser.add_argument('-Gllc', '--Gllc', metavar='', type=str, default='0.5', help="Gauss linear limited corrector.")
+#     parser.add_argument('-sF', '--startFrom', metavar='', type=str, default='latestTime', help="startFrom")
+#     parser.add_argument('-sT', '--startTime', metavar='', type=str, default='0', help="startTime")
+#     parser.add_argument('-sA', '--stopAt', metavar='', type=str, default='endTime', help="stopAt")
+#     parser.add_argument('-eT', '--endTime', metavar='', type=str, default='0.05', help="endTime")
+#     parser.add_argument('-dT', '--deltaT', metavar='', type=str, default='1e-8', help="deltaT")
+#     parser.add_argument('-wCon', '--writeControl', metavar='', type=str, default='adjustable', help="writeControl")
+#     parser.add_argument('-wI', '--writeInterval', metavar='', type=str, default='0.001', help="writeInterval")
+#     parser.add_argument('-wCom', '--writeCompression', metavar='', type=str, default='off',
+#                         help="writeCompression")
+#     parser.add_argument('-pW', '--purgeWrite', metavar='', type=str, default='0', help="purgeWrite")
+#     parser.add_argument('-wF', '--writeFormat', metavar='', type=str, default='ascii', help="writeFormat")
+#     parser.add_argument('-wP', '--writePrecision', metavar='', type=str, default='6', help="writePrecision")
+#     parser.add_argument('-tF', '--timeFormat', metavar='', type=str, default='general', help="timeFormat")
+#     parser.add_argument('-rTM', '--runTimeModifiable', metavar='', type=str, default='yes', help="runTimeModifiable")
+#     parser.add_argument('-aTS', '--adjustTimeStep', metavar='', type=str, default='on', help="adjustTimeStep")
+#     parser.add_argument('-mC', '--maxCo', metavar='', type=str, default='5', help="maxCo")
 
 
 def dictFromUserFlags(args):
@@ -154,6 +155,7 @@ def userFlags():
     parser = argparse.ArgumentParser(description="A program for generating files for cavitation case")
     parser.add_argument('-n', '--name_case', metavar='', type=str, default='new_case', help="A path to case directory.")
     parser.add_argument('-grid', '--grid_path', metavar='', type=str, default='../polyMesh', help="A path to grid.")
+    parser.add_argument('-table', '--table_path', metavar='', type=str, default='../table', help="A path to table.")
     parser.add_argument('-output', '--output_path', metavar='', type=str, default='output.txt', help="A path to log.")
     parser.add_argument('-clear', '--clear_case_path', metavar='', type=str, default=None,
                         help="A path to case directory, which is necessary to clear.")

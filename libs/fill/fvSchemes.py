@@ -32,10 +32,10 @@ def fill_fvSchemes(param):
            ' { \n' + \
            '     default         {}; \n'.format(param['interpolationSchemes']) + \
            '  \n' + \
-           '     reconstruct(U)      {}; \n'.format(param['reconstruct(U)']) + \
+           '     reconstruct(U)      {}; \n'.format(param['reconstruct_U']) + \
            '  \n' + \
-           '     reconstruct(p)      {}; \n'.format(param['reconstruct(p)']) + \
-           '     reconstruct(thermo:rho)    {}; \n'.format(param['reconstruct(thermo:rho)']) + \
+           '     reconstruct(p)      {}; \n'.format(param['reconstruct_p']) + \
+           '     reconstruct(thermo:rho)    {}; \n'.format(param['reconstruct_thermo']) + \
            ' } \n' + \
            '  \n' + \
            ' snGradSchemes \n' + \
