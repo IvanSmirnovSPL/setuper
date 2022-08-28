@@ -20,7 +20,7 @@ def fill_fvSchemes(param):
            ' { \n' + \
            '     default         {}; \n'.format(param['divSchemes']) + \
            '  \n' + \
-           '     div(tauMC)      Gauss {}; \n'.format(param['div(tauMC)']) + \
+           '     div(tauMC)      Gauss {}; \n'.format(param['div_tauMC']) + \
            ' } \n' + \
            '  \n' + \
            ' laplacianSchemes \n' + \

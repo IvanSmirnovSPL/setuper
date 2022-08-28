@@ -18,7 +18,7 @@ def fill_fvSolution(param):
            '  \n' + \
            '     h \n' + \
            '     { \n' + \
-           '         {}; \n'.format(param['$U;']) + \
+           '         {}; \n'.format(param['U']) + \
            '         tolerance       {}; \n'.format(param['tolerance']) + \
            '         relTol          {}; \n'.format(param['relTol']) + \
            '     } \n' + \

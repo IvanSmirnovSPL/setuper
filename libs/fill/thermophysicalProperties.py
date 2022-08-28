@@ -1,6 +1,6 @@
 def fill_thermophysicalProperties(param):
     return '  \n' + \
-           ' phases (vapour {}; \n'.format(param['phases']) + \
+           ' phases ( {} ); \n'.format(param['phases']) + \
            '  \n' + \
            ' Tmin {}; \n'.format(param['Tmin']) + \
            ' Tmax {}; \n'.format(param['Tmax']) + \

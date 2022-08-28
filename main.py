@@ -83,7 +83,7 @@ class PathsOfCase:
 
     def make_files_in_constant_dir(self):
         files = list(self.files_data['constant'].keys())  # g, transportProperties, turbulenceProperties
-        files.remove('transportProperties')
+        #files.remove('transportProperties')
         data = self.files_data['constant']
         functions = {'g': fill_g, 'thermophysicalProperties': fill_thermophysicalProperties,
                      'turbulenceProperties': fill_turbulenceProperties}
@@ -99,9 +99,9 @@ class PathsOfCase:
     def make_files_in_system_dir(self):
         files = list(self.files_data['system'].keys())  # controlDict,
         # decomposeParDict, fvSchemes, fvSolution
-        files.remove('blockMeshDict')
-        files.remove('snappyHexMeshDict')
-        files.remove('decomposeParDict')
+        #files.remove('blockMeshDict')
+        #files.remove('snappyHexMeshDict')
+        #files.remove('decomposeParDict')
         data = self.files_data['system']
         functions = {'controlDict': fill_controlDict,
                      'fvSchemes': fill_fvSchemes,

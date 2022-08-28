@@ -1,119 +1,82 @@
 system = \
     {
-        'blockMeshDict':
-            {
-
-            },
         'controlDict':
             {
-                'libs': 0,
-                'application': 0,
-                'startFrom': 0,
-                'startTime': 0,
-                'stopAt': 0,
-                'endTime': 0,
-                'deltaT': 0,
-                'writeControl': 0,
-                'writeInterval': 0,
-                'purgeWrite': 0,
-                'writeFormat': 0,
-                'writePrecision': 0,
-                'writeCompression': 0,
-                'timeFormat': 0,
-                'timePrecision': 0,
-                'runTimeModifiable': 0,
-                'adjustTimeStep': 0,
-                'maxCo': 0,
-                'maxDeltaT': 0,
-            },
-        'decomposeParDict':
-            {
-                'numberOfSubdomains': '1'
+                'libs': ')',
+                'application': 'rhoCentralFoam',
+                'startFrom': 'startTime',
+                'startTime': '0',
+                'stopAt': 'endTime',
+                'endTime': '2.2e-4',
+                'deltaT': '1e-5',
+                'writeControl': 'adjustable',
+                'writeInterval': '1e-5',
+                'purgeWrite': '0',
+                'writeFormat': 'ascii',
+                'writePrecision': '6',
+                'writeCompression': 'off',
+                'timeFormat': 'general',
+                'timePrecision': '6',
+                'runTimeModifiable': 'true',
+                'adjustTimeStep': 'yes',
+                'maxCo': '0.5',
+                'maxDeltaT': '0.01',
             },
         'fvSchemes':
             {
-                'fluxScheme': 0,
-                'ddtSchemes': 0,
-                'fluxIntegrator': 0,
-                'gradSchemes': 0,
-                'divSchemes': 0,
-                'div(tauMC)': 0,
-                'laplacianSchemes': 0,
-                'interpolationSchemes': 0,
-                'reconstruct_U': 0,
-                'reconstruct_p': 0,
-                'reconstruct_thermo': 0,
-                'snGradSchemes': 0,
+                'fluxScheme': 'AUSMPlusUp',
+                'ddtSchemes': 'Euler',
+                'fluxIntegrator': 'RK45',
+                'gradSchemes': 'linear',
+                'divSchemes': 'none',
+                'div_tauMC': 'WENOUpwindFit 3 0',
+                'laplacianSchemes': 'linear corrected',
+                'interpolationSchemes': 'linear',
+                'reconstruct_U': 'upwind',
+                'reconstruct_p': 'upwind',
+                'reconstruct_thermo': 'upwind',
+                'snGradSchemes': 'corrected',
             },
         'fvSolution':
             {
-                'solver': 0,
-                'U_solver': 0,
-                'smoother': 0,
-                'nSweeps': 0,
-                'tolerance': 0,
-                'relTol': 0,
-                '$U;': 0,
+                'solver': 'diagonal',
+                'U_solver': 'smoothSolver',
+                'smoother': 'GaussSeidel',
+                'nSweeps': '2',
+                'tolerance': '1e-09',
+                'relTol': '0.01',
+                'U': '$U',
             },
-
-        'snappyHexMeshDict':
-            {
-
-            }
-
     }
 
 constant = \
     {
-        'transportProperties':
-            {
-                'phaseChangeTwoPhaseMixture': 'SchnerrSauer',
-                'pSat': 2300,
-                'sigma': 0.07,
-                'nu_water': 9e-07,
-                'rho_water': 1000,
-                'transportModel': 'Newtonian',
-                'nu_vapour': 4.273e-04,
-                'rho_vapour': 0.02308,
-                'UInf_Kunz': 'U20.0',
-                'tInf_Kunz': 0.005,
-                'Cc_Kunz': 'C1000',
-                'Cv_Kunz': 'C1000',
-                'UInf_Merkle': 20.0,
-                'tInf_Merkle': 0.005,
-                'Cc_Merkle': 80,
-                'Cv_Merkle': 1e-03,
-                'n': 1.6e13,
-                'dNuc': 2.0e-06,
-                'Cc_SchnerrSauer': 1,
-                'Cv_SchnerrSauer': 1
-            },
         'turbulenceProperties':
             {
-                'simulationType': 'laminar'
+                'simulationType': 'laminar',
             },
         'thermophysicalProperties':
             {
-                'phases': 0,
-                'Tmin': 0,
-                'Tmax': 0,
-                'relTol': 0,
-                'maxIter': 0,
-                'logPSatFile': 0,
-                'TSatFile': 0,
-                'rho1SatFile': 0,
-                'rho2SatFile': 0,
-                'rho1SatDerFile': 0,
-                'rho2SatDerFile': 0,
-                'gvFile': 0,
-                'glFile': 0,
-                'TstepFile': 0,
+                'phases': 'vapour liquid',
+                'Tmin': '0.001',
+                'Tmax': '1000000',
+                'relTol': '1e-5',
+                'maxIter': '1000',
+                'logPSatFile': 'logPSat.dat',
+                'TSatFile': 'TSat.dat',
+                'rho1SatFile': 'rhovSat.dat',
+                'rho2SatFile': 'rholSat.dat',
+                'rho1SatDerFile': 'rhovSatDer.dat',
+                'rho2SatDerFile': 'rholSatDer.dat',
+                'gvFile': 'gv.dat',
+                'glFile': 'gl.dat',
+                'TstepFile': 'Tstep.dat',
             },
         'g':
             {
-                'dimensions_g': '[0 1 -2 0 0 0 0]',
-                'g': -9.81
-            }
+                'g': ' 0 9.81 0',
+                'dimensions_g' : '[0 1 -2 0 0 0 0]',
+            },
     }
 
 zero = \
@@ -125,7 +88,7 @@ zero = \
             },
         'T':
             {
-                'internal_value': '100000',
+                'internal_value': '666',
                 'boundary_types': ['empty', 'out'],
             },
         'U':
