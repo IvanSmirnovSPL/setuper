@@ -160,8 +160,8 @@ def main():
     fillFromUserDict(userDict, files_data)
     parser = userFlags()
     args = parser.parse_args()
-    #userDict = dictFromUserFlags(args)
-    #fillFromUserDict(userDict, files_data)
+    userDict = dictFromUserFlags(args)
+    fillFromUserDict(userDict, files_data)
 
     if args.clear_case_path is not None:
         try:
