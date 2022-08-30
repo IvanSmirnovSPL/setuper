@@ -197,8 +197,6 @@ def programmSettings(parser):
     parser.add_argument('-TstepFile', '--TstepFile', metavar='', type=str, default='Tstep.dat', help='')
     parser.add_argument('-g', '--g', metavar='', type=str, default=' 0 9.81 0', help='')
 
-    parser.add_argument('-mC', '--maxCo', metavar='', type=str, default='5', help="maxCo")
-
 
 def dictFromUserFlags(args):
     userDict = {}
