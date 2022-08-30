@@ -1,5 +1,6 @@
 import argparse
 
+
 # 'alpha'
 # 'U'
 # 'p'
@@ -30,30 +31,10 @@ import argparse
 
 def fillFromUserDict(userDict, files_data):
     for key in userDict.keys():
-        if key == 'alpha':
-            files_data['0.orig']['alpha.water']['internal_value'] = str(userDict[key])
-        elif key == 'U':
-            files_data['0.orig']['U']['internal_value'] = str(userDict[key])
-        elif key == 'p':
-            files_data['0.orig']['p_rgh']['internal_value'] = str(userDict[key])
-        elif key == 'np':
-            files_data['system']['decomposeParDict']['numberOfSubdomains'] = str(userDict[key])
-        elif key == 'tolerance':
-            files_data['system']['fvSolution']['tolerance'] = str(userDict[key])
-        elif key == 'relTol':
-            files_data['system']['fvSolution']['relTol'] = str(userDict[key])
-        elif key == 'momentumPredictor':
-            files_data['system']['fvSolution']['momentumPredictor'] = str(userDict[key])
-        elif key == 'nOuterCorrectors':
-            files_data['system']['fvSolution']['nOuterCorrectors'] = str(userDict[key])
-        elif key == 'nCorrectors':
-            files_data['system']['fvSolution']['nCorrectors'] = str(userDict[key])
-        elif key == 'nNonOrthogonalCorrectors':
-            files_data['system']['fvSolution']['nNonOrthogonalCorrectors'] = str(userDict[key])
-        elif key == 'U.*':
-            files_data['system']['fvSolution']['U.*'] = str(userDict[key])
-        elif key == 'Gllc':
-            files_data['system']['fvSchemes']['Gllc'] = str(userDict[key])
+        if key == 'libs':
+            files_data['system']['controlDict']['libs'] = str(userDict[key])
+        elif key == 'application':
+            files_data['system']['controlDict']['application'] = str(userDict[key])
         elif key == 'startFrom':
             files_data['system']['controlDict']['startFrom'] = str(userDict[key])
         elif key == 'startTime':
@@ -78,61 +59,151 @@ def fillFromUserDict(userDict, files_data):
             files_data['system']['controlDict']['writeCompression'] = str(userDict[key])
         elif key == 'timeFormat':
             files_data['system']['controlDict']['timeFormat'] = str(userDict[key])
+        elif key == 'timePrecision':
+            files_data['system']['controlDict']['timePrecision'] = str(userDict[key])
         elif key == 'runTimeModifiable':
             files_data['system']['controlDict']['runTimeModifiable'] = str(userDict[key])
-        elif key == 'maxCo':
-            files_data['system']['controlDict']['maxCo'] = str(userDict[key])
         elif key == 'adjustTimeStep':
             files_data['system']['controlDict']['adjustTimeStep'] = str(userDict[key])
+        elif key == 'maxCo':
+            files_data['system']['controlDict']['maxCo'] = str(userDict[key])
+        elif key == 'maxDeltaT':
+            files_data['system']['controlDict']['maxDeltaT'] = str(userDict[key])
+        elif key == 'fluxScheme':
+            files_data['system']['fvSchemes']['fluxScheme'] = str(userDict[key])
+        elif key == 'ddtSchemes':
+            files_data['system']['fvSchemes']['ddtSchemes'] = str(userDict[key])
+        elif key == 'fluxIntegrator':
+            files_data['system']['fvSchemes']['fluxIntegrator'] = str(userDict[key])
+        elif key == 'gradSchemes':
+            files_data['system']['fvSchemes']['gradSchemes'] = str(userDict[key])
+        elif key == 'divSchemes':
+            files_data['system']['fvSchemes']['divSchemes'] = str(userDict[key])
+        elif key == 'div_tauMC':
+            files_data['system']['fvSchemes']['div_tauMC'] = str(userDict[key])
+        elif key == 'laplacianSchemes':
+            files_data['system']['fvSchemes']['laplacianSchemes'] = str(userDict[key])
+        elif key == 'interpolationSchemes':
+            files_data['system']['fvSchemes']['interpolationSchemes'] = str(userDict[key])
+        elif key == 'reconstruct_U':
+            files_data['system']['fvSchemes']['reconstruct_U'] = str(userDict[key])
+        elif key == 'reconstruct_p':
+            files_data['system']['fvSchemes']['reconstruct_p'] = str(userDict[key])
+        elif key == 'reconstruct_thermo':
+            files_data['system']['fvSchemes']['reconstruct_thermo'] = str(userDict[key])
+        elif key == 'snGradSchemes':
+            files_data['system']['fvSchemes']['snGradSchemes'] = str(userDict[key])
+        elif key == 'solver':
+            files_data['system']['fvSolution']['solver'] = str(userDict[key])
+        elif key == 'U_solver':
+            files_data['system']['fvSolution']['U_solver'] = str(userDict[key])
+        elif key == 'smoother':
+            files_data['system']['fvSolution']['smoother'] = str(userDict[key])
+        elif key == 'nSweeps':
+            files_data['system']['fvSolution']['nSweeps'] = str(userDict[key])
+        elif key == 'tolerance':
+            files_data['system']['fvSolution']['tolerance'] = str(userDict[key])
+        elif key == 'relTol':
+            files_data['system']['fvSolution']['relTol'] = str(userDict[key])
+            files_data['constant']['thermophysicalProperties']['relTol'] = str(userDict[key])
+        elif key == 'U':
+            files_data['system']['fvSolution']['U'] = str(userDict[key])
+        elif key == 'simulationType':
+            files_data['constant']['turbulenceProperties']['simulationType'] = str(userDict[key])
+        elif key == 'phases':
+            files_data['constant']['thermophysicalProperties']['phases'] = str(userDict[key])
+        elif key == 'Tmin':
+            files_data['constant']['thermophysicalProperties']['Tmin'] = str(userDict[key])
+        elif key == 'Tmax':
+            files_data['constant']['thermophysicalProperties']['Tmax'] = str(userDict[key])
+        elif key == 'maxIter':
+            files_data['constant']['thermophysicalProperties']['maxIter'] = str(userDict[key])
+        elif key == 'logPSatFile':
+            files_data['constant']['thermophysicalProperties']['logPSatFile'] = str(userDict[key])
+        elif key == 'TSatFile':
+            files_data['constant']['thermophysicalProperties']['TSatFile'] = str(userDict[key])
+        elif key == 'rho1SatFile':
+            files_data['constant']['thermophysicalProperties']['rho1SatFile'] = str(userDict[key])
+        elif key == 'rho2SatFile':
+            files_data['constant']['thermophysicalProperties']['rho2SatFile'] = str(userDict[key])
+        elif key == 'rho1SatDerFile':
+            files_data['constant']['thermophysicalProperties']['rho1SatDerFile'] = str(userDict[key])
+        elif key == 'rho2SatDerFile':
+            files_data['constant']['thermophysicalProperties']['rho2SatDerFile'] = str(userDict[key])
+        elif key == 'gvFile':
+            files_data['constant']['thermophysicalProperties']['gvFile'] = str(userDict[key])
+        elif key == 'glFile':
+            files_data['constant']['thermophysicalProperties']['glFile'] = str(userDict[key])
+        elif key == 'TstepFile':
+            files_data['constant']['thermophysicalProperties']['TstepFile'] = str(userDict[key])
+        elif key == 'g':
+            files_data['constant']['g']['g'] = str(userDict[key])
+
 
 def programmSettings(parser):
-    pass
-# def programmSettings(parser):
-#     parser.add_argument('-a', '--alpha', metavar='', type=str, default='1', help="alpha.water")
-#     parser.add_argument('-U', '--U', metavar='', type=str, default='(0 0 20)', help="U")
-#     parser.add_argument('-p', '--p', metavar='', type=str, default='100000', help="p")
-#     parser.add_argument('-np', '--np', metavar='', type=str, default='1', help="Number of processes.")
-#     parser.add_argument('-tol', '--tolerance', metavar='', type=str, default='1e-6', help="tolerance")
-#     parser.add_argument('-relTol', '--relTol', metavar='', type=str, default='0.1', help="relTol")
-#     parser.add_argument('-mP', '--momentumPredictor', metavar='', type=str, default='no', help="momentumPredictor")
-#     parser.add_argument('-nOC', '--nOuterCorrectors', metavar='', type=str, default='1', help="nOuterCorrectors")
-#     parser.add_argument('-nC', '--nCorrectors', metavar='', type=str, default='3', help="nCorrectors")
-#     parser.add_argument('-nNOC', '--nNonOrthogonalCorrectors', metavar='', type=str, default='0',
-#                         help="nNonOrthogonalCorrectors")
-#     parser.add_argument('-rF', '--rF', metavar='', type=str, default='1', help="Relaxation factors, equations, 'U.*'")
-#     parser.add_argument('-Gllc', '--Gllc', metavar='', type=str, default='0.5', help="Gauss linear limited corrector.")
-#     parser.add_argument('-sF', '--startFrom', metavar='', type=str, default='latestTime', help="startFrom")
-#     parser.add_argument('-sT', '--startTime', metavar='', type=str, default='0', help="startTime")
-#     parser.add_argument('-sA', '--stopAt', metavar='', type=str, default='endTime', help="stopAt")
-#     parser.add_argument('-eT', '--endTime', metavar='', type=str, default='0.05', help="endTime")
-#     parser.add_argument('-dT', '--deltaT', metavar='', type=str, default='1e-8', help="deltaT")
-#     parser.add_argument('-wCon', '--writeControl', metavar='', type=str, default='adjustable', help="writeControl")
-#     parser.add_argument('-wI', '--writeInterval', metavar='', type=str, default='0.001', help="writeInterval")
-#     parser.add_argument('-wCom', '--writeCompression', metavar='', type=str, default='off',
-#                         help="writeCompression")
-#     parser.add_argument('-pW', '--purgeWrite', metavar='', type=str, default='0', help="purgeWrite")
-#     parser.add_argument('-wF', '--writeFormat', metavar='', type=str, default='ascii', help="writeFormat")
-#     parser.add_argument('-wP', '--writePrecision', metavar='', type=str, default='6', help="writePrecision")
-#     parser.add_argument('-tF', '--timeFormat', metavar='', type=str, default='general', help="timeFormat")
-#     parser.add_argument('-rTM', '--runTimeModifiable', metavar='', type=str, default='yes', help="runTimeModifiable")
-#     parser.add_argument('-aTS', '--adjustTimeStep', metavar='', type=str, default='on', help="adjustTimeStep")
-#     parser.add_argument('-mC', '--maxCo', metavar='', type=str, default='5', help="maxCo")
+    parser.add_argument('-libs', '--libs', metavar='', type=str, default=')', help='')
+    parser.add_argument('-application', '--application', metavar='', type=str, default='rhoCentralFoam', help='')
+    parser.add_argument('-startFrom', '--startFrom', metavar='', type=str, default='startTime', help='')
+    parser.add_argument('-startTime', '--startTime', metavar='', type=str, default='0', help='')
+    parser.add_argument('-stopAt', '--stopAt', metavar='', type=str, default='endTime', help='')
+    parser.add_argument('-endTime', '--endTime', metavar='', type=str, default='2.2e-4', help='')
+    parser.add_argument('-deltaT', '--deltaT', metavar='', type=str, default='1e-5', help='')
+    parser.add_argument('-writeControl', '--writeControl', metavar='', type=str, default='adjustable', help='')
+    parser.add_argument('-writeInterval', '--writeInterval', metavar='', type=str, default='1e-5', help='')
+    parser.add_argument('-purgeWrite', '--purgeWrite', metavar='', type=str, default='0', help='')
+    parser.add_argument('-writeFormat', '--writeFormat', metavar='', type=str, default='ascii', help='')
+    parser.add_argument('-writePrecision', '--writePrecision', metavar='', type=str, default='6', help='')
+    parser.add_argument('-writeCompression', '--writeCompression', metavar='', type=str, default='off', help='')
+    parser.add_argument('-timeFormat', '--timeFormat', metavar='', type=str, default='general', help='')
+    parser.add_argument('-timePrecision', '--timePrecision', metavar='', type=str, default='6', help='')
+    parser.add_argument('-runTimeModifiable', '--runTimeModifiable', metavar='', type=str, default='true', help='')
+    parser.add_argument('-adjustTimeStep', '--adjustTimeStep', metavar='', type=str, default='yes', help='')
+    parser.add_argument('-maxCo', '--maxCo', metavar='', type=str, default='0.5', help='')
+    parser.add_argument('-maxDeltaT', '--maxDeltaT', metavar='', type=str, default='0.01', help='')
+    parser.add_argument('-fluxScheme', '--fluxScheme', metavar='', type=str, default='AUSMPlusUp', help='')
+    parser.add_argument('-ddtSchemes', '--ddtSchemes', metavar='', type=str, default='Euler', help='')
+    parser.add_argument('-fluxIntegrator', '--fluxIntegrator', metavar='', type=str, default='RK45', help='')
+    parser.add_argument('-gradSchemes', '--gradSchemes', metavar='', type=str, default='linear', help='')
+    parser.add_argument('-divSchemes', '--divSchemes', metavar='', type=str, default='none', help='')
+    parser.add_argument('-div_tauMC', '--div_tauMC', metavar='', type=str, default='WENOUpwindFit 3 0', help='')
+    parser.add_argument('-laplacianSchemes', '--laplacianSchemes', metavar='', type=str, default='linear corrected',
+                        help='')
+    parser.add_argument('-interpolationSchemes', '--interpolationSchemes', metavar='', type=str, default='linear',
+                        help='')
+    parser.add_argument('-reconstruct_U', '--reconstruct_U', metavar='', type=str, default='upwind', help='')
+    parser.add_argument('-reconstruct_p', '--reconstruct_p', metavar='', type=str, default='upwind', help='')
+    parser.add_argument('-reconstruct_thermo', '--reconstruct_thermo', metavar='', type=str, default='upwind', help='')
+    parser.add_argument('-snGradSchemes', '--snGradSchemes', metavar='', type=str, default='corrected', help='')
+    parser.add_argument('-solver', '--solver', metavar='', type=str, default='diagonal', help='')
+    parser.add_argument('-U_solver', '--U_solver', metavar='', type=str, default='smoothSolver', help='')
+    parser.add_argument('-smoother', '--smoother', metavar='', type=str, default='GaussSeidel', help='')
+    parser.add_argument('-nSweeps', '--nSweeps', metavar='', type=str, default='2', help='')
+    parser.add_argument('-tolerance', '--tolerance', metavar='', type=str, default='1e-09', help='')
+    parser.add_argument('-U', '--U', metavar='', type=str, default='$U', help='')
+    parser.add_argument('-simulationType', '--simulationType', metavar='', type=str, default='laminar', help='')
+    parser.add_argument('-phases', '--phases', metavar='', type=str, default='vapour liquid', help='')
+    parser.add_argument('-Tmin', '--Tmin', metavar='', type=str, default='0.001', help='')
+    parser.add_argument('-Tmax', '--Tmax', metavar='', type=str, default='1000000', help='')
+    parser.add_argument('-relTol', '--relTol', metavar='', type=str, default='1e-5', help='')
+    parser.add_argument('-maxIter', '--maxIter', metavar='', type=str, default='1000', help='')
+    parser.add_argument('-logPSatFile', '--logPSatFile', metavar='', type=str, default='logPSat.dat', help='')
+    parser.add_argument('-TSatFile', '--TSatFile', metavar='', type=str, default='TSat.dat', help='')
+    parser.add_argument('-rho1SatFile', '--rho1SatFile', metavar='', type=str, default='rhovSat.dat', help='')
+    parser.add_argument('-rho2SatFile', '--rho2SatFile', metavar='', type=str, default='rholSat.dat', help='')
+    parser.add_argument('-rho1SatDerFile', '--rho1SatDerFile', metavar='', type=str, default='rhovSatDer.dat', help='')
+    parser.add_argument('-rho2SatDerFile', '--rho2SatDerFile', metavar='', type=str, default='rholSatDer.dat', help='')
+    parser.add_argument('-gvFile', '--gvFile', metavar='', type=str, default='gv.dat', help='')
+    parser.add_argument('-glFile', '--glFile', metavar='', type=str, default='gl.dat', help='')
+    parser.add_argument('-TstepFile', '--TstepFile', metavar='', type=str, default='Tstep.dat', help='')
+    parser.add_argument('-g', '--g', metavar='', type=str, default=' 0 9.81 0', help='')
+
+    parser.add_argument('-mC', '--maxCo', metavar='', type=str, default='5', help="maxCo")
 
 
 def dictFromUserFlags(args):
     userDict = {}
-    userDict['alpha'] = args.alpha
-    userDict['U'] = args.U
-    userDict['p'] = args.p
-    userDict['np'] = args.np
-    userDict['tolerance'] = args.tolerance
-    userDict['relTol'] = args.relTol
-    userDict['momentumPredictor'] = args.momentumPredictor
-    userDict['nOuterCorrectors'] = args.nOuterCorrectors
-    userDict['nCorrectors'] = args.nCorrectors
-    userDict['nNonOrthogonalCorrectors'] = args.nNonOrthogonalCorrectors
-    userDict['U.*'] = args.rF
-    userDict['Gllc'] = args.Gllc
+    userDict['libs'] = args.libs
+    userDict['application'] = args.application
     userDict['startFrom'] = args.startFrom
     userDict['startTime'] = args.startTime
     userDict['stopAt'] = args.stopAt
@@ -145,8 +216,44 @@ def dictFromUserFlags(args):
     userDict['writePrecision'] = args.writePrecision
     userDict['writeCompression'] = args.writeCompression
     userDict['timeFormat'] = args.timeFormat
+    userDict['timePrecision'] = args.timePrecision
     userDict['runTimeModifiable'] = args.runTimeModifiable
+    userDict['adjustTimeStep'] = args.adjustTimeStep
     userDict['maxCo'] = args.maxCo
+    userDict['maxDeltaT'] = args.maxDeltaT
+    userDict['fluxScheme'] = args.fluxScheme
+    userDict['ddtSchemes'] = args.ddtSchemes
+    userDict['fluxIntegrator'] = args.fluxIntegrator
+    userDict['gradSchemes'] = args.gradSchemes
+    userDict['divSchemes'] = args.divSchemes
+    userDict['div_tauMC'] = args.div_tauMC
+    userDict['laplacianSchemes'] = args.laplacianSchemes
+    userDict['interpolationSchemes'] = args.interpolationSchemes
+    userDict['reconstruct_U'] = args.reconstruct_U
+    userDict['reconstruct_p'] = args.reconstruct_p
+    userDict['reconstruct_thermo'] = args.reconstruct_thermo
+    userDict['snGradSchemes'] = args.snGradSchemes
+    userDict['solver'] = args.solver
+    userDict['U_solver'] = args.U_solver
+    userDict['smoother'] = args.smoother
+    userDict['nSweeps'] = args.nSweeps
+    userDict['tolerance'] = args.tolerance
+    userDict['relTol'] = args.relTol
+    userDict['U'] = args.U
+    userDict['simulationType'] = args.simulationType
+    userDict['phases'] = args.phases
+    userDict['Tmin'] = args.Tmin
+    userDict['Tmax'] = args.Tmax
+    userDict['maxIter'] = args.maxIter
+    userDict['logPSatFile'] = args.logPSatFile
+    userDict['TSatFile'] = args.TSatFile
+    userDict['rho1SatFile'] = args.rho1SatFile
+    userDict['rho2SatFile'] = args.rho2SatFile
+    userDict['rho1SatDerFile'] = args.rho1SatDerFile
+    userDict['rho2SatDerFile'] = args.rho2SatDerFile
+    userDict['gvFile'] = args.gvFile
+    userDict['glFile'] = args.glFile
+    userDict['TstepFile'] = args.TstepFile
 
     return userDict
 
