@@ -49,9 +49,19 @@ class PathsOfCase:
             self.output_path = output_path
 
     def start_case(self):
-        if not os.path.exists(Path(self.constant_dir_path, "polyMesh")):
-            list_files = subprocess.run(["ln", "-s", self.grid_path, Path(self.constant_dir_path, "polyMesh")])
-        list_files = subprocess.run(["cp", "-r", self.zero_dir_path, Path(self.case_directory, "0")])
+        # if not os.path.exists(Path(self.constant_dir_path, "polyMesh")):
+        #     list_files = subprocess.run(["ln", "-s", self.grid_path, Path(self.constant_dir_path, "polyMesh")])
+        # list_files = subprocess.run(["cp", "-r", self.zero_dir_path, Path(self.case_directory, "0")])
+
+        if os.path.exists(Path(self.constant_dir_path, "polyMesh")):
+            os.remove(Path(self.constant_dir_path, "polyMesh"))
+        os.symlink(self.grid_path, Path(self.constant_dir_path, "polyMesh"))
+
+        if os.path.exists(Path(self.case_directory, "0")):
+            os.remove(Path(self.case_directory, "0"))
+        shutil.copytree(self.zero_dir_path, Path(self.case_directory, "0"))
+
+
         (open(self.output_path, 'w')).close()  # clear output file
         np = int(self.files_data['system']['decomposeParDict']['numberOfSubdomains'])
         if np == 1:
