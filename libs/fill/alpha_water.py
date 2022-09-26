@@ -1,13 +1,40 @@
-def fill_alpha_water(fd, path, params):
-    file = open(path, 'a')
-    keys = list(params.keys())
-    for key in keys:
-        if type(params[key]) is dict:
-            fd.part_of_dict_is_dict(params, key, file)
-        elif type(params[key]) is tuple:
-            fd.part_of_dict_is_tuple(params, key, file)
-        else:
-            fd.part_of_dictionary(params, key, file)
-    file.write(fd.line())
-    file.write(fd.separator)
-    file.close()
+from libs.fields import Fields
+
+
+def fill_alpha_water(params, fn=None, fp=None):
+    alpha_water = Fields(field_name='alpha.water', internal_value=params['internal_value'],
+                         boundary_types=params['boundary_types'],
+                         boundary_name=params['boundary_name'],
+                         value=params['value'])
+    alpha_water.make_boundary_conditions(filename=fn, fp=fp, value_name={'out_with_value': 'inletValue'})
+
+
+'''return ' dimensions      {}; '.format(params['dimensions_alpha']) + '\n' + \
+           '  ' + '\n' + \
+           ' internalField   {}; '.format(params['internalField_alpha']) + '\n' + \
+           '  ' + '\n' + \
+           ' boundaryField ' + '\n' + \
+           ' { ' + '\n' + \
+           '     inlet ' + '\n' + \
+           '     { ' + '\n' + \
+           '         type            {}; '.format(params['type_inlet_alpha']) + '\n' + \
+           '         value           {}; '.format(params['value_inlet_alpha']) + '\n' + \
+           '     } ' + '\n' + \
+           '  ' + '\n' + \
+           '     outlet ' + '\n' + \
+           '     { ' + '\n' + \
+           '         type            {}; '.format(params['type_outlet_alpha']) + '\n' + \
+           '         inletValue      {}; '.format(params['inletValue_outlet_alpha']) + '\n' + \
+           '     } ' + '\n' + \
+           '  ' + '\n' + \
+           '     symmetry ' + '\n' + \
+           '     { ' + '\n' + \
+           '         type            {}; '.format(params['type_walls_alpha']) + '\n' + \
+           '     } ' + '\n' + \
+           '  ' + '\n' + \
+           '     wall ' + '\n' + \
+           '     { ' + '\n' + \
+           '         type            {}; '.format(params['type_bullet_alpha']) + '\n' + \
+           '     } ' + '\n' + \
+           ' } '
+'''
