@@ -1,0 +1,251 @@
+{
+  "operators": {
+    "9af60497-c093-4277-a95a-e6776cdb2a0a": {
+      "top": 200,
+      "left": 160,
+      "properties": {
+        "title": "<i class=\"material-icons w3-text-indigo\" style=\"font-size:24px\" >developer_board</i> CAV",
+        "description": "проверка",
+        "type": "exec",
+        "execModule": "cavitation",
+        "AddOptions": {
+          "value": "",
+          "discription": "Дополнительные опции запуска модуля"
+        },
+        "alpha" : {
+"value": 1, 
+"default":1, 
+"min":0, 
+"max":1, 
+"descripetion": "alpha.water", 
+"option":"-a", 
+"importance": 2 
+}, 
+"U" : {
+"value": "(0 0 20)", 
+"default":"(0 0 20)", 
+"descripetion": "U", 
+"option":"-U", 
+"importance": 2 
+}, 
+"p" : {
+"value": 100000, 
+"default":100000, 
+"min":0, 
+"max":1000000, 
+"descripetion": "p", 
+"option":"-p", 
+"importance": 2 
+}, 
+"np" : {
+"value": 1, 
+"default":1, 
+"min":1, 
+"max":30, 
+"descripetion": "Number of processes.", 
+"option":"-np", 
+"importance": 2 
+}, 
+"tolerance" : {
+"value": "1e-6", 
+"default":"1e-6", 
+"descripetion": "tolerance", 
+"option":"-tol", 
+"importance": 2 
+}, 
+"relTol" : {
+"value": "0.1", 
+"default":"0.1", 
+"descripetion": "relTol", 
+"option":"-relTol", 
+"importance": 2 
+}, 
+"momentumPredictor" : {
+"value": "no", 
+"default":"no", 
+"descripetion": "momentumPredictor", 
+"option":"-mP", 
+"importance": 2 
+}, 
+"nOuterCorrectors" : {
+"value": 1, 
+"default":1, 
+"min":0, 
+"max":2, 
+"descripetion": "nOuterCorrectors", 
+"option":"-nOC", 
+"importance": 2 
+}, 
+"nCorrectors" : {
+"value": 3, 
+"default":3, 
+"min":0, 
+"max":5, 
+"descripetion": "nCorrectors", 
+"option":"-nC", 
+"importance": 2 
+}, 
+"nNonOrthogonalCorrectors" : {
+"value": 0, 
+"default":0, 
+"min":0, 
+"max":5, 
+"descripetion": "nNonOrthogonalCorrectors", 
+"option":"-nNOC", 
+"importance": 2 
+}, 
+"rF" : {
+"value": 1, 
+"default":1, 
+"min":1, 
+"max":5, 
+"descripetion": "U.*", 
+"option":"-rF", 
+"importance": 2 
+}, 
+"Gllc" : {
+"value": "0.5", 
+"default":"0.5", 
+"descripetion": "Gauss linear limited corrector.", 
+"option":"-Gllc", 
+"importance": 2 
+}, 
+"startFrom" : {
+"value": "latestTime", 
+"default":"latestTime", 
+"descripetion": "startFrom", 
+"option":"-sF", 
+"importance": 2 
+}, 
+"startTime" : {
+"value": 0, 
+"default":0, 
+"min":0, 
+"max":0, 
+"descripetion": "startTime", 
+"option":"-sT", 
+"importance": 2 
+}, 
+"stopAt" : {
+"value": "endTime", 
+"default":"endTime", 
+"descripetion": "stopAt", 
+"option":"-sA", 
+"importance": 2 
+}, 
+"endTime" : {
+"value": "0.001", 
+"default":"0.001", 
+"descripetion": "endTime", 
+"option":"-eT", 
+"importance": 2 
+}, 
+"deltaT" : {
+"value": "1e-8", 
+"default":"1e-8", 
+"descripetion": "deltaT", 
+"option":"-dT", 
+"importance": 2 
+}, 
+"writeControl" : {
+"value": "adjustable", 
+"default":"adjustable", 
+"descripetion": "writeControl", 
+"option":"-wCon", 
+"importance": 2 
+}, 
+"writeInterval" : {
+"value": "0.001", 
+"default":"0.001", 
+"descripetion": "writeInterval", 
+"option":"-wI", 
+"importance": 2 
+}, 
+"writeCompression" : {
+"value": "off", 
+"default":"off", 
+"descripetion": "writeCompression", 
+"option":"-wCom", 
+"importance": 2 
+}, 
+"purgeWrite" : {
+"value": 0, 
+"default":0, 
+"min":0, 
+"max":5, 
+"descripetion": "purgeWrite", 
+"option":"-pW", 
+"importance": 2 
+}, 
+"writeFormat" : {
+"value": "ascii", 
+"default":"ascii", 
+"descripetion": "writeFormat", 
+"option":"-wF", 
+"importance": 2 
+}, 
+"writePrecision" : {
+"value": 6, 
+"default":6, 
+"min":6, 
+"max":10, 
+"descripetion": "writePrecision", 
+"option":"-wP", 
+"importance": 2 
+}, 
+"timeFormat" : {
+"value": "general", 
+"default":"general", 
+"descripetion": "timeFormat", 
+"option":"-tF", 
+"importance": 2 
+}, 
+"runTimeModifiable" : {
+"value": "yes", 
+"default":"yes", 
+"descripetion": "runTimeModifiable", 
+"option":"-rTM", 
+"importance": 2 
+}, 
+"adjustTimeStep" : {
+"value": "on", 
+"default":"on", 
+"descripetion": "adjustTimeStep", 
+"option":"-aTS", 
+"importance": 2 
+}, 
+"maxCo" : {
+"value": 5, 
+"default":5, 
+"min":0, 
+"max":10, 
+"descripetion": "maxC", 
+"option":"-mC", 
+"importance": 2 
+}, 
+        "inputs": {
+          "grid": {
+            "label": "grid",
+            "type": "file",
+            "fileType": "everyone",
+            "isDir": true,
+            "option": "-grid",
+            "required": true
+          }
+        },
+        "outputs": {
+          "rez": {
+            "label": "rez",
+            "type": "file",
+            "fileType": "MeshAndFilds",
+            "isDir": true,
+            "option": "-n",
+            "required": true
+          }
+        }
+      }
+    }
+  },
+  "links": {},
+  "operatorTypes": {}
+}
