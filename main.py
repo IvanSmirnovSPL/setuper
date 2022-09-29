@@ -56,10 +56,14 @@ class PathsOfCase:
     def add_paths(self):
         self.grid_path = self.find('polyMesh', Path.cwd())
         self.table_path = self.find('tables', Path.cwd())
-        if not os.path.exists(Path(self.constant_dir_path, "polyMesh")):
-            list_files = subprocess.run(["ln", "-s", self.grid_path, Path(self.constant_dir_path, "polyMesh")])
-        if not os.path.exists(Path(self.constant_dir_path, "tables")):
-            list_files = subprocess.run(["ln", "-s", self.table_path, Path(self.constant_dir_path, "tables")])
+
+        if os.path.exists(Path(self.constant_dir_path, "polyMesh")):
+            os.remove(Path(self.constant_dir_path, "polyMesh"))
+        os.symlink(self.grid_path, Path(self.constant_dir_path, "polyMesh"))
+
+        if os.path.exists(Path(self.constant_dir_path, "tables")):
+            os.remove(Path(self.constant_dir_path, "tables"))
+        os.symlink(self.table_path, Path(self.constant_dir_path, "tables"))
 
     def find(self, name, path):
         for root, dirs, files in os.walk(path):
