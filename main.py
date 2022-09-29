@@ -54,6 +54,8 @@ class PathsOfCase:
             self.output_path = output_path
 
     def add_paths(self):
+        self.grid_path = self.find('polyMesh', Path.cwd())
+        self.table_path = self.find('tables', Path.cwd())
         if not os.path.exists(Path(self.constant_dir_path, "polyMesh")):
             list_files = subprocess.run(["ln", "-s", self.grid_path, Path(self.constant_dir_path, "polyMesh")])
         if not os.path.exists(Path(self.constant_dir_path, "tables")):
