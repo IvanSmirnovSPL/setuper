@@ -86,6 +86,12 @@ class PathsOfCase:
                 case=self.case_directory,
                 output=self.output_path, np=np))
 
+            os.system('reconstructPar -case {case} >> {output}'.format(case=self.case_directory,
+                                                                       output=self.output_path))
+
+        os.system(f'foamToVTK -case {self.case_directory} >> {self.output_path}')
+        shutil.copytree(Path(self.case_directory, 'VTK'), Path(self.vtk_directory, 'VTK'))
+
     def make_directories(self):
         self.existence_check_and_make(self.case_directory)
         self.existence_check_and_make(self.constant_dir_path)
