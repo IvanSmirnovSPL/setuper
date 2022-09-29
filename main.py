@@ -72,7 +72,11 @@ class PathsOfCase:
                 return str(os.path.join(root, name))
 
     def start_case(self):
-        list_files = subprocess.run(["cp", "-r", self.zero_dir_path, Path(self.case_directory, "0")])
+
+        if os.path.exists(Path(self.case_directory, "0")):
+            os.remove(Path(self.case_directory, "0"))
+        shutil.copytree(self.zero_dir_path, Path(self.case_directory, "0"))
+
         (open(self.output_path, 'w')).close()  # clear output file
         np = int(self.files_data['system']['decomposeParDict']['numberOfSubdomains'])
         if np == 1:
