@@ -259,6 +259,7 @@ def dictFromUserFlags(args):
 def userFlags():
     parser = argparse.ArgumentParser(description="A program for generating files for cavitation case")
     parser.add_argument('-n', '--name_case', metavar='', type=str, default='new_case', help="A path to case directory.")
+    parser.add_argument('-vtk', '--vtk_path', metavar='', type=str, default='new_case_', help="A path to vtk directory.")
     parser.add_argument('-grid', '--grid_path', metavar='', type=str, default='../polyMesh', help="A path to grid.")
     parser.add_argument('-table', '--table_path', metavar='', type=str, default='../table', help="A path to table.")
     parser.add_argument('-output', '--output_path', metavar='', type=str, default='output.txt', help="A path to log.")

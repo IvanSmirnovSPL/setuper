@@ -30,11 +30,12 @@ files_data = params.files_data
 
 
 class PathsOfCase:
-    def __init__(self, name='new_case', files_data={}, output_path="", grid_path="", table_path=""):
+    def __init__(self, name='new_case', vtk='new_case_', files_data={}, output_path="", grid_path="", table_path=""):
         self.fd = FileDesign()
         self.files_data = files_data
         self.home_directory = Path.cwd()
         self.case_directory = Path(self.home_directory, name)
+        self.vtk_directory = Path(self.home_directory, vtk)
         self.constant_dir_path = Path(self.case_directory, 'constant')
         self.zero_dir_path = Path(self.case_directory, '0.orig')
         self.system_dir_path = Path(self.case_directory, 'system')
@@ -189,7 +190,7 @@ def main():
         os.system('reconstructPar -case {}'.format(args.reconstruct_case_path))
     else:
 
-        paths = PathsOfCase(name=args.name_case, files_data=files_data, grid_path=args.grid_path,
+        paths = PathsOfCase(name=args.name_case, vtk=args.vtk_path, files_data=files_data, grid_path=args.grid_path,
                             table_path=args.table_path,
                             output_path=args.output_path)
         paths.make_directories()
