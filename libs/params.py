@@ -2,7 +2,7 @@ system = \
     {
         'controlDict':
             {
-                'application': 'FACTFoam',
+                'application': 'FAKTFoam',
                 'startFrom': 'startTime',
                 'startTime': '0',
                 'stopAt': 'endTime',
