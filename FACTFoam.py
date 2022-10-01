@@ -205,7 +205,7 @@ def main():
         paths.make_files_in_constant_dir()
         paths.make_files_in_zero_dir()
         paths.add_paths()
-        paths.start_case()
+        #paths.start_case()
 
 
 if __name__ == '__main__':

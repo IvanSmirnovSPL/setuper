@@ -2,8 +2,7 @@ system = \
     {
         'controlDict':
             {
-                'libs': ')',
-                'application': 'rhoCentralFoam',
+                'application': 'FACTFoam',
                 'startFrom': 'startTime',
                 'startTime': '0',
                 'stopAt': 'endTime',
