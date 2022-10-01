@@ -1,7 +1,5 @@
 def fill_controlDict(param):
     return '  \n' + \
-           ' libs {}; \n'.format(param['libs']) + \
-           '  \n' + \
            ' application     {}; \n'.format(param['application']) + \
            '  \n' + \
            ' startFrom       {}; \n'.format(param['startFrom']) + \
