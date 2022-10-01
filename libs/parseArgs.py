@@ -261,7 +261,8 @@ def userFlags():
     parser.add_argument('-n', '--name_case', metavar='', type=str, default='new_case', help="A path to case directory.")
     parser.add_argument('-vtk', '--vtk_path', metavar='', type=str, default='new_case_', help="A path to vtk directory.")
     parser.add_argument('-grid', '--grid_path', metavar='', type=str, default='../polyMesh', help="A path to grid.")
-    parser.add_argument('-table', '--table_path', metavar='', type=str, default='../table', help="A path to table.")
+    parser.add_argument('-table', '--table_path', metavar='', type=str, default='/opt/kpvm/ismirnov/bin/tables', help="A path to table.")
+    parser.add_argument('-zero', '--zero_path', metavar='', type=str, default='../table', help="A path to zero.")
     parser.add_argument('-output', '--output_path', metavar='', type=str, default='output.txt', help="A path to log.")
     parser.add_argument('-clear', '--clear_case_path', metavar='', type=str, default=None,
                         help="A path to case directory, which is necessary to clear.")

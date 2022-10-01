@@ -20,6 +20,7 @@ from libs.fill.controlDict import fill_controlDict
 from libs.fill.decomposeParDict import fill_decomposeParDict
 from libs.fill.fvSchemes import fill_fvSchemes
 from libs.fill.fvSolution import fill_fvSolution
+from libs.fill.params_file import fill_params
 
 # support
 from libs.file_design import FileDesign
@@ -30,7 +31,7 @@ files_data = params.files_data
 
 
 class PathsOfCase:
-    def __init__(self, name='new_case', vtk='new_case_', files_data={}, output_path="", grid_path="", table_path=""):
+    def __init__(self, name='new_case', vtk='new_case_', zero=None, files_data={}, output_path="", grid_path="", table_path="/opt/kpvm/ismirnov/bin/tables"):
         self.fd = FileDesign()
         self.files_data = files_data
         self.home_directory = Path.cwd()
@@ -41,6 +42,10 @@ class PathsOfCase:
         self.system_dir_path = Path(self.case_directory, 'system')
         self.output_path = output_path
         self.reConstract = False
+        if zero is not None:
+            self.zero_path = self.find('0.orig', Path.cwd())
+        else:
+            self.zero_path = None
         if grid_path == "":
             self.grid_path = Path(self.constant_dir_path, "polyMesh")
         else:
@@ -48,7 +53,7 @@ class PathsOfCase:
         if table_path == "":
             self.table = Path(self.constant_dir_path, "tables")
         else:
-            self.table_path = table_path  # path to /polymesh
+            self.table_path = table_path  # path to /tables
         if output_path == "":
             self.output_path = Path(self.case_directory, "output.txt")
         else:
@@ -56,14 +61,14 @@ class PathsOfCase:
 
     def add_paths(self):
         self.grid_path = self.find('polyMesh', Path.cwd())
-        self.table_path = self.find('tables', Path.cwd())
+        #self.table_path = self.find('tables', Path.cwd())
 
         if os.path.exists(Path(self.constant_dir_path, "polyMesh")):
             os.remove(Path(self.constant_dir_path, "polyMesh"))
         os.symlink(self.grid_path, Path(self.constant_dir_path, "polyMesh"))
 
-        if os.path.exists(Path(self.constant_dir_path, "tables")):
-            os.remove(Path(self.constant_dir_path, "tables"))
+        #if os.path.exists(Path(self.constant_dir_path, "tables")):
+        #    os.remove(Path(self.constant_dir_path, "tables"))
         os.symlink(self.table_path, Path(self.constant_dir_path, "tables"))
 
     def find(self, name, path):
@@ -97,8 +102,8 @@ class PathsOfCase:
             os.system('reconstructPar -case {case} >> {output}'.format(case=self.case_directory,
                                                                        output=self.output_path))
 
-        os.system(f'foamToVTK -case {self.case_directory} >> {self.output_path}')
-        shutil.copytree(Path(self.case_directory, 'VTK'), Path(self.vtk_directory, 'VTK'))
+        #os.system(f'foamToVTK -case {self.case_directory} >> {self.output_path}')
+        #shutil.copytree(Path(self.case_directory, 'VTK'), Path(self.vtk_directory, 'VTK'))
 
     def make_directories(self):
         self.existence_check_and_make(self.case_directory)
@@ -139,22 +144,32 @@ class PathsOfCase:
             param = data[file_]
             out_stream.write(functions[file_](param))
             out_stream.close()
+        path = Path(self.system_dir_path, 'params')
+        f = open(path, 'w')
+        f.write(fill_params(None))
+        f.close()
 
     def make_files_in_zero_dir(self):
-        files = list(self.files_data['0.orig'].keys())  # p_rgh, U, alpha.water
-        data = self.files_data['0.orig']
-        functions = {'p': fill_p, 'U': fill_U, 'alpha.water': fill_alpha_water, 'T': fill_T}
-        field = ['volScalarField', 'volVectorField']
-        classes = {'p': field[0], 'U': field[1], 'alpha.water': field[0], 'T': field[0]}
-
-        for file_ in files:
-            path = Path(self.zero_dir_path, file_)
-            self.fd.init_file(path)
-            self.fd.foamfile(path=path, class_=classes[file_], object_=file_)
-            out_stream = open(path, 'a')
-            params = data[file_]
-            functions[file_](params, fp=out_stream)
-            out_stream.close()
+        #if self.zero_path is not None and True:
+        self.zero_path = self.find('0', Path.cwd())
+        for foo, tmp, files in os.walk(self.zero_path):
+            for file in files:
+                os.system(f'cp {self.zero_path}/{file} {self.zero_dir_path}/{file}')
+        # else:
+        #     files = list(self.files_data['0.orig'].keys())  # p_rgh, U, alpha.water
+        #     data = self.files_data['0.orig']
+        #     functions = {'p': fill_p, 'U': fill_U, 'alpha.water': fill_alpha_water, 'T': fill_T}
+        #     field = ['volScalarField', 'volVectorField']
+        #     classes = {'p': field[0], 'U': field[1], 'alpha.water': field[0], 'T': field[0]}
+        #
+        #     for file_ in files:
+        #         path = Path(self.zero_dir_path, file_)
+        #         self.fd.init_file(path)
+        #         self.fd.foamfile(path=path, class_=classes[file_], object_=file_)
+        #         out_stream = open(path, 'a')
+        #         params = data[file_]
+        #         functions[file_](params, fp=out_stream)
+        #         out_stream.close()
 
     @staticmethod
     def existence_check_and_make(path):
@@ -196,8 +211,10 @@ def main():
     elif args.reconstruct_case_path is not None:
         os.system('reconstructPar -case {}'.format(args.reconstruct_case_path))
     else:
-
-        paths = PathsOfCase(name=args.name_case, vtk=args.vtk_path, files_data=files_data, grid_path=args.grid_path,
+        zero_dir = None
+        if args.zero_path is not None:
+            zero_dir = args.zero_path
+        paths = PathsOfCase(name=args.name_case, vtk=args.vtk_path, zero=zero_dir, files_data=files_data, grid_path=args.grid_path,
                             table_path=args.table_path,
                             output_path=args.output_path)
         paths.make_directories()
@@ -205,7 +222,7 @@ def main():
         paths.make_files_in_constant_dir()
         paths.make_files_in_zero_dir()
         paths.add_paths()
-        #paths.start_case()
+        paths.start_case()
 
 
 if __name__ == '__main__':

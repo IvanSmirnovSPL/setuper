@@ -83,23 +83,23 @@ zero = \
         'p':
             {
                 'internal_value': '100000',
-                'boundary_types': ['empty', 'out'],
+                'boundary_types': ['empty', 'outlet', 'inlet'],
             },
         'T':
             {
                 'internal_value': '666',
-                'boundary_types': ['empty', 'out'],
+                'boundary_types': ['empty', 'outlet', 'inlet'],
             },
         'U':
             {
                 'internal_value': '(0 0 20)',
-                'boundary_types': ['empty', 'out'],
+                'boundary_types': ['empty', 'outlet', 'inlet'],
             },
         'alpha.water':
             {
 
                 'internal_value': '1',
-                'boundary_types': ['empty', 'out'],
+                'boundary_types': ['empty', 'outlet', 'inlet'],
             }
     }
 
