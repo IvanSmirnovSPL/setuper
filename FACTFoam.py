@@ -52,7 +52,7 @@ class PathsOfCase:
         if output_path == "":
             self.output_path = Path(self.case_directory, "output.txt")
         else:
-            self.output_path = output_path
+            self.output_path = Path(self.case_directory, "output.txt")
 
     def add_paths(self):
         self.grid_path = self.find('polyMesh', Path.cwd())
@@ -78,7 +78,8 @@ class PathsOfCase:
         shutil.copytree(self.zero_dir_path, Path(self.case_directory, "0"))
 
         (open(self.output_path, 'w')).close()  # clear output file
-        np = int(self.files_data['system']['decomposeParDict']['numberOfSubdomains'])
+        #np = int(self.files_data['system']['decomposeParDict']['numberOfSubdomains'])
+        np = 1
         os.system('source /opt/kpvm/foam2112rc')
         os.system('source /opt/kpvm/ifrolov/bin/bubblerc')
         if np == 1:
@@ -204,7 +205,7 @@ def main():
         paths.make_files_in_constant_dir()
         paths.make_files_in_zero_dir()
         paths.add_paths()
-        # paths.start_case()
+        paths.start_case()
 
 
 if __name__ == '__main__':
