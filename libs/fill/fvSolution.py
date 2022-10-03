@@ -2,7 +2,7 @@ def fill_fvSolution(param):
     return '  \n' + \
            ' solvers \n' + \
            ' { \n' + \
-           '      "(thermo:rho|rhoU|rhoE)" \n' + \
+           '      "(thermo:rho|rhoU|rhoE|E)" \n' + \
            '     { \n' + \
            '         solver          {}; \n'.format(param['solver']) + \
            '     } \n' + \

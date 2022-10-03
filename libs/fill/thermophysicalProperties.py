@@ -1,10 +1,11 @@
 def fill_thermophysicalProperties(param):
     return '  \n' + \
            ' phases ( {} ); \n'.format(param['phases']) + \
-           '  \n' + \
-           'properties_rhoe (vapor_mass_fraction temperature pressure speed_of_sound viscosity thermal_conductivity); \n' + \
-           'properties_TP (vapor_mass_fraction density internal_energy speed_of_sound viscosity thermal_conductivity); \n' + \
            ' \n' + \
+            'properties_rhoe (vapor_mass_fraction temperature pressure speed_of_sound viscosity thermal_conductivity); \n' + \
+            'properties_TP (vapor_mass_fraction density internal_energy speed_of_sound viscosity thermal_conductivity); \n' + \
+            'properties_TRho (vapor_volume_fraction); \n' + \
+            ' \n' + \
             'rhoe_settings \n' + \
             '{ \n' + \
             '    vapor_mass_fraction \n' + \
@@ -76,5 +77,14 @@ def fill_thermophysicalProperties(param):
             '        name    kappa; \n' + \
             '        type    PropertyTPTable; \n' + \
             '        mixture_calculation_method volume_average; \n' + \
+            '    } \n' + \
+            '} \n' + \
+            ' \n' + \
+            'TRho_settings \n' + \
+            '{ \n' + \
+            '    vapor_volume_fraction \n' + \
+            '    { \n' + \
+            '        name    alphav; \n' + \
+            '        type    AlphavTRho; \n' + \
             '    } \n' + \
             '} \n'

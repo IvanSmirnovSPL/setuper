@@ -20,7 +20,8 @@ def fill_fvSchemes(param):
            ' { \n' + \
            '     default         {}; \n'.format(param['divSchemes']) + \
            '  \n' + \
-           '     div(tauMC)      Gauss {}; \n'.format(param['div_tauMC']) + \
+           '     div(tauMC)      Gauss linear; \n'+ \
+           '      div((S&U))      Gauss linear; \n' + \
            ' } \n' + \
            '  \n' + \
            ' laplacianSchemes \n' + \
@@ -30,12 +31,12 @@ def fill_fvSchemes(param):
            '  \n' + \
            ' interpolationSchemes \n' + \
            ' { \n' + \
-           '     default         {}; \n'.format(param['interpolationSchemes']) + \
-           '  \n' + \
-           '     reconstruct(U)      {}; \n'.format(param['reconstruct_U']) + \
-           '  \n' + \
-           '     reconstruct(p)      {}; \n'.format(param['reconstruct_p']) + \
-           '     reconstruct(thermo:rho)    {}; \n'.format(param['reconstruct_thermo']) + \
+           '     default         none; \n' + \
+           '     flux(U)         linear; \n' + \
+           '     reconstruct(U)      upwind; \n' + \
+           '     interpolate(thermo:c) upwind phi; \n' + \
+           '     reconstruct(thermo:rho)    upwind; \n' + \
+           '     reconstruct(thermo:he)    upwind; \n' + \
            ' } \n' + \
            '  \n' + \
            ' snGradSchemes \n' + \

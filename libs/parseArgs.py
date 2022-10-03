@@ -143,62 +143,50 @@ def fillFromUserDict(userDict, files_data):
 
 
 def programmSettings(parser):
-    parser.add_argument('-libs', '--libs', metavar='', type=str, default='libWENOEXT.so', help='')
-    parser.add_argument('-np', '--np', metavar='', type=str, default='1', help="Number of processes.")
-    parser.add_argument('-application', '--application', metavar='', type=str, default='FAKTFoam', help='')
-    parser.add_argument('-startFrom', '--startFrom', metavar='', type=str, default='startTime', help='')
-    parser.add_argument('-startTime', '--startTime', metavar='', type=str, default='0', help='')
-    parser.add_argument('-stopAt', '--stopAt', metavar='', type=str, default='endTime', help='')
-    parser.add_argument('-endTime', '--endTime', metavar='', type=str, default='1e-3', help='')
-    parser.add_argument('-deltaT', '--deltaT', metavar='', type=str, default='1e-07', help='')
-    parser.add_argument('-writeControl', '--writeControl', metavar='', type=str, default='adjustable', help='')
-    parser.add_argument('-writeInterval', '--writeInterval', metavar='', type=str, default='1e-5', help='')
-    parser.add_argument('-purgeWrite', '--purgeWrite', metavar='', type=str, default='0', help='')
-    parser.add_argument('-writeFormat', '--writeFormat', metavar='', type=str, default='ascii', help='')
-    parser.add_argument('-writePrecision', '--writePrecision', metavar='', type=str, default='6', help='')
-    parser.add_argument('-writeCompression', '--writeCompression', metavar='', type=str, default='off', help='')
-    parser.add_argument('-timeFormat', '--timeFormat', metavar='', type=str, default='general', help='')
-    parser.add_argument('-timePrecision', '--timePrecision', metavar='', type=str, default='6', help='')
-    parser.add_argument('-runTimeModifiable', '--runTimeModifiable', metavar='', type=str, default='true', help='')
-    parser.add_argument('-adjustTimeStep', '--adjustTimeStep', metavar='', type=str, default='yes', help='')
-    parser.add_argument('-maxCo', '--maxCo', metavar='', type=str, default='0.1', help='')
-    parser.add_argument('-maxDeltaT', '--maxDeltaT', metavar='', type=str, default='1', help='')
-    parser.add_argument('-fluxScheme', '--fluxScheme', metavar='', type=str, default='AUSMPlusUp', help='')
-    parser.add_argument('-ddtSchemes', '--ddtSchemes', metavar='', type=str, default='Euler', help='')
-    parser.add_argument('-fluxIntegrator', '--fluxIntegrator', metavar='', type=str, default='RK45', help='')
-    parser.add_argument('-gradSchemes', '--gradSchemes', metavar='', type=str, default='linear', help='')
-    parser.add_argument('-divSchemes', '--divSchemes', metavar='', type=str, default='none', help='')
-    parser.add_argument('-div_tauMC', '--div_tauMC', metavar='', type=str, default='WENOUpwindFit 3 0', help='')
-    parser.add_argument('-laplacianSchemes', '--laplacianSchemes', metavar='', type=str, default='linear corrected',
+    parser.add_argument('-libs_', '--libs', metavar='', type=str, default='libWENOEXT.so', help='')
+    parser.add_argument('-np_', '--np', metavar='', type=str, default='1', help="Number of processes.")
+    parser.add_argument('-application_', '--application', metavar='', type=str, default='FAKTFoam', help='')
+    parser.add_argument('-startFrom_', '--startFrom', metavar='', type=str, default='startTime', help='')
+    parser.add_argument('-startTime_', '--startTime', metavar='', type=str, default='0', help='')
+    parser.add_argument('-stopAt_', '--stopAt', metavar='', type=str, default='endTime', help='')
+    parser.add_argument('-endTime_', '--endTime', metavar='', type=str, default='1e-3', help='')
+    parser.add_argument('-deltaT_', '--deltaT', metavar='', type=str, default='1e-07', help='')
+    parser.add_argument('-writeControl_', '--writeControl', metavar='', type=str, default='adjustable', help='')
+    parser.add_argument('-writeInterval_', '--writeInterval', metavar='', type=str, default='1e-5', help='')
+    parser.add_argument('-purgeWrite_', '--purgeWrite', metavar='', type=str, default='0', help='')
+    parser.add_argument('-writeFormat_', '--writeFormat', metavar='', type=str, default='ascii', help='')
+    parser.add_argument('-writePrecision_', '--writePrecision', metavar='', type=str, default='6', help='')
+    parser.add_argument('-writeCompression_', '--writeCompression', metavar='', type=str, default='off', help='')
+    parser.add_argument('-timeFormat_', '--timeFormat', metavar='', type=str, default='general', help='')
+    parser.add_argument('-timePrecision_', '--timePrecision', metavar='', type=str, default='6', help='')
+    parser.add_argument('-runTimeModifiable_', '--runTimeModifiable', metavar='', type=str, default='true', help='')
+    parser.add_argument('-adjustTimeStep_', '--adjustTimeStep', metavar='', type=str, default='yes', help='')
+    parser.add_argument('-maxCo_', '--maxCo', metavar='', type=str, default='0.1', help='')
+    parser.add_argument('-maxDeltaT_', '--maxDeltaT', metavar='', type=str, default='1', help='')
+    parser.add_argument('-fluxScheme_', '--fluxScheme', metavar='', type=str, default='AUSMPlusUp', help='')
+    parser.add_argument('-ddtSchemes_', '--ddtSchemes', metavar='', type=str, default='Euler', help='')
+    parser.add_argument('-fluxIntegrator_', '--fluxIntegrator', metavar='', type=str, default='RK45', help='')
+    parser.add_argument('-gradSchemes_', '--gradSchemes', metavar='', type=str, default='linear', help='')
+    parser.add_argument('-divSchemes_', '--divSchemes', metavar='', type=str, default='none', help='')
+    parser.add_argument('-div_tauMC_', '--div_tauMC', metavar='', type=str, default='WENOUpwindFit 3 0', help='')
+    parser.add_argument('-laplacianSchemes_', '--laplacianSchemes', metavar='', type=str, default='linear corrected',
                         help='')
-    parser.add_argument('-interpolationSchemes', '--interpolationSchemes', metavar='', type=str, default='linear',
+    parser.add_argument('-interpolationSchemes_', '--interpolationSchemes', metavar='', type=str, default='linear',
                         help='')
-    parser.add_argument('-reconstruct_U', '--reconstruct_U', metavar='', type=str, default='upwind', help='')
-    parser.add_argument('-reconstruct_p', '--reconstruct_p', metavar='', type=str, default='upwind', help='')
-    parser.add_argument('-reconstruct_thermo', '--reconstruct_thermo', metavar='', type=str, default='upwind', help='')
-    parser.add_argument('-snGradSchemes', '--snGradSchemes', metavar='', type=str, default='corrected', help='')
-    parser.add_argument('-solver', '--solver', metavar='', type=str, default='diagonal', help='')
-    parser.add_argument('-U_solver', '--U_solver', metavar='', type=str, default='smoothSolver', help='')
-    parser.add_argument('-smoother', '--smoother', metavar='', type=str, default='GaussSeidel', help='')
-    parser.add_argument('-nSweeps', '--nSweeps', metavar='', type=str, default='2', help='')
-    parser.add_argument('-tolerance', '--tolerance', metavar='', type=str, default='1e-09', help='')
-    parser.add_argument('-U', '--U', metavar='', type=str, default='$U', help='')
-    parser.add_argument('-simulationType', '--simulationType', metavar='', type=str, default='laminar', help='')
-    parser.add_argument('-phases', '--phases', metavar='', type=str, default='vapour liquid', help='')
-    parser.add_argument('-Tmin', '--Tmin', metavar='', type=str, default='0.001', help='')
-    parser.add_argument('-Tmax', '--Tmax', metavar='', type=str, default='1000000', help='')
-    parser.add_argument('-relTol', '--relTol', metavar='', type=str, default='1e-5', help='')
-    parser.add_argument('-maxIter', '--maxIter', metavar='', type=str, default='1000', help='')
-    parser.add_argument('-logPSatFile', '--logPSatFile', metavar='', type=str, default='logPSat.dat', help='')
-    parser.add_argument('-TSatFile', '--TSatFile', metavar='', type=str, default='TSat.dat', help='')
-    parser.add_argument('-rho1SatFile', '--rho1SatFile', metavar='', type=str, default='rhovSat.dat', help='')
-    parser.add_argument('-rho2SatFile', '--rho2SatFile', metavar='', type=str, default='rholSat.dat', help='')
-    parser.add_argument('-rho1SatDerFile', '--rho1SatDerFile', metavar='', type=str, default='rhovSatDer.dat', help='')
-    parser.add_argument('-rho2SatDerFile', '--rho2SatDerFile', metavar='', type=str, default='rholSatDer.dat', help='')
-    parser.add_argument('-gvFile', '--gvFile', metavar='', type=str, default='gv.dat', help='')
-    parser.add_argument('-glFile', '--glFile', metavar='', type=str, default='gl.dat', help='')
-    parser.add_argument('-TstepFile', '--TstepFile', metavar='', type=str, default='Tstep.dat', help='')
-    parser.add_argument('-g', '--g', metavar='', type=str, default=' 0 9.81 0', help='')
+    parser.add_argument('-reconstruct_U_', '--reconstruct_U', metavar='', type=str, default='upwind', help='')
+    parser.add_argument('-reconstruct_p_', '--reconstruct_p', metavar='', type=str, default='upwind', help='')
+    parser.add_argument('-reconstruct_thermo_', '--reconstruct_thermo', metavar='', type=str, default='upwind', help='')
+    parser.add_argument('-snGradSchemes_', '--snGradSchemes', metavar='', type=str, default='corrected', help='')
+    parser.add_argument('-solver_', '--solver', metavar='', type=str, default='diagonal', help='')
+    parser.add_argument('-U_solver_', '--U_solver', metavar='', type=str, default='smoothSolver', help='')
+    parser.add_argument('-smoother_', '--smoother', metavar='', type=str, default='GaussSeidel', help='')
+    parser.add_argument('-nSweeps_', '--nSweeps', metavar='', type=str, default='2', help='')
+    parser.add_argument('-tolerance_', '--tolerance', metavar='', type=str, default='1e-09', help='')
+    parser.add_argument('-relTol_', '--relTol', metavar='', type=str, default='1e-5', help='')
+    parser.add_argument('-U_', '--U', metavar='', type=str, default='$U', help='')
+    parser.add_argument('-simulationType_', '--simulationType', metavar='', type=str, default='laminar', help='')
+    parser.add_argument('-phases_', '--phases', metavar='', type=str, default='vapour liquid', help='')
+    parser.add_argument('-g_', '--g', metavar='', type=str, default=' 0 9.81 0', help='')
 
 
 def dictFromUserFlags(args):
@@ -244,18 +232,6 @@ def dictFromUserFlags(args):
     userDict['U'] = args.U
     userDict['simulationType'] = args.simulationType
     userDict['phases'] = args.phases
-    userDict['Tmin'] = args.Tmin
-    userDict['Tmax'] = args.Tmax
-    userDict['maxIter'] = args.maxIter
-    userDict['logPSatFile'] = args.logPSatFile
-    userDict['TSatFile'] = args.TSatFile
-    userDict['rho1SatFile'] = args.rho1SatFile
-    userDict['rho2SatFile'] = args.rho2SatFile
-    userDict['rho1SatDerFile'] = args.rho1SatDerFile
-    userDict['rho2SatDerFile'] = args.rho2SatDerFile
-    userDict['gvFile'] = args.gvFile
-    userDict['glFile'] = args.glFile
-    userDict['TstepFile'] = args.TstepFile
 
     return userDict
 

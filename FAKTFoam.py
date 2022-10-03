@@ -69,6 +69,7 @@ class PathsOfCase:
 
         #if os.path.exists(Path(self.constant_dir_path, "tables")):
         #    os.remove(Path(self.constant_dir_path, "tables"))
+        #shutil.copytree(self.table_path, Path(self.constant_dir_path, "tables"))
         os.symlink(self.table_path, Path(self.constant_dir_path, "tables"))
 
     def find(self, name, path):
@@ -92,14 +93,14 @@ class PathsOfCase:
         os.system('source /opt/kpvm/ifrolov/bin/bubblerc')
         os.system(f'echo $LD_LIBRARY_PATH >> {self.output_path}')
         if np == 1:
-            os.system('FAKTFoam -case {case} >> {output}'.format(case=self.case_directory,
+            os.system('cd {case} && FAKTFoam >> {output}'.format(case=self.case_directory,
                                                                              output=self.output_path))
         else:
             self.reConstract = True
             os.system('decomposePar -case {case} >> {output}'.format(
                 case=self.case_directory,
                 output=self.output_path, np=np))
-            os.system('mpirun -np {np} FAKTFoam -case {case} -parallel  >> {output}'.format(
+            os.system('cd {case} && mpirun -np {np} FAKTFoam -parallel  >> {output}'.format(
                 case=self.case_directory,
                 output=self.output_path, np=np))
 
