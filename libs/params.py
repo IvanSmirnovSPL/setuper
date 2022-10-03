@@ -2,12 +2,13 @@ system = \
     {
         'controlDict':
             {
+                'libs': "libWENOEXT.so",
                 'application': 'FAKTFoam',
                 'startFrom': 'startTime',
                 'startTime': '0',
                 'stopAt': 'endTime',
-                'endTime': '2.2e-4',
-                'deltaT': '1e-5',
+                'endTime': '1e-3',
+                'deltaT': '1e-07',
                 'writeControl': 'adjustable',
                 'writeInterval': '1e-5',
                 'purgeWrite': '0',
@@ -18,8 +19,8 @@ system = \
                 'timePrecision': '6',
                 'runTimeModifiable': 'true',
                 'adjustTimeStep': 'yes',
-                'maxCo': '0.5',
-                'maxDeltaT': '0.01',
+                'maxCo': '0.1',
+                'maxDeltaT': '1',
             },
         'decomposeParDict':
             {
@@ -46,7 +47,7 @@ system = \
                 'U_solver': 'smoothSolver',
                 'smoother': 'GaussSeidel',
                 'nSweeps': '2',
-                'tolerance': '1e-09',
+                'tolerance': '1e-9',
                 'relTol': '0.01',
                 'U': '$U',
             },

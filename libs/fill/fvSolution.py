@@ -19,8 +19,8 @@ def fill_fvSolution(param):
            '     h \n' + \
            '     { \n' + \
            '         {}; \n'.format(param['U']) + \
-           '         tolerance       {}; \n'.format(param['tolerance']) + \
-           '         relTol          {}; \n'.format(param['relTol']) + \
+           '         tolerance       1e-10; \n' + \
+           '         relTol          0; \n' + \
            '     } \n' + \
            ' } \n' + \
            '  \n' + \

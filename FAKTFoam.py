@@ -91,23 +91,23 @@ class PathsOfCase:
 
         os.system('source /opt/kpvm/ifrolov/bin/bubblerc')
         os.system(f'echo $LD_LIBRARY_PATH >> {self.output_path}')
-        # if np == 1:
-        #     os.system('FAKTFoam -case {case} >> {output}'.format(case=self.case_directory,
-        #                                                                      output=self.output_path))
-        # else:
-        #     self.reConstract = True
-        #     os.system('decomposePar -case {case} >> {output}'.format(
-        #         case=self.case_directory,
-        #         output=self.output_path, np=np))
-        #     os.system('mpirun -np {np} FAKTFoam -case {case} -parallel  >> {output}'.format(
-        #         case=self.case_directory,
-        #         output=self.output_path, np=np))
-        #
-        #     os.system('reconstructPar -case {case} >> {output}'.format(case=self.case_directory,
-        #                                                                output=self.output_path))
+        if np == 1:
+            os.system('FAKTFoam -case {case} >> {output}'.format(case=self.case_directory,
+                                                                             output=self.output_path))
+        else:
+            self.reConstract = True
+            os.system('decomposePar -case {case} >> {output}'.format(
+                case=self.case_directory,
+                output=self.output_path, np=np))
+            os.system('mpirun -np {np} FAKTFoam -case {case} -parallel  >> {output}'.format(
+                case=self.case_directory,
+                output=self.output_path, np=np))
 
-        #os.system(f'foamToVTK -case {self.case_directory} >> {self.output_path}')
-        #shutil.copytree(Path(self.case_directory, 'VTK'), Path(self.vtk_directory, 'VTK'))
+            os.system('reconstructPar -case {case} >> {output}'.format(case=self.case_directory,
+                                                                       output=self.output_path))
+
+        os.system(f'foamToVTK -case {self.case_directory} >> {self.output_path}')
+        shutil.copytree(Path(self.case_directory, 'VTK'), Path(self.vtk_directory, 'VTK'))
 
     def make_directories(self):
         self.existence_check_and_make(self.case_directory)
