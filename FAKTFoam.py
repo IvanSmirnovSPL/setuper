@@ -83,28 +83,28 @@ class PathsOfCase:
         shutil.copytree(self.zero_dir_path, Path(self.case_directory, "0"))
 
         (open(self.output_path, 'w')).close()  # clear output file
-        #np = int(self.files_data['system']['decomposeParDict']['numberOfSubdomains'])
-        np = 1
+        np = int(self.files_data['system']['decomposeParDict']['numberOfSubdomains'])
+        #np = 1
         os.system('export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/intel/lib/intel64')
         os.system('source /opt/kpvm/foamIntelrc')
         #os.system('source /opt/kpvm/foam2112rc')
 
         os.system('source /opt/kpvm/ifrolov/bin/bubblerc')
         os.system(f'echo $LD_LIBRARY_PATH >> {self.output_path}')
-        if np == 1:
-            os.system('FAKTFoam -case {case} >> {output}'.format(case=self.case_directory,
-                                                                             output=self.output_path))
-        else:
-            self.reConstract = True
-            os.system('decomposePar -case {case} >> {output}'.format(
-                case=self.case_directory,
-                output=self.output_path, np=np))
-            os.system('mpirun -np {np} FAKTFoam -case {case} -parallel  >> {output}'.format(
-                case=self.case_directory,
-                output=self.output_path, np=np))
-
-            os.system('reconstructPar -case {case} >> {output}'.format(case=self.case_directory,
-                                                                       output=self.output_path))
+        # if np == 1:
+        #     os.system('FAKTFoam -case {case} >> {output}'.format(case=self.case_directory,
+        #                                                                      output=self.output_path))
+        # else:
+        #     self.reConstract = True
+        #     os.system('decomposePar -case {case} >> {output}'.format(
+        #         case=self.case_directory,
+        #         output=self.output_path, np=np))
+        #     os.system('mpirun -np {np} FAKTFoam -case {case} -parallel  >> {output}'.format(
+        #         case=self.case_directory,
+        #         output=self.output_path, np=np))
+        #
+        #     os.system('reconstructPar -case {case} >> {output}'.format(case=self.case_directory,
+        #                                                                output=self.output_path))
 
         #os.system(f'foamToVTK -case {self.case_directory} >> {self.output_path}')
         #shutil.copytree(Path(self.case_directory, 'VTK'), Path(self.vtk_directory, 'VTK'))

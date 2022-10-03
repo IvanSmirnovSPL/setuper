@@ -21,6 +21,10 @@ system = \
                 'maxCo': '0.5',
                 'maxDeltaT': '0.01',
             },
+        'decomposeParDict':
+            {
+                'numberOfSubdomains': '1'
+            },
         'fvSchemes':
             {
                 'fluxScheme': 'AUSMPlusUp',

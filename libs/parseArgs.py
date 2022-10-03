@@ -33,6 +33,8 @@ def fillFromUserDict(userDict, files_data):
     for key in userDict.keys():
         if key == 'libs':
             files_data['system']['controlDict']['libs'] = str(userDict[key])
+        elif key == 'np':
+            files_data['system']['decomposeParDict']['numberOfSubdomains'] = str(userDict[key])
         elif key == 'application':
             files_data['system']['controlDict']['application'] = str(userDict[key])
         elif key == 'startFrom':
@@ -142,6 +144,7 @@ def fillFromUserDict(userDict, files_data):
 
 def programmSettings(parser):
     parser.add_argument('-libs', '--libs', metavar='', type=str, default=')', help='')
+    parser.add_argument('-np', '--np', metavar='', type=str, default='1', help="Number of processes.")
     parser.add_argument('-application', '--application', metavar='', type=str, default='rhoCentralFoam', help='')
     parser.add_argument('-startFrom', '--startFrom', metavar='', type=str, default='startTime', help='')
     parser.add_argument('-startTime', '--startTime', metavar='', type=str, default='0', help='')
@@ -201,6 +204,7 @@ def programmSettings(parser):
 def dictFromUserFlags(args):
     userDict = {}
     userDict['libs'] = args.libs
+    userDict['np'] = args.np
     userDict['application'] = args.application
     userDict['startFrom'] = args.startFrom
     userDict['startTime'] = args.startTime
