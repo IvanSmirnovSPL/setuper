@@ -85,8 +85,10 @@ class PathsOfCase:
         (open(self.output_path, 'w')).close()  # clear output file
         #np = int(self.files_data['system']['decomposeParDict']['numberOfSubdomains'])
         np = 1
-        os.system('source /opt/kpvm/foam2112rc')
+        os.system('export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/intel/lib/intel64')
+        os.system('source /opt/kpvm/foamIntelrc')
         os.system('source /opt/kpvm/ifrolov/bin/bubblerc')
+        os.system(f'echo $LD_LIBRARY_PATH >> {self.output_path}')
         if np == 1:
             os.system('FAKTFoam -case {case} >> {output}'.format(case=self.case_directory,
                                                                              output=self.output_path))
