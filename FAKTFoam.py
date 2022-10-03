@@ -87,6 +87,8 @@ class PathsOfCase:
         np = 1
         os.system('export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/intel/lib/intel64')
         os.system('source /opt/kpvm/foamIntelrc')
+        #os.system('source /opt/kpvm/foam2112rc')
+
         os.system('source /opt/kpvm/ifrolov/bin/bubblerc')
         os.system(f'echo $LD_LIBRARY_PATH >> {self.output_path}')
         if np == 1:
@@ -137,7 +139,8 @@ class PathsOfCase:
         data = self.files_data['system']
         functions = {'controlDict': fill_controlDict,
                      'fvSchemes': fill_fvSchemes,
-                     'fvSolution': fill_fvSolution}
+                     'fvSolution': fill_fvSolution,
+                     'decomposeParDict': fill_decomposeParDict}
         for file_ in files:
             path = Path(self.system_dir_path, file_)
             self.fd.init_file(path)
