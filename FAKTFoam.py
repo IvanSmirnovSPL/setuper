@@ -14,6 +14,7 @@ from libs.fill.p import fill_p
 from libs.fill.alpha_water import fill_alpha_water
 from libs.fill.U import fill_U
 from libs.fill.T import fill_T
+from libs.makeZeroFromMesh import detectBTypes
 
 # system
 from libs.fill.controlDict import fill_controlDict
@@ -26,12 +27,13 @@ from libs.fill.params_file import fill_params
 from libs.file_design import FileDesign
 from libs import params
 from libs.parseArgs import fillFromUserDict, userFlags, dictFromUserFlags
+from libs.fields import refactorTypes
 
 files_data = params.files_data
 
 
 class PathsOfCase:
-    def __init__(self, name='new_case', vtk='new_case_', zero=None, files_data={}, output_path="", grid_path="", table_path="/opt/kpvm/ismirnov/bin/tables"):
+    def __init__(self, name='new_case', vtk='new_case_', zero_dir_flag=None, files_data={}, output_path="", grid_path="", table_path="/opt/kpvm/ismirnov/bin/tables"):
         self.fd = FileDesign()
         self.files_data = files_data
         self.home_directory = Path.cwd()
@@ -39,13 +41,10 @@ class PathsOfCase:
         self.vtk_directory = Path(self.home_directory, vtk)
         self.constant_dir_path = Path(self.case_directory, 'constant')
         self.zero_dir_path = Path(self.case_directory, '0.orig')
+        self.zero_dir_flag = zero_dir_flag
         self.system_dir_path = Path(self.case_directory, 'system')
         self.output_path = output_path
-        self.reConstract = False
-        if zero is not None:
-            self.zero_path = self.find('0.orig', Path.cwd())
-        else:
-            self.zero_path = None
+
         if grid_path == "":
             self.grid_path = Path(self.constant_dir_path, "polyMesh")
         else:
@@ -145,27 +144,39 @@ class PathsOfCase:
         f.write(fill_params(None))
         f.close()
 
+    def copyDirectories(self, src, dist, symlinks=False, ignore=None):
+        for item in os.listdir(src):
+            s = os.path.join(src, item)
+            d = os.path.join(dist, item)
+            if os.path.isdir(s):
+                shutil.copytree(s, d, symlinks, ignore)
+            else:
+                shutil.copy2(s, d)
+
     def make_files_in_zero_dir(self):
-        #if self.zero_path is not None and True:
-        self.zero_path = self.find('0', Path.cwd())
-        for foo, tmp, files in os.walk(self.zero_path):
-            for file in files:
-                os.system(f'cp {self.zero_path}/{file} {self.zero_dir_path}/{file}')
-        # else:
-        #     files = list(self.files_data['0.orig'].keys())  # p_rgh, U, alpha.water
-        #     data = self.files_data['0.orig']
-        #     functions = {'p': fill_p, 'U': fill_U, 'alpha.water': fill_alpha_water, 'T': fill_T}
-        #     field = ['volScalarField', 'volVectorField']
-        #     classes = {'p': field[0], 'U': field[1], 'alpha.water': field[0], 'T': field[0]}
-        #
-        #     for file_ in files:
-        #         path = Path(self.zero_dir_path, file_)
-        #         self.fd.init_file(path)
-        #         self.fd.foamfile(path=path, class_=classes[file_], object_=file_)
-        #         out_stream = open(path, 'a')
-        #         params = data[file_]
-        #         functions[file_](params, fp=out_stream)
-        #         out_stream.close()
+        if self.zero_dir_flag is not None:
+            path = self.find('0', Path.cwd())
+            print(path)
+            self.copyDirectories(path, self.zero_dir_path)
+        else:
+            files = list(self.files_data['0.orig'].keys())  # p_rgh, U, alpha.water
+            data = self.files_data['0.orig']
+            functions = {'p': fill_p, 'U': fill_U, 'alpha.water': fill_alpha_water, 'T': fill_T}
+            field = ['volScalarField', 'volVectorField']
+            classes = {'p': field[0], 'U': field[1], 'alpha.water': field[0], 'T': field[0]}
+            types = refactorTypes(detectBTypes(self.grid_path))
+
+            for f in functions.keys():
+                self.files_data['0.orig'][f]['boundary_types'] = types
+
+            for file_ in files:
+                path = Path(self.zero_dir_path, file_)
+                self.fd.init_file(path)
+                self.fd.foamfile(path=path, class_=classes[file_], object_=file_)
+                out_stream = open(path, 'a')
+                params = data[file_]
+                functions[file_](params, fp=out_stream, p=r'#include "../system/params"')
+                out_stream.close()
 
     @staticmethod
     def existence_check_and_make(path):
@@ -207,10 +218,10 @@ def main():
     elif args.reconstruct_case_path is not None:
         os.system('reconstructPar -case {}'.format(args.reconstruct_case_path))
     else:
-        zero_dir = None
-        if args.zero_path is not None:
-            zero_dir = args.zero_path
-        paths = PathsOfCase(name=args.name_case, vtk=args.vtk_path, zero=zero_dir, files_data=files_data, grid_path=args.grid_path,
+        zero_dir_flag = None
+        if args.zero_path != 'None':
+            zero_dir_flag = args.zero_path
+        paths = PathsOfCase(name=args.name_case, vtk=args.vtk_path, zero_dir_flag=zero_dir_flag, files_data=files_data, grid_path=args.grid_path,
                             table_path=args.table_path,
                             output_path=args.output_path)
         paths.make_directories()

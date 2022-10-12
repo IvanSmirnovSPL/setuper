@@ -48,9 +48,23 @@ boundaries = {
     'symmetryPlane': Boundary('symmetryPlane', "(symmetryPlane).*"),
     'out': Boundary('zeroGradient', "(out|OUT|Out|sides).*"),
     'out_with_value': Boundary('fixedValue', "(outlet).*", value=True),
+    'out_with_value_alpha': Boundary('zeroGradient', "(outlet).*"),
     'in': Boundary('zeroGradient', "(in|IN|In|otherSide).*"),
-    'in_with_value': Boundary('fixedValue', "(inlet).*", value=True)
+    'in_with_value': Boundary('fixedValue', "(inlet).*", value=True),
+    'in_with_value_alpha': Boundary('zeroGradient', "(inlet).*")
 }
+
+
+def refactorTypes(types):
+    for idt, type in enumerate(types):
+        if type == ('outlet' or 'Outlet' or 'OUTLET'):
+            types[idt] = 'out_with_value'
+        if type == ('inlet' or 'Inlet' or 'INLET'):
+            types[idt] = 'in_with_value'
+        if type == ('empty' or 'Empty' or 'EMPTY'):
+            types[idt] = 'empty'
+    return types
+
 
 '''
 class Fields:
@@ -106,7 +120,7 @@ Output: nothing
 class Fields:
 
     def __init__(self, field_name, internal_value, boundary_types=None,
-                 boundary_name=None, value=None):
+                 boundary_name=None, value=None, params=None):
         self.dimensions = dimensions
         self.boundaries = boundaries
         self.field_name = field_name
@@ -114,6 +128,7 @@ class Fields:
         self.boundary_types = boundary_types
         self.boundary_name = boundary_name
         self.value = value
+        self.params = params
 
     def write_field_type(self, field):
         if field in self.dimensions:
@@ -141,6 +156,9 @@ class Fields:
             f = open(filename, 'a')
         else:
             f = fp
+
+        if self.params is not None:
+            f.write(self.params + '\n')
         f.write(self.write_field_type(self.field_name))
         f.write(self.write_internal_field(self.internal_value))
         f.write('boundaryField \n{ \n ')

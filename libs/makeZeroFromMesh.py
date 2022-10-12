@@ -2,7 +2,7 @@ from pathlib import Path
 import re
 
 
-def findCount(lines):
+def findCount(lines) -> (int, int, int):
     tmp_ = 0
     foo_ = 0
     for i, line in enumerate(lines):
@@ -29,9 +29,8 @@ def findBoundaryTypes(lines):
     return types
 
 
-path = r"/home/ivan/Documents/TSAGI/releaseFACTFoam/polyMesh"
+def detectBTypes(path):
+    with open(Path(path, 'boundary'), 'r') as f:
+        lines = f.readlines()
+    return findBoundaryTypes(lines)
 
-# read file
-with open(Path(path, 'boundary'), 'r') as f:
-    lines = f.readlines()
-print(findBoundaryTypes(lines))

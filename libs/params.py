@@ -87,24 +87,27 @@ zero = \
     {
         'p':
             {
-                'internal_value': '100000',
-                'boundary_types': ['empty', 'outlet', 'inlet'],
+                'internal_value': '$p_right',
+                'value': {'out_with_value': 'uniform $p_right', 'in_with_value': 'uniform $p_left'},
+                'boundary_types': ['empty', 'out_with_value', 'in_with_value'],
             },
         'T':
             {
-                'internal_value': '666',
-                'boundary_types': ['empty', 'outlet', 'inlet'],
+                'internal_value': '$T_right',
+                'value': {'out_with_value': 'uniform $T_right', 'in_with_value': 'uniform $T_left'},
+                'boundary_types': ['empty', 'out_with_value', 'in_with_value'],
             },
         'U':
             {
-                'internal_value': '(0 0 20)',
-                'boundary_types': ['empty', 'outlet', 'inlet'],
+                'internal_value': '(0 0 0)',
+                'value': {'out_with_value': 'uniform (0 0 0)', 'in_with_value': 'uniform (0 0 0)'},
+                'boundary_types': ['empty', 'out_with_value', 'in_with_value'],
             },
         'alpha.water':
             {
 
                 'internal_value': '1',
-                'boundary_types': ['empty', 'outlet', 'inlet'],
+                'boundary_types': ['empty', 'out_with_value', 'in_with_value'],
             }
     }
 
