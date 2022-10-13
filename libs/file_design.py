@@ -12,15 +12,15 @@ class FileDesign:
         self.separator = r'// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //' + '\n'
 
         self.clean = r'#!/bin/sh' + '\n' + \
-                       'cd "${0%/*}" || exit                                # Run from this directory' + '\n' + \
-                       '. ${WM_PROJECT_DIR:?}/bin/tools/CleanFunctions      # Tutorial clean functions' + '\n' + \
-                       '#------------------------------------------------------------------------------' + '\n' + \
-                       ' ' + '\n' + \
-                       'cleanCase0' + '\n' + \
-                       ' ' + '\n' + \
-                       'rm -rf constant/triSurface' + '\n' + \
-                       ' ' + '\n' + \
-                       '#------------------------------------------------------------------------------'
+                     'cd "${0%/*}" || exit                                # Run from this directory' + '\n' + \
+                     '. ${WM_PROJECT_DIR:?}/bin/tools/CleanFunctions      # Tutorial clean functions' + '\n' + \
+                     '#------------------------------------------------------------------------------' + '\n' + \
+                     ' ' + '\n' + \
+                     'cleanCase0' + '\n' + \
+                     ' ' + '\n' + \
+                     'rm -rf constant/triSurface' + '\n' + \
+                     ' ' + '\n' + \
+                     '#------------------------------------------------------------------------------'
 
         self.run = '#!/bin/sh' + '\n' + \
                    'cd "${0%/*}" || exit                                # Run from this directory' + '\n' + \
@@ -54,8 +54,6 @@ class FileDesign:
         file = open(filename, 'w')
         file.write(self.preamble)
         file.close()
-
-
 
     @staticmethod
     def line(string=''):
@@ -92,7 +90,7 @@ class FileDesign:
         file.write(self.line())
         file.write(self.line(self.string_with_spaces(part_name, start_space=start_space, length=length)))
         dictionary = params[part_name]
-        file.write(self.line(' '*start_space + '{'))
+        file.write(self.line(' ' * start_space + '{'))
         for key in dictionary.keys():
             tmp = dictionary[key]
             if type(tmp) is dict:
@@ -104,8 +102,7 @@ class FileDesign:
                     self.part_of_tuple_is_tuple(dictionary, key, file, start_space=start_space + 4, length=length)
             else:
                 self.part_of_dictionary(dictionary, key, file, start_space=start_space + 4, length=length)
-        file.write(self.line(' '*start_space + '}'))
-
+        file.write(self.line(' ' * start_space + '}'))
 
     def part_of_dict_is_tuple(self, params, part_name, file, start_space=0, length=16):
         if type(params[part_name][0]) is dict:
@@ -132,9 +129,7 @@ class FileDesign:
         file.write(self.line())
         file.write(self.line(self.string_with_spaces(part_name, start_space=start_space, length=length)))
         foo = params[part_name]
-        file.write(self.line(' '*start_space + '('))
+        file.write(self.line(' ' * start_space + '('))
         for tmp in foo:
-            file.write(self.line(' '*(4 + start_space) + tmp))
-        file.write(self.line(' '*start_space +')'))
-
-
+            file.write(self.line(' ' * (4 + start_space) + tmp))
+        file.write(self.line(' ' * start_space + ')'))

@@ -143,6 +143,22 @@ def fillFromUserDict(userDict, files_data):
             files_data['constant']['thermophysicalProperties']['TstepFile'] = str(userDict[key])
         elif key == 'g':
             files_data['constant']['g']['g'] = str(userDict[key])
+        elif key == 'a':
+            files_data['system']['params']['a'] = str(userDict[key])
+        elif key == 'N':
+            files_data['system']['params'][key] = str(userDict[key])
+        elif key == 'L':
+            files_data['system']['params'][key] = str(userDict[key])
+        elif key == 'shift':
+            files_data['system']['params'][key] = str(userDict[key])
+        elif key == 'p_left':
+            files_data['system']['params'][key] = str(userDict[key])
+        elif key == 'p_right':
+            files_data['system']['params'][key] = str(userDict[key])
+        elif key == 'T_left':
+            files_data['system']['params'][key] = str(userDict[key])
+        elif key == 'T_right':
+            files_data['system']['params'][key] = str(userDict[key])
 
 
 def programmSettings(parser):
@@ -190,6 +206,14 @@ def programmSettings(parser):
     parser.add_argument('-simulationType', '--simulationType', metavar='', type=str, default='laminar', help='')
     parser.add_argument('-phases', '--phases', metavar='', type=str, default='vapour_liquid', help='')
     parser.add_argument('-g', '--g', metavar='', type=str, default=' 0_9.81_0', help='')
+    parser.add_argument('-a', '--a', metavar='', type=str, default=' 0.1', help='')
+    parser.add_argument('-N', '--N', metavar='', type=str, default=' 1000', help='')
+    parser.add_argument('-L', '--L', metavar='', type=str, default='5.0', help='')
+    parser.add_argument('-shift', '--shift', metavar='', type=str, default='0.0', help='')
+    parser.add_argument('-p_left', '--p_left', metavar='', type=str, default=' 1.1e7', help='')
+    parser.add_argument('-p_right', '--p_right', metavar='', type=str, default=' 8.9e6', help='')
+    parser.add_argument('-T_left', '--T_left', metavar='', type=str, default='584.2360251538847', help='')
+    parser.add_argument('-T_right', '--T_right', metavar='', type=str, default='576.5818015076865', help='')
 
 def dictFromUserFlags(args):
     userDict = {}
@@ -235,6 +259,14 @@ def dictFromUserFlags(args):
     userDict['simulationType'] = args.simulationType
     userDict['phases'] = unpackArg(args.phases)
     userDict['g'] = unpackArg(args.g)
+    userDict['a'] = args.a
+    userDict['N'] = args.N
+    userDict['L'] = args.L
+    userDict['shift'] = args.shift
+    userDict['p_left'] = args.p_left
+    userDict['p_right'] = args.p_right
+    userDict['T_left'] = args.T_left
+    userDict['T_right'] = args.T_right
 
     return userDict
 

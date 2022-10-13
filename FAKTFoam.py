@@ -133,16 +133,18 @@ class PathsOfCase:
                      'decomposeParDict': fill_decomposeParDict}
         for file_ in files:
             path = Path(self.system_dir_path, file_)
-            self.fd.init_file(path)
-            self.fd.foamfile(path=path, object_=file_)
-            out_stream = open(path, 'a')
-            param = data[file_]
-            out_stream.write(functions[file_](param))
-            out_stream.close()
-        path = Path(self.system_dir_path, 'params')
-        f = open(path, 'w')
-        f.write(fill_params(None))
-        f.close()
+            if file_ == 'params':
+                f = open(path, 'w')
+                f.write(fill_params(data['params']))
+                f.close()
+            else:
+                self.fd.init_file(path)
+                self.fd.foamfile(path=path, object_=file_)
+                out_stream = open(path, 'a')
+                param = data[file_]
+                out_stream.write(functions[file_](param))
+                out_stream.close()
+
 
     def copyDirectories(self, src, dist, symlinks=False, ignore=None):
         for item in os.listdir(src):
