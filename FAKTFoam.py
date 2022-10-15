@@ -22,6 +22,7 @@ from libs.fill.decomposeParDict import fill_decomposeParDict
 from libs.fill.fvSchemes import fill_fvSchemes
 from libs.fill.fvSolution import fill_fvSolution
 from libs.fill.params_file import fill_params
+from libs.fill.setFieldsDict import fill_SetFieldsDict
 
 # support
 from libs.file_design import FileDesign
@@ -81,6 +82,7 @@ class PathsOfCase:
         if os.path.exists(Path(self.case_directory, "0")):
             os.remove(Path(self.case_directory, "0"))
         shutil.copytree(self.zero_dir_path, Path(self.case_directory, "0"))
+        os.system(f'cd {self.case_directory} && setFields >> {self.output_path}')
 
         (open(self.output_path, 'w')).close()  # clear output file
         np = int(self.files_data['system']['decomposeParDict']['numberOfSubdomains'])
@@ -130,7 +132,8 @@ class PathsOfCase:
         functions = {'controlDict': fill_controlDict,
                      'fvSchemes': fill_fvSchemes,
                      'fvSolution': fill_fvSolution,
-                     'decomposeParDict': fill_decomposeParDict}
+                     'decomposeParDict': fill_decomposeParDict,
+                     'setFieldsDict': fill_SetFieldsDict}
         for file_ in files:
             path = Path(self.system_dir_path, file_)
             if file_ == 'params':
