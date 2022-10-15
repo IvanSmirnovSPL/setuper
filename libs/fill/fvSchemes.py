@@ -36,7 +36,8 @@ def fill_fvSchemes(param):
            '     reconstruct(U)      upwind; \n' + \
            '     interpolate(thermo:c) upwind phi; \n' + \
            '     reconstruct(thermo:rho)    upwind; \n' + \
-           '     reconstruct(thermo:he)    upwind; \n' + \
+           '     reconstruct(rhoU) upwind;          \n' + \
+           '    reconstruct(rhoE)   upwind; \n' + \
            ' } \n' + \
            '  \n' + \
            ' snGradSchemes \n' + \
