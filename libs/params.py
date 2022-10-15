@@ -102,13 +102,13 @@ zero = \
     {
         'p':
             {
-                'internal_value': '$p_right',
+                'internal_value': '0',
                 'value': {'out_with_value': 'uniform $p_right', 'in_with_value': 'uniform $p_left'},
                 'boundary_types': ['empty', 'out_with_value', 'in_with_value'],
             },
         'T':
             {
-                'internal_value': '$T_right',
+                'internal_value': '1',
                 'value': {'out_with_value': 'uniform $T_right', 'in_with_value': 'uniform $T_left'},
                 'boundary_types': ['empty', 'out_with_value', 'in_with_value'],
             },
@@ -118,10 +118,10 @@ zero = \
                 'value': {'out_with_value': 'uniform (0 0 0)', 'in_with_value': 'uniform (0 0 0)'},
                 'boundary_types': ['empty', 'out_with_value', 'in_with_value'],
             },
-        'alpha.water':
+        'alpha.vapour':
             {
 
-                'internal_value': '1',
+                'internal_value': '1.0',
                 'boundary_types': ['empty', 'out_with_value', 'in_with_value'],
             }
     }

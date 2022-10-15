@@ -13,14 +13,20 @@ def fill_fvSchemes(param):
            '  \n' + \
            ' gradSchemes \n' + \
            ' { \n' + \
-           '     default         Gauss {}; \n'.format(param['gradSchemes']) + \
+           'default         none;//cellLimited<Venkatakrishnan> leastSquares 1.0;' + '\n' + \
+           ' a cellLimited<Venkatakrishnan> leastSquares 1.0;' + '\n' + \
+           'grad(thermo:rho) leastSquares;' + '\n' + \
+           'grad(magSqr(rhoU)) leastSquares;' + '\n' + \
+           'grad(rhoE) leastSquares;' + '\n' + \
+           'grad(U) leastSquares;' + '\n' + \
+           ' grad(T) leastSquares;' + '\n' + \
            ' } \n' + \
            '  \n' + \
            ' divSchemes \n' + \
            ' { \n' + \
            '     default         {}; \n'.format(param['divSchemes']) + \
            '  \n' + \
-           '     div(tauMC)      Gauss linear; \n'+ \
+           '     div(tauMC)      Gauss linear; \n' + \
            '      div((S&U))      Gauss linear; \n' + \
            ' } \n' + \
            '  \n' + \
@@ -33,8 +39,7 @@ def fill_fvSchemes(param):
            ' { \n' + \
            '     default         none; \n' + \
            '     flux(U)         linear; \n' + \
-           '     reconstruct(U)      upwind; \n' + \
-           '     interpolate(thermo:c) upwind phi; \n' + \
+           '     interpolate(thermo:c) linear; \n' + \
            '     reconstruct(thermo:rho)    upwind; \n' + \
            '     reconstruct(rhoU) upwind;          \n' + \
            '    reconstruct(rhoE)   upwind; \n' + \

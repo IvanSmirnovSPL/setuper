@@ -161,11 +161,11 @@ class PathsOfCase:
             print(path)
             self.copyDirectories(path, self.zero_dir_path)
         else:
-            files = list(self.files_data['0.orig'].keys())  # p_rgh, U, alpha.water
+            files = list(self.files_data['0.orig'].keys())  # p_rgh, U, alpha.vapour
             data = self.files_data['0.orig']
-            functions = {'p': fill_p, 'U': fill_U, 'alpha.water': fill_alpha_water, 'T': fill_T}
+            functions = {'p': fill_p, 'U': fill_U, 'alpha.vapour': fill_alpha_water, 'T': fill_T}
             field = ['volScalarField', 'volVectorField']
-            classes = {'p': field[0], 'U': field[1], 'alpha.water': field[0], 'T': field[0]}
+            classes = {'p': field[0], 'U': field[1], 'alpha.vapour': field[0], 'T': field[0]}
             types = refactorTypes(detectBTypes(self.grid_path))
 
             for f in functions.keys():
