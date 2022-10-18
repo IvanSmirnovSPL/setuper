@@ -5,22 +5,10 @@ import subprocess
 import shutil
 import threading
 
+from libs.zero_dir import makeFilesInZeroDir
+from libs.system_dir import makeFilesInSystemDir
+from libs.constant_dir import makeFilesInConstantDir
 
-# constant
-from libs.fill.g import fill_g
-from libs.fill.transportProperties import fill_transportProperties
-from libs.fill.turbulenceProperties import fill_turbulenceProperties
-
-# 0.orig
-from libs.fill.p_rgh import fill_p_rgh
-from libs.fill.alpha_water import fill_alpha_water
-from libs.fill.U import fill_U
-
-# system
-from libs.fill.controlDict import fill_controlDict
-from libs.fill.decomposeParDict import fill_decomposeParDict
-from libs.fill.fvSchemes import fill_fvSchemes
-from libs.fill.fvSolution import fill_fvSolution
 
 # support
 from libs.file_design import FileDesign
@@ -86,9 +74,6 @@ class PathsOfCase:
             os.system('mpirun -np {np} interPhaseChangeFoam -case {case} -parallel  >> {output}'.format(
                 case=self.case_directory,
                 output=self.output_path, np=np))
-            #th = threading.Thread(group=None, target=_f_)
-            #th.start()
-            #th.join()
 
             os.system('reconstructPar -case {case} >> {output}'.format(case=self.case_directory,
                                                                         output=self.output_path))
@@ -103,52 +88,13 @@ class PathsOfCase:
         self.existence_check_and_make(self.system_dir_path)
 
     def make_files_in_constant_dir(self):
-        files = list(self.files_data['constant'].keys())  # g, transportProperties, turbulenceProperties
-        data = self.files_data['constant']
-        functions = {'g': fill_g, 'transportProperties': fill_transportProperties,
-                     'turbulenceProperties': fill_turbulenceProperties}
-        for file_ in files:
-            path = Path(self.constant_dir_path, file_)
-            self.fd.init_file(path)
-            self.fd.foamfile(path=path, object_=file_)
-            out_stream = open(path, 'a')
-            param = data[file_]
-            out_stream.write(functions[file_](param))
-            out_stream.close()
+        makeFilesInConstantDir(self)
 
     def make_files_in_system_dir(self):
-        files = list(self.files_data['system'].keys())  # controlDict,
-        # decomposeParDict, fvSchemes, fvSolution
-        files.remove('blockMeshDict')
-        files.remove('snappyHexMeshDict')
-        data = self.files_data['system']
-        functions = {'controlDict': fill_controlDict,
-                     'decomposeParDict': fill_decomposeParDict, 'fvSchemes': fill_fvSchemes,
-                     'fvSolution': fill_fvSolution}
-        for file_ in files:
-            path = Path(self.system_dir_path, file_)
-            self.fd.init_file(path)
-            self.fd.foamfile(path=path, object_=file_)
-            out_stream = open(path, 'a')
-            param = data[file_]
-            out_stream.write(functions[file_](param))
-            out_stream.close()
+        makeFilesInSystemDir(self)
 
     def make_files_in_zero_dir(self):
-        files = list(self.files_data['0.orig'].keys())  # p_rgh, U, alpha.water
-        data = self.files_data['0.orig']
-        functions = {'p_rgh': fill_p_rgh, 'U': fill_U, 'alpha.water': fill_alpha_water}
-        field = ['volScalarField', 'volVectorField']
-        classes = {'p_rgh': field[0], 'U': field[1], 'alpha.water': field[0]}
-
-        for file_ in files:
-            path = Path(self.zero_dir_path, file_)
-            self.fd.init_file(path)
-            self.fd.foamfile(path=path, class_=classes[file_], object_=file_)
-            out_stream = open(path, 'a')
-            params = data[file_]
-            functions[file_](params, fp=out_stream)
-            out_stream.close()
+        makeFilesInZeroDir(self)
 
     @staticmethod
     def existence_check_and_make(path):
