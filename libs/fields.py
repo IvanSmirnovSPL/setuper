@@ -39,7 +39,9 @@ dimensions = {'p': '[1 -1 -2 0 0 0 0]',
 
 '''dictionary of boundary types, every boundary type is class Boundary()'''
 boundaries = {
-    'wall': Boundary('noSlip', "(wall|WALL|Wall|originalPatch|Created).*"),
+    'wall': Boundary('noSlip', "(wall|WALL|Wall|originalPatch|Created|walls|WALLS|Walls).*"),
+    'wall_pressure': Boundary('fixedFluxPressure', "(wall|WALL|Wall|originalPatch|Created|walls|WALLS|Walls).*"),
+    'wall_alpha': Boundary('zeroGradient', "(wall|WALL|Wall|originalPatch|Created|walls|WALLS|Walls).*"),
     'empty': Boundary('empty', "(empty|bottomEmpty|topEmpty).*"),
     'symmetry': Boundary('symmetry', "(symmetry).*"),
     'overset': Boundary('overset', "(overset).*"),
@@ -52,6 +54,7 @@ boundaries = {
     'in_with_value': Boundary('fixedValue', "(inlet).*", value=True)
 }
 
+
 def refactorTypes(types):
     for idt, type in enumerate(types):
         if type == ('outlet' or 'Outlet' or 'OUTLET'):
@@ -60,7 +63,10 @@ def refactorTypes(types):
             types[idt] = 'in_with_value'
         if type == ('empty' or 'Empty' or 'EMPTY'):
             types[idt] = 'empty'
+        if type == 'walls':
+            types[idt] = 'wall'
     return types
+
 
 '''
 class Fields:
@@ -141,6 +147,8 @@ class Fields:
             tmp.name = boundary_name
         if value is not None:
             tmp.value = value
+        if value is True:
+            tmp.value = '$internalField'
         if tmp.value:
             return '"{0.parse_name}" \n{{ \n type      {0.name};\n {1}     {0.value}; \n}}\n'.format(tmp, value_name)
         else:
