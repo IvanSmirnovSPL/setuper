@@ -19,7 +19,7 @@ files_data = params.files_data
 
 
 class PathsOfCase:
-    def __init__(self, name='new_case', vtk='new_case_', files_data={}, output_path="", grid_path=""):
+    def __init__(self, name='new_case', vtk='new_case_', zero_dir_flag=None, files_data={}, output_path="", grid_path=""):
         self.fd = FileDesign()
         self.files_data = files_data
         self.home_directory = Path.cwd()
@@ -27,6 +27,7 @@ class PathsOfCase:
         self.vtk_directory = Path(self.home_directory, vtk)
         self.constant_dir_path = Path(self.case_directory, 'constant')
         self.zero_dir_path = Path(self.case_directory, '0.orig')
+        self.zero_dir_flag = zero_dir_flag
         self.system_dir_path = Path(self.case_directory, 'system')
         self.output_path = Path(self.case_directory, output_path)
         self.reConstract = False
@@ -47,9 +48,6 @@ class PathsOfCase:
 
 
     def start_case(self):
-        # if not os.path.exists(Path(self.constant_dir_path, "polyMesh")):
-        #     list_files = subprocess.run(["ln", "-s", self.grid_path, Path(self.constant_dir_path, "polyMesh")])
-        # list_files = subprocess.run(["cp", "-r", self.zero_dir_path, Path(self.case_directory, "0")])
         
         self.grid_path = self.find('polyMesh', Path.cwd())
         
@@ -149,8 +147,8 @@ def main():
         if args.zero_path != 'None':
             zero_dir_flag = args.zero_path
 
-        paths = PathsOfCase(name=args.name_case, vtk=args.vtk_path, files_data=files_data, grid_path=args.grid_path,
-                            output_path=args.output_path)
+        paths = PathsOfCase(name=args.name_case, vtk=args.vtk_path, zero_dir_flag=zero_dir_flag, files_data=files_data,
+                            grid_path=args.grid_path, output_path=args.output_path)
         paths.make_directories()
         paths.make_files_in_system_dir()
         paths.make_files_in_constant_dir()
