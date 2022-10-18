@@ -5,8 +5,8 @@ import subprocess
 import shutil
 import threading
 
-from fields import refactorTypes
-from makeZeroFromMesh import detectBTypes
+from libs.fields import refactorTypes
+from libs.makeZeroFromMesh import detectBTypes
 
 # 0.orig
 from libs.fill.p_rgh import fill_p_rgh
