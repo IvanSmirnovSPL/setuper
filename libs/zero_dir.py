@@ -27,6 +27,8 @@ def makeFilesInZeroDir(self):
         field = ['volScalarField', 'volVectorField']
         classes = {'p_rgh': field[0], 'U': field[1], 'alpha.water': field[0]}
         types = refactorTypes(detectBTypes(self.grid_path))
+        for f in functions.keys():
+            self.files_data['0.orig'][f]['boundary_types'] = types
 
         for file_ in files:
             path = Path(self.zero_dir_path, file_)
