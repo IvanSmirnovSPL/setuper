@@ -27,6 +27,9 @@ import argparse
 # 'runTimeModifiable'
 # 'maxCo'
 
+def unpackArg(arg, sep='_'):
+    return " ".join(arg.split('_'))
+
 
 def fillFromUserDict(userDict, files_data):
     for key in userDict.keys():
@@ -88,7 +91,7 @@ def fillFromUserDict(userDict, files_data):
 
 def programmSettings(parser):
     parser.add_argument('-a', '--alpha', metavar='', type=str, default='1', help="alpha.water")
-    parser.add_argument('-U', '--U', metavar='', type=str, default='(0 0 20)', help="U")
+    parser.add_argument('-U', '--U', metavar='', type=str, default='(0_0_20)', help="U")
     parser.add_argument('-p', '--p', metavar='', type=str, default='100000', help="p")
     parser.add_argument('-np', '--np', metavar='', type=str, default='1', help="Number of processes.")
     parser.add_argument('-tol', '--tolerance', metavar='', type=str, default='1e-6', help="tolerance")
@@ -121,7 +124,7 @@ def programmSettings(parser):
 def dictFromUserFlags(args):
     userDict = {}
     userDict['alpha'] = args.alpha
-    userDict['U'] = args.U
+    userDict['U'] = unpackArg(args.U)
     userDict['p'] = args.p
     userDict['np'] = args.np
     userDict['tolerance'] = args.tolerance
