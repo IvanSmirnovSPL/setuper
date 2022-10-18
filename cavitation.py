@@ -87,6 +87,15 @@ class PathsOfCase:
         self.existence_check_and_make(self.zero_dir_path)
         self.existence_check_and_make(self.system_dir_path)
 
+    def copyDirectories(self, src, dist, symlinks=False, ignore=None):
+        for item in os.listdir(src):
+            s = os.path.join(src, item)
+            d = os.path.join(dist, item)
+            if os.path.isdir(s):
+                shutil.copytree(s, d, symlinks, ignore)
+            else:
+                shutil.copy2(s, d)
+
     def make_files_in_constant_dir(self):
         makeFilesInConstantDir(self)
 
