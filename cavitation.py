@@ -145,6 +145,9 @@ def main():
     elif args.reconstruct_case_path is not None:
         os.system('reconstructPar -case {}'.format(args.reconstruct_case_path))
     else:
+        zero_dir_flag = None
+        if args.zero_path != 'None':
+            zero_dir_flag = args.zero_path
 
         paths = PathsOfCase(name=args.name_case, vtk=args.vtk_path, files_data=files_data, grid_path=args.grid_path,
                             output_path=args.output_path)
