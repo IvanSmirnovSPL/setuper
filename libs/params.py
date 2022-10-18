@@ -92,14 +92,14 @@ zero = \
             {
                 'internal_value': '100000',
                 'boundary_types': ['in', 'out_with_value', 'symmetry', 'wall'],
-                'boundary_name': {'out_with_value': 'fixedValue', 'wall': 'fixedFluxPressure'},
+              #  'boundary_name': {'out_with_value': 'fixedValue', 'wall': 'fixedFluxPressure'},
                 'value': {'out_with_value': '$internalField'}
             },
         'U':
             {
                 'internal_value': '(0 0 20)',
                 'boundary_types': ['in_with_value', 'out_with_value', 'symmetry', 'wall'],
-                'boundary_name': {'out_with_value': 'pressureInletOutletVelocity'},
+             #   'boundary_name': {'out_with_value': 'pressureInletOutletVelocity'},
                 'value': {'in_with_value': '$internalField', 'out_with_value': '$internalField'}
             },
         'alpha.water':
@@ -107,7 +107,7 @@ zero = \
 
                 'internal_value': '1',
                 'boundary_types': ['in_with_value', 'out_with_value', 'symmetry', 'wall'],
-                'boundary_name': {'wall': 'zeroGradient', 'out_with_value': 'inletOutlet'},
+               # 'boundary_name': {'wall': 'zeroGradient', 'out_with_value': 'inletOutlet'},
                 'value': {'in_with_value': '$internalField', 'out_with_value': '$internalField'}
             }
     }
