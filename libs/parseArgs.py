@@ -87,11 +87,13 @@ def fillFromUserDict(userDict, files_data):
             files_data['system']['controlDict']['maxCo'] = str(userDict[key])
         elif key == 'adjustTimeStep':
             files_data['system']['controlDict']['adjustTimeStep'] = str(userDict[key])
+        elif key == 'g':
+            files_data['constant']['g']['g'] = str(userDict[key])
 
 
 def programmSettings(parser):
     parser.add_argument('-a', '--alpha', metavar='', type=str, default='1', help="alpha.water")
-    parser.add_argument('-U', '--U', metavar='', type=str, default='(0_0_20)', help="U")
+    parser.add_argument('-U', '--U', metavar='', type=str, default='0_0_-20', help="U")
     parser.add_argument('-p', '--p', metavar='', type=str, default='100000', help="p")
     parser.add_argument('-np', '--np', metavar='', type=str, default='1', help="Number of processes.")
     parser.add_argument('-tol', '--tolerance', metavar='', type=str, default='1e-6', help="tolerance")
@@ -119,12 +121,14 @@ def programmSettings(parser):
     parser.add_argument('-rTM', '--runTimeModifiable', metavar='', type=str, default='yes', help="runTimeModifiable")
     parser.add_argument('-aTS', '--adjustTimeStep', metavar='', type=str, default='on', help="adjustTimeStep")
     parser.add_argument('-mC', '--maxCo', metavar='', type=str, default='5', help="maxCo")
+    parser.add_argument('-g', '--g', metavar='', type=str, default='0_-9.81_0', help="g")
 
 
 def dictFromUserFlags(args):
     userDict = {}
     userDict['alpha'] = args.alpha
-    userDict['U'] = unpackArg(args.U)
+    userDict['U'] = '(' + unpackArg(args.U) + ')'
+    userDict['g'] = unpackArg(args.g)
     userDict['p'] = args.p
     userDict['np'] = args.np
     userDict['tolerance'] = args.tolerance

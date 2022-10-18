@@ -82,7 +82,7 @@ constant = \
         'g':
             {
                 'dimensions_g': '[0 1 -2 0 0 0 0]',
-                'g': -9.81
+                'g': '0 -9.81 0'
             }
     }
 
@@ -97,7 +97,7 @@ zero = \
             },
         'U':
             {
-                'internal_value': '(0 0 20)',
+                'internal_value': '(0 0 -20)',
                 'boundary_types': ['in_with_value', 'out_with_value', 'symmetry', 'wall'],
                 'boundary_name': {'out_with_value': 'pressureInletOutletVelocity'},
                 'value': {'in_with_value': '$internalField', 'out_with_value': '$internalField'}

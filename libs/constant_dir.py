@@ -12,6 +12,14 @@ from libs.fill.turbulenceProperties import fill_turbulenceProperties
 
 
 def makeFilesInConstantDir(self):
+    self.grid_path = self.find('polyMesh', Path.cwd())
+
+    if os.path.exists(Path(self.constant_dir_path, "polyMesh")):
+        shutil.rmtree(Path(self.constant_dir_path, "polyMesh"))
+    os.mkdir(Path(self.constant_dir_path, 'polyMesh'))
+    self.copyDirectories(self.grid_path, Path(self.constant_dir_path, 'polyMesh'))
+    #os.symlink(self.grid_path, Path(self.constant_dir_path, "polyMesh"))
+
     files = list(self.files_data['constant'].keys())  # g, transportProperties, turbulenceProperties
     data = self.files_data['constant']
     functions = {'g': fill_g, 'transportProperties': fill_transportProperties,

@@ -48,12 +48,6 @@ class PathsOfCase:
 
 
     def start_case(self):
-        
-        self.grid_path = self.find('polyMesh', Path.cwd())
-        
-        if os.path.exists(Path(self.constant_dir_path, "polyMesh")):
-            os.remove(Path(self.constant_dir_path, "polyMesh"))
-        os.symlink(self.grid_path, Path(self.constant_dir_path, "polyMesh"))
 
         if os.path.exists(Path(self.case_directory, "0")):
             os.remove(Path(self.case_directory, "0"))
