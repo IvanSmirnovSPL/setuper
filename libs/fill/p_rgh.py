@@ -7,6 +7,10 @@ def fill_p_rgh(params, fn=None, fp=None):
         if B == 'wall':
             B = 'wall_pressure'
         BT.append(B)
+    for B in params.get('boundary_types', None):
+        if B == 'in_with_value':
+            B = 'in_with_value_pressure'
+        BT.append(B)
 
     p_rgh = Fields(field_name='p_rgh', internal_value=params.get('internal_value', None),
                    boundary_types=BT,

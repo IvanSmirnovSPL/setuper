@@ -42,6 +42,7 @@ boundaries = {
     'wall': Boundary('noSlip', "(wall|WALL|Wall|originalPatch|Created|walls|WALLS|Walls).*"),
     'wall_pressure': Boundary('fixedFluxPressure', "(wall|WALL|Wall|originalPatch|Created|walls|WALLS|Walls).*"),
     'wall_alpha': Boundary('zeroGradient', "(wall|WALL|Wall|originalPatch|Created|walls|WALLS|Walls).*"),
+    'in_with_value_pressure': Boundary('zeroGradient', "(inlet).*"),
     'empty': Boundary('empty', "(empty|bottomEmpty|topEmpty).*"),
     'symmetry': Boundary('symmetry', "(symmetry).*"),
     'overset': Boundary('overset', "(overset).*"),
