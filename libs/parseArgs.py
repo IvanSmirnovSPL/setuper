@@ -89,6 +89,8 @@ def fillFromUserDict(userDict, files_data):
             files_data['system']['controlDict']['adjustTimeStep'] = str(userDict[key])
         elif key == 'g':
             files_data['constant']['g']['g'] = str(userDict[key])
+        elif key == 'pSat':
+            files_data['constant']['transportProperties']['pSat'] = str(userDict[key])
 
 
 def programmSettings(parser):
@@ -122,10 +124,12 @@ def programmSettings(parser):
     parser.add_argument('-aTS', '--adjustTimeStep', metavar='', type=str, default='on', help="adjustTimeStep")
     parser.add_argument('-mC', '--maxCo', metavar='', type=str, default='5', help="maxCo")
     parser.add_argument('-g', '--g', metavar='', type=str, default='0_-9.81_0', help="g")
+    parser.add_argument('-pSat', '--pSat', metavar='', type=str, default='2300', help="Saturation pressure")
 
 
 def dictFromUserFlags(args):
     userDict = {}
+    userDict['pSat'] = args.pSat
     userDict['alpha'] = args.alpha
     userDict['U'] = '(' + unpackArg(args.U) + ')'
     userDict['g'] = unpackArg(args.g)
