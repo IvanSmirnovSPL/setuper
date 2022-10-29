@@ -21,14 +21,25 @@ def filePointer(fd=None, fp=None, flag='r'):
 
 def searchParam(line, d):
     tmp = line.rfind(';')
-    if tmp == -1:
+    if tmp == -1 or len(line.split()) < 2 or line.split()[0] == 'dimensions':
         return r"'" + line + r"'"
-    foo = line[:tmp].rfind(' ')
-    bar = line.find('  ')
-    default = line[foo: tmp]
-    key = line[:bar + 1].replace(' ', '')
-    line = line[:foo] + r" {};'.format(params['" + key + r"'])"
+    lineList = line[:tmp].split()
+
+    st = line.find('(')
+    ed = line.find(')')
+    key = lineList[0]
+    pattern = re.compile('\$.*')
+    if pattern.match(key)  is not None:
+        print(key)
+        key = key[1:]
+    if st != -1 and ed != -1:
+        default = line[st + 1: ed]
+        line = line[:st] + '({});' + r"'.format(params[" + key + r"])"
+    else:
+        default = lineList[-1]
+        line = " ".join(lineList[:-1]) + ' {};' + r"'.format(params[" + key + r"])"
     d[key] = default
+
     return r"r'" + line
 
 def findStars(lines):
