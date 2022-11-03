@@ -3,15 +3,6 @@ import os
 import shutil
 from pathlib import Path
 
-
-preamble = '/*--------------------------------*- C++ -*----------------------------------*\\' + '\n' + \
-            r'| =========                 |                                                 |' + '\n' + \
-            r'| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |' + '\n' + \
-            r'|  \\    /   O peration     | Version:  v2106                                 |' + '\n' + \
-            r'|   \\  /    A nd           | Website:  www.openfoam.com                      |' + '\n' + \
-            r'|    \\/     M anipulation  |                                                 |' + '\n' + \
-            r'\*---------------------------------------------------------------------------*/' + '\n'
-
 def filePointer(fd=None, fp=None, flag='r'):
     if fp is not None:
         f = open(fp, flag)
@@ -79,6 +70,38 @@ def makeFillFile(rez, fd=None, fp=None):
     rez.close()
     return (d)
 
+def makeFillFileParams(rez, fd=None, fp=None):
+    f = filePointer(fd=fd, fp=fp)
+    rez = filePointer(fd=rez, flag='w')
+    lines = f.readlines()
+    f.close()
+    d = {}
+    lines = lines[7:]
+    bound = 0
+    for i, line in enumerate(lines):
+        if i < bound:
+            print('    ', r"r'" + line[:-1] + r"' + '\n' " + '+ \\', file=rez)
+            continue
+        line = searchParam(line[:-1], d)
+        if i == len(lines) - 1:
+            print('    ', line + r" + '\n '", file=rez)
+        else:
+            print('    ', line + r" + '\n' " + '+ \\', file=rez)
+    rez.close()
+    return (d)
+
+def copyCleanFile(rez, fd=None, fp=None):
+    f = filePointer(fd=fd, fp=fp)
+    rez = filePointer(fd=rez, flag='w')
+    lines = f.readlines()
+    f.close()
+    lines = lines[7:]
+    for i, line in enumerate(lines):
+        if i == len(lines) - 1:
+            print('    ', r"r'" + line[:-1] + r"' + '\n '", file=rez)
+        else:
+            print('    ', r"r'" + line[:-1] + r"' + '\n' " + '+ \\', file=rez)
+    rez.close()
 def findParts(lines):
     pattern1 = re.compile('.*\{.*')
     pattern2 = re.compile('.*\}.*')
@@ -128,9 +151,11 @@ def makeFillDuplicateNames(rez, fd=None, fp=None):
 
 
 dist = 'fill'
-src = 'system'
+src_system = '../system'
+src_constant = '../constant'
 dist = Path(Path.cwd(), dist)
-src = Path(Path.cwd(), src)
+src1 = Path(Path.cwd(), src_system)
+src2 = Path(Path.cwd(), src_constant)
 
 shutil.rmtree(dist, ignore_errors=True)
 os.mkdir(dist)
@@ -138,6 +163,8 @@ os.mkdir(dist)
 def makeFiles(src, dist):
     d = {}
     for name in os.listdir(src):
+        if name == 'blockMeshDict':
+            continue
         filename = os.path.join(src, name)
         if os.path.isfile(filename):
             path = Path(dist,name)
@@ -145,11 +172,21 @@ def makeFiles(src, dist):
             print(f'def fill_{name}(params):', '    return ', sep='\n', end='', file=rez)
             if name == 'fvSchemes' or name == 'fvSolution':
                 dd = makeFillDuplicateNames(rez=rez, fp=filename)
+            elif name =='setFieldsDict' or name == 'WENODict':
+                copyCleanFile(rez=rez, fp=filename)
+            elif name =='params':
+                makeFillFileParams(rez=rez, fp=filename)
             else:
                 dd = makeFillFile(rez=rez, fp=filename)
             d[name] = dd
     return d
 
 
-d = makeFiles(src, dist)
-print(d['fvSchemes'].keys())
+d = {}
+d['system'] = makeFiles(src1, dist)
+
+d['constant'] = makeFiles(src2, dist)
+
+f = open(Path(dist, 'parametres.py'), 'w')
+print('filedata = ', d, file=f)
+f.close()
