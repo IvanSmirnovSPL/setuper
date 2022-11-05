@@ -3,6 +3,7 @@ import os
 import shutil
 from pathlib import Path
 from viewDictionary import makeFile
+from makeProgrammParser import makeProgrammSettingsFunction, makeFillFromUserDict, makeDictFromUserFlags
 
 def filePointer(fd=None, fp=None, flag='r'):
     if fp is not None:
@@ -28,6 +29,10 @@ def searchParam(line, d, part=None):
         key = part['key'] +f'_{key}'
     for i in range(20):
         key = key.replace('.', '')
+        key = key.replace(':', '')
+        key = key.replace('|', '')
+        key = key.replace(r'"', '')
+        key = key.replace(r"'", '')
         key = key.replace('/', '')
         key = key.replace('\\', '')
         key = key.replace('(', '_')
@@ -199,5 +204,8 @@ def generateCase(src, dist):
     d['constant'] = makeFiles(constantPath, fillPath)
     d['zero'] = {}
     makeFile(d, 'filedata', Path(dist, 'parametres.py'))
+    makeProgrammSettingsFunction(d, Path(dist, 'rez.txt'))
+    makeDictFromUserFlags(d, Path(dist, 'rez1.txt'))
+    makeFillFromUserDict(d, Path(dist, 'rez2.txt'))
 
 generateCase(Path(Path.cwd().parent, 'srcCase'), Path(Path.cwd(), 'rez'))
