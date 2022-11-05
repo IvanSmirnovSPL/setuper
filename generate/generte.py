@@ -2,6 +2,7 @@ import re
 import os
 import shutil
 from pathlib import Path
+from viewDictionary import makeFile
 
 def filePointer(fd=None, fp=None, flag='r'):
     if fp is not None:
@@ -27,6 +28,8 @@ def searchParam(line, d, part=None):
         key = part['key'] +f'_{key}'
     for i in range(20):
         key = key.replace('.', '')
+        key = key.replace('/', '')
+        key = key.replace('\\', '')
         key = key.replace('(', '_')
         key = key.replace(')', '_')
         key = key.replace(',', '_')
@@ -150,15 +153,7 @@ def makeFillDuplicateNames(rez, fd=None, fp=None):
     return (d)
 
 
-dist = 'fill'
-src_system = '../system'
-src_constant = '../constant'
-dist = Path(Path.cwd(), dist)
-src1 = Path(Path.cwd(), src_system)
-src2 = Path(Path.cwd(), src_constant)
 
-shutil.rmtree(dist, ignore_errors=True)
-os.mkdir(dist)
 
 def makeFiles(src, dist):
     d = {}
@@ -182,11 +177,27 @@ def makeFiles(src, dist):
     return d
 
 
-d = {}
-d['system'] = makeFiles(src1, dist)
+# d = {}
+# d['system'] = makeFiles(src1, dist)
+#
+# d['constant'] = makeFiles(src2, dist)
+# d['zero'] = {}
+#
+# makeFile(d, 'filedata', Path(Path.cwd(), 'parametres.py'))
 
-d['constant'] = makeFiles(src2, dist)
 
-f = open(Path(dist, 'parametres.py'), 'w')
-print('filedata = ', d, file=f)
-f.close()
+
+def generateCase(src, dist):
+    shutil.rmtree(dist, ignore_errors=True)
+    os.mkdir(dist)
+    systemPath = Path(src, 'system')
+    constantPath = Path(src, 'constant')
+    fillPath = Path(dist, 'fill')
+    os.mkdir(fillPath)
+    d = {}
+    d['system'] = makeFiles(systemPath, fillPath)
+    d['constant'] = makeFiles(constantPath, fillPath)
+    d['zero'] = {}
+    makeFile(d, 'filedata', Path(dist, 'parametres.py'))
+
+generateCase(Path(Path.cwd().parent, 'srcCase'), Path(Path.cwd(), 'rez'))
