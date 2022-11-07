@@ -75,11 +75,17 @@ class itemWithPath:
 def constructDictPath(d, rez, curPath):
     for key in d.keys():
         if isinstance(d[key], dict):
-            cP = [i for i in curPath]
-            cP = cP.append(key)
+            cP = []
+            if len(curPath) > 0:
+                cP = curPath.copy()
+            cP.append(key)
             constructDictPath(d[key], rez, cP)
         else:
-            rez[key] = itemWithPath(d[key], curPath)
+            #print('here', key, curPath)
+            #curPath.append(key)
+            rezPath = curPath.copy()
+            rezPath.append(key)
+            rez[key] = itemWithPath(d[key], rezPath)
     return rez
 
 
