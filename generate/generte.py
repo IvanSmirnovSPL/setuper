@@ -13,13 +13,14 @@ def filePointer(fd=None, fp=None, flag='r'):
     return f
 
 def searchParam(line, d, part=None):
-    tmp = line.rfind(';')
+    tmp = line.find(';')
+    line = line[:tmp]
     if tmp == -1 or len(line.split()) < 2 or line.split()[0] == 'dimensions':
         return r"'" + line + r"'"
-    lineList = line[:tmp].split()
+    lineList = line.split()
 
-    st = line.find('(')
-    ed = line.find(')')
+    st = line.rfind('(')
+    ed = line.rfind(')')
     key = lineList[0]
     pattern = re.compile('\$.*')
     if pattern.match(key) is not None:
@@ -41,7 +42,10 @@ def searchParam(line, d, part=None):
         key = key.replace('*', '_')
         key = key.replace('__', '_')
     if st != -1 and ed != -1:
-        default = line[st + 1: ed]
+        if line[st + 1: ed].find(' ') != -1:
+            default = line[st + 1: ed]
+        else:
+            default = lineList[-1]
         line = line[:st] + '({});' + r"'.format(params['" + key + r"'])"
     else:
         default = lineList[-1]
