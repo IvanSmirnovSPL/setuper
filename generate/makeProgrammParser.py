@@ -15,7 +15,7 @@ def makeProgrammSettingsFunction(d, rezPath):
                 type_ = 'int'
             else:
                 type_ = 'str'
-                default = r"'" + default + r"'"
+                default = r"'" + str(default) + r"'"
             default = str(default)
             print(
                 '\t' + r"parser.add_argument('-" + key + r"', '--" + key + r"', metavar='', type=" + type_ + ", default=" + default + r", help='')",
@@ -87,8 +87,3 @@ def constructDictPath(d, rez, curPath):
             rezPath.append(key)
             rez[key] = itemWithPath(d[key], rezPath)
     return rez
-
-
-makeProgrammSettingsFunction(d, 'rez.txt')
-makeDictFromUserFlags(d, 'rez1.txt')
-makeFillFromUserDict(d, 'rez2.txt')

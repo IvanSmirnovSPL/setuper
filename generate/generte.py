@@ -4,6 +4,7 @@ import shutil
 from pathlib import Path
 from viewDictionary import makeFile
 from makeProgrammParser import makeProgrammSettingsFunction, makeFillFromUserDict, makeDictFromUserFlags
+from remake import remake
 
 def filePointer(fd=None, fp=None, flag='r'):
     if fp is not None:
@@ -196,7 +197,7 @@ def makeFiles(src, dist):
 
 
 
-def generateCase(src, dist):
+def generateCase1(src, dist):
     shutil.rmtree(dist, ignore_errors=True)
     os.mkdir(dist)
     systemPath = Path(src, 'system')
@@ -208,8 +209,15 @@ def generateCase(src, dist):
     d['constant'] = makeFiles(constantPath, fillPath)
     d['zero'] = {}
     makeFile(d, 'filedata', Path(dist, 'parametres.py'))
+    return d
+
+def generateCase2(d, src, dist):
     makeProgrammSettingsFunction(d, Path(dist, 'rez.txt'))
     makeDictFromUserFlags(d, Path(dist, 'rez1.txt'))
     makeFillFromUserDict(d, Path(dist, 'rez2.txt'))
+    remake(rezPath=Path(dist, 'Egorych.txt'), propertiesPth=Path(dist, 'rez.txt'), skip=0)
 
-generateCase(Path(Path.cwd().parent, 'srcCase'), Path(Path.cwd(), 'rez'))
+
+d = generateCase1(Path(Path.cwd().parent, 'srcCase'), Path(Path.cwd(), 'rez'))
+#before check parametres.py
+generateCase2(d, Path(Path.cwd().parent, 'srcCase'), Path(Path.cwd(), 'rez'))
