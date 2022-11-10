@@ -177,7 +177,7 @@ def makeFiles(src, dist):
             path = Path(dist,name)
             rez = open(f'{path}.py', 'w')
             print(f'def fill_{name}(params):', '    return ', sep='\n', end='', file=rez)
-            if name == 'fvSchemes' or name == 'fvSolution':
+            if name == 'fvSchemes' or name == 'fvSolution' or name == 'thermophysicalProperties':
                 dd = makeFillDuplicateNames(rez=rez, fp=filename)
             elif name =='setFieldsDict' or name == 'WENODict':
                 copyCleanFile(rez=rez, fp=filename)
