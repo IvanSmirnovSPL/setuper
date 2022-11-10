@@ -29,7 +29,7 @@ system = \
                 'gradSchemes_default': 'linear',
                 'divSchemes_default': 'none',
                 'divSchemes_div_tauMC_': 'linear',
-                'divSchemes_div_S&U_': 'linear',
+                'divSchemes_div_SU_': 'linear',
                 'laplacianSchemes_default': 'corrected',
                 'interpolationSchemes_default': 'linear',
                 'interpolationSchemes_scheme': 'upwind',
@@ -38,42 +38,10 @@ system = \
                 'interpolationSchemes_reconstruct_rhoE_': '$scheme',
                 'snGradSchemes_default': 'corrected',
             },
-        'createPatchDict':
-            {
-                'pointSync': 'false',
-                'name': 'sym',
-                'type': 'symmetry',
-                'constructFrom': 'set',
-                'set': 'symmetry',
-            },
-        'topoSetDict':
-            {
-                'name': 'symmetry',
-                'type': 'faceSet',
-                'action': 'subtract',
-                'source': 'boxToFace',
-                'patch': 'Symmetry',
-                'box': '1e6 1e6 0',
-            },
         'decomposeParDict':
             {
                 'numberOfSubdomains': '8',
                 'method': 'scotch',
-                '': '4 2 1',
-            },
-        'extrudeMeshDict':
-            {
-                'constructFrom': 'surface',
-                'sourceCase': '"<case>"',
-                'sourcePatches': '(sym)',
-                'exposedPatchName': 'sym',
-                'flipNormals': 'false',
-                'extrudeModel': 'offsetSurface',
-                'nLayers': '1',
-                'expansionRatio': '1.0',
-                'thickness': '0.05',
-                'mergeFaces': 'false',
-                'mergeTol': '0',
             },
         'fvSolution':
             {
@@ -90,20 +58,6 @@ system = \
     },
 constant = \
     {
-        'boundaryRegion':
-            {
-                'BoundaryType': 'outlet',
-                'Label': 'Outlet',
-                'BoundaryIndex': '5',
-                'size': '2174',
-            },
-        'cellTable':
-            {
-                'Label': 'Region_1',
-                'MaterialType': 'fluid',
-                'MaterialId': '2',
-                'GroupId': '1',
-            },
         'turbulenceProperties':
             {
                 'simulationType': 'laminar',
