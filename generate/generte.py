@@ -125,11 +125,11 @@ def findParts(lines):
         if pattern1.match(line) is not None:
             tmp = {}
             tmp['key'] = lines[i - 1].split()[0]
-            tmp['lbound'] = i
+            tmp['lbound'] = i + 1
             flag = True
         if flag:
             if pattern2.match(line) is not None:
-                tmp['rbound'] = i
+                tmp['rbound'] = i - 1
                 rez.append(tmp)
                 flag = False
     return rez
@@ -158,7 +158,7 @@ def makeFillDuplicateNames(rez, fd=None, fp=None):
                 if i >= foo['lbound'] and i <= foo['rbound']:
                     part = foo
                     break
-            line = searchParam(line[:-1], d, part)
+            line = searchParam(line, d, part)
             print('    ', line + r" + '\n' " + '+ \\', file=rez)
     rez.close()
     return (d)
