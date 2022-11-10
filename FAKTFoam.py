@@ -52,7 +52,7 @@ class PathsOfCase:
         if os.path.exists(Path(self.case_directory, "0")):
             os.remove(Path(self.case_directory, "0"))
         shutil.copytree(self.zero_dir_path, Path(self.case_directory, "0"))
-        os.system(f'cd {self.case_directory} && setFields >> {self.output_path}')
+        #os.system(f'cd {self.case_directory} && setFields >> {self.output_path}')
 
         (open(self.output_path, 'w')).close()  # clear output file
         np = int(self.files_data['system']['decomposeParDict']['numberOfSubdomains'])
