@@ -6,6 +6,8 @@ from viewDictionary import makeFile
 from makeProgrammParser import makeProgrammSettingsFunction, makeFillFromUserDict, makeDictFromUserFlags
 from remake import remake
 
+
+
 def filePointer(fd=None, fp=None, flag='r'):
     if fp is not None:
         f = open(fp, flag)
@@ -177,9 +179,9 @@ def makeFiles(src, dist):
             path = Path(dist,name)
             rez = open(f'{path}.py', 'w')
             print(f'def fill_{name}(params):', '    return ', sep='\n', end='', file=rez)
-            if name == 'fvSchemes' or name == 'fvSolution' or name == 'thermophysicalProperties':
+            if name == 'fvSchemes' or name == 'fvSolution':
                 dd = makeFillDuplicateNames(rez=rez, fp=filename)
-            elif name =='setFieldsDict' or name == 'WENODict':
+            elif name =='setFieldsDict' or name == 'WENODict' or name =='thermophysicalProperties':
                 copyCleanFile(rez=rez, fp=filename)
             elif name =='params':
                 makeFillFileParams(rez=rez, fp=filename)
