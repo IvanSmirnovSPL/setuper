@@ -31,6 +31,7 @@ def searchParam(line, d, part=None):
         key = part['key'] +f'_{key}'
     for i in range(20):
         key = key.replace('.', '')
+        key = key.replace('&', '')
         key = key.replace(':', '')
         key = key.replace('|', '')
         key = key.replace(r'"', '')
