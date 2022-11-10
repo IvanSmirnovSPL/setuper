@@ -15,9 +15,10 @@ def filePointer(fd=None, fp=None, flag='r'):
 
 def searchParam(line, d, part=None):
     tmp = line.find(';')
-    line = line[:tmp]
-    if tmp == -1 or len(line.split()) < 2 or line.split()[0] == 'dimensions':
+
+    if tmp == -1 or len(line[:tmp].split()) < 2 or line[:tmp].split()[0] == 'dimensions':
         return r"'" + line + r"'"
+    line = line[:tmp]
     lineList = line.split()
 
     st = line.rfind('(')
