@@ -13,4 +13,3 @@ def fill_alpha_water(params, fn=None, fp=None, p=None):
                          boundary_name=params.get('boundary_name', None),
                          value=params.get('value', None), params=p)
     alpha_water.make_boundary_conditions(filename=fn, fp=fp)
-

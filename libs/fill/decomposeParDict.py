@@ -1,13 +1,13 @@
 def fill_decomposeParDict(params):
-    return ' numberOfSubdomains {} ; '.format(params['numberOfSubdomains']) + '\n' + \
-           ' method          scotch; ' + '\n'
-
-# /*
-# 1. Расчёт на одном ядре.
-# interPhaseChangeFoam
-#
-# 2. Расчёт на нескольких ядрах.
-# decomposeParDict
-# mpirun -np number interPhaseChangeFoam -parallel
-# reconstractPar
-# */
+    return      r'FoamFile' + '\n' + \
+     r'{' + '\n' + \
+     r'	version 2.0;' + '\n' + \
+     r'	format ascii;' + '\n' + \
+     r'	class dictionary;' + '\n' + \
+     r'	location system;' + '\n' + \
+     r'	object decomposeParDict;' + '\n' + \
+     r'}' + '\n' + \
+     r'// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //' + '\n' + \
+     '' + '\n' + \
+     r'numberOfSubdomains {};'.format(params['numberOfSubdomains']) + '\n' + \
+     r'method {};'.format(params['method']) + '\n'

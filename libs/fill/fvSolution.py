@@ -1,27 +1,36 @@
-def fill_fvSolution(param):
-    return '  \n' + \
-           ' solvers \n' + \
-           ' { \n' + \
-           '      "(thermo:rho|rhoU|rhoE|E)" \n' + \
-           '     { \n' + \
-           '         solver          {}; \n'.format(param['solver']) + \
-           '     } \n' + \
-           '  \n' + \
-           '     U \n' + \
-           '     { \n' + \
-           '         solver          {}; \n'.format(param['U_solver']) + \
-           '         smoother        {}; \n'.format(param['smoother']) + \
-           '         nSweeps         {}; \n'.format(param['nSweeps']) + \
-           '         tolerance       {}; \n'.format(param['tolerance']) + \
-           '         relTol          {}; \n'.format(param['relTol']) + \
-           '     } \n' + \
-           '  \n' + \
-           '     h \n' + \
-           '     { \n' + \
-           '         {}; \n'.format(param['U']) + \
-           '         tolerance       1e-10; \n' + \
-           '         relTol          0; \n' + \
-           '     } \n' + \
-           ' } \n' + \
-           '  \n' + \
-           '  \n'
+def fill_fvSolution(params):
+    return      r'FoamFile' + '\n' + \
+     r'{' + '\n' + \
+     r'    version     2.0;' + '\n' + \
+     r'    format      ascii;' + '\n' + \
+     r'    class       dictionary;' + '\n' + \
+     r'    location    "system";' + '\n' + \
+     r'    object      fvSolution;' + '\n' + \
+     r'}' + '\n' + \
+     r'// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //' + '\n' + \
+     '' + '\n' + \
+     'solver' + '\n' + \
+     '' + '\n' + \
+     '    ' + '\n' + \
+     '    ' + '\n' + \
+     r'solver {};'.format(params['E_solver']) + '\n' + \
+     r'preconditioner {};'.format(params['E_preconditioner']) + '\n' + \
+     r'tolerance {};'.format(params['E_tolerance']) + '\n' + \
+     r'relTol {};'.format(params['E_relTol']) + '\n' + \
+     '    ' + '\n' + \
+     '    ' + '\n' + \
+     '    ' + '\n' + \
+     r'solver {};'.format(params['U_solver']) + '\n' + \
+     r'preconditioner {};'.format(params['U_preconditioner']) + '\n' + \
+     r'tolerance {};'.format(params['U_tolerance']) + '\n' + \
+     r'relTol {};'.format(params['U_relTol']) + '\n' + \
+     '    ' + '\n' + \
+     '' + '\n' + \
+     '' + '\n' + \
+     'SIMPL' + '\n' + \
+     '' + '\n' + \
+     r'nNonOrthogonalCorrectors {};'.format(params['SIMPLE_nNonOrthogonalCorrectors']) + '\n' + \
+     '' + '\n' + \
+     '' + '\n' + \
+     '' + '\n' + \
+     '// ************************************************************************* /' + '\n '

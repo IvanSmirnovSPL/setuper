@@ -34,7 +34,9 @@ def unpackArg(arg, sep='_'):
 
 def fillFromUserDict(userDict, files_data):
     for key in userDict.keys():
+        print(key, userDict[key], type(files_data['system']))
         if key == 'application':
+            print(userDict[key])
             files_data['system']['controlDict']['application'] = str(userDict[key])
         elif key == 'startFrom':
             files_data['system']['controlDict']['startFrom'] = str(userDict[key])

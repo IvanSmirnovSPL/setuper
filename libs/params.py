@@ -54,8 +54,8 @@ system = \
                 'U_tolerance': '1e-06',
                 'U_relTol': '0',
                 'SIMPLE_nNonOrthogonalCorrectors': '2',
-            },
-    },
+            }
+    }
 constant = \
     {
         'turbulenceProperties':
@@ -75,8 +75,8 @@ constant = \
         'g':
             {
                 'value': '0 0 0',
-            },
-    },
+            }
+    }
 
 zero = \
     {
