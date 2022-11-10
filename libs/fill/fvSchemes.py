@@ -1,14 +1,5 @@
 def fill_fvSchemes(params):
-    return      r'FoamFile' + '\n' + \
-     r'{' + '\n' + \
-     r'    version     2.0;' + '\n' + \
-     r'    format      ascii;' + '\n' + \
-     r'    class       dictionary;' + '\n' + \
-     r'    location    "system";' + '\n' + \
-     r'    object      fvSchemes;' + '\n' + \
-     r'}' + '\n' + \
-     r'// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //' + '\n' + \
-     'compressible' + '\n' + \
+    return      'compressible' + '\n' + \
      '{' + '\n' + \
      r'fluxScheme {};'.format(params['compressible_fluxScheme']) + '\n' + \
      '}' + '\n' + \
@@ -27,8 +18,8 @@ def fill_fvSchemes(params):
      'divSchemes' + '\n' + \
      '{' + '\n' + \
      r'default {};'.format(params['divSchemes_default']) + '\n' + \
-     r'    div({});'.format(params['divSchemes_div_tauMC_']) + '\n' + \
-     r'    div(({});'.format(params['divSchemes_div_SU_']) + '\n' + \
+     r'    div(tauMC) Gauss {};'.format(params['divSchemes_div_tauMC_']) + '\n' + \
+     r'    div((S&U)) Gauss {};'.format(params['divSchemes_div_SU_']) + '\n' + \
      '}' + '\n' + \
      '' + '\n' + \
      'laplacianSchemes' + '\n' + \
@@ -41,9 +32,9 @@ def fill_fvSchemes(params):
      r'default {};'.format(params['interpolationSchemes_default']) + '\n' + \
      r'scheme {};'.format(params['interpolationSchemes_scheme']) + '\n' + \
      '    ' + '\n' + \
-     r'    reconstruct({});'.format(params['interpolationSchemes_reconstruct_thermorho_']) + '\n' + \
-     r'    reconstruct({});'.format(params['interpolationSchemes_reconstruct_rhoU_']) + '\n' + \
-     r'    reconstruct({});'.format(params['interpolationSchemes_reconstruct_rhoE_']) + '\n' + \
+     r'    reconstruct(thermo:rho) {};'.format(params['interpolationSchemes_reconstruct_thermorho_']) + '\n' + \
+     r'    reconstruct(rhoU) {};'.format(params['interpolationSchemes_reconstruct_rhoU_']) + '\n' + \
+     r'    reconstruct(rhoE) {};'.format(params['interpolationSchemes_reconstruct_rhoE_']) + '\n' + \
      '}' + '\n' + \
      '' + '\n' + \
      'snGradSchemes' + '\n' + \

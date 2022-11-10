@@ -1,14 +1,5 @@
 def fill_fvSolution(params):
-    return      r'FoamFile' + '\n' + \
-     r'{' + '\n' + \
-     r'    version     2.0;' + '\n' + \
-     r'    format      ascii;' + '\n' + \
-     r'    class       dictionary;' + '\n' + \
-     r'    location    "system";' + '\n' + \
-     r'    object      fvSolution;' + '\n' + \
-     r'}' + '\n' + \
-     r'// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //' + '\n' + \
-     '' + '\n' + \
+    return     '' + '\n' + \
      'solvers' + '\n' + \
      '{' + '\n' + \
      '    E' + '\n' + \
