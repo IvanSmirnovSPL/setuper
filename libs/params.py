@@ -2,15 +2,14 @@ system = \
     {
         'controlDict':
             {
-                'libs': "libWENOEXT.so",
-                'application': 'FAKTFoam',
+                'application': 'laplacianMesh',
                 'startFrom': 'startTime',
                 'startTime': '0',
                 'stopAt': 'endTime',
-                'endTime': '1e-3',
-                'deltaT': '1e-07',
-                'writeControl': 'adjustable',
-                'writeInterval': '1e-5',
+                'endTime': '300',
+                'deltaT': '1e-8',
+                'writeControl': 'timeStep',
+                'writeInterval': '10',
                 'purgeWrite': '0',
                 'writeFormat': 'ascii',
                 'writePrecision': '6',
@@ -19,59 +18,92 @@ system = \
                 'timePrecision': '6',
                 'runTimeModifiable': 'true',
                 'adjustTimeStep': 'yes',
-                'maxCo': '0.1',
+                'maxCo': '0.5',
                 'maxDeltaT': '1',
-            },
-        'decomposeParDict':
-            {
-                'numberOfSubdomains': '1'
             },
         'fvSchemes':
             {
-                'fluxScheme': 'AUSMPlusUp',
-                'ddtSchemes': 'Euler',
-                'fluxIntegrator': 'RK45',
-                'gradSchemes': 'linear',
-                'divSchemes': 'none',
-                'div_tauMC': 'WENOUpwindFit 3 0',
-                'laplacianSchemes': 'linear corrected',
-                'interpolationSchemes': 'linear',
-                'reconstruct_U': 'upwind',
-                'reconstruct_p': 'upwind',
-                'reconstruct_thermo': 'upwind',
-                'snGradSchemes': 'corrected',
+                'compressible_fluxScheme': 'AUSMPlusUp',
+                'ddtSchemes_default': 'Euler',
+                'ddtSchemes_fluxIntegrator': 'Euler',
+                'gradSchemes_default': 'linear',
+                'divSchemes_default': 'none',
+                'divSchemes_div_tauMC_': 'linear',
+                'divSchemes_div_S&U_': 'linear',
+                'laplacianSchemes_default': 'corrected',
+                'interpolationSchemes_default': 'linear',
+                'interpolationSchemes_scheme': 'upwind',
+                'interpolationSchemes_reconstruct_thermorho_': '$scheme',
+                'interpolationSchemes_reconstruct_rhoU_': '$scheme',
+                'interpolationSchemes_reconstruct_rhoE_': '$scheme',
+                'snGradSchemes_default': 'corrected',
+            },
+        'createPatchDict':
+            {
+                'pointSync': 'false',
+                'name': 'sym',
+                'type': 'symmetry',
+                'constructFrom': 'set',
+                'set': 'symmetry',
+            },
+        'topoSetDict':
+            {
+                'name': 'symmetry',
+                'type': 'faceSet',
+                'action': 'subtract',
+                'source': 'boxToFace',
+                'patch': 'Symmetry',
+                'box': '1e6 1e6 0',
+            },
+        'decomposeParDict':
+            {
+                'numberOfSubdomains': '8',
+                'method': 'scotch',
+                '': '4 2 1',
+            },
+        'extrudeMeshDict':
+            {
+                'constructFrom': 'surface',
+                'sourceCase': '"<case>"',
+                'sourcePatches': '(sym)',
+                'exposedPatchName': 'sym',
+                'flipNormals': 'false',
+                'extrudeModel': 'offsetSurface',
+                'nLayers': '1',
+                'expansionRatio': '1.0',
+                'thickness': '0.05',
+                'mergeFaces': 'false',
+                'mergeTol': '0',
             },
         'fvSolution':
             {
-                'solver': 'diagonal',
-                'U_solver': 'smoothSolver',
-                'smoother': 'GaussSeidel',
-                'nSweeps': '2',
-                'tolerance': '1e-9',
-                'relTol': '0.01',
-                'U': '$U',
+                'E_solver': 'PCG',
+                'E_preconditioner': 'DIC',
+                'E_tolerance': '1e-06',
+                'E_relTol': '0',
+                'U_solver': 'PCG',
+                'U_preconditioner': 'DIC',
+                'U_tolerance': '1e-06',
+                'U_relTol': '0',
+                'SIMPLE_nNonOrthogonalCorrectors': '2',
             },
-        'params':
-            {
-                'a': '0.1',
-                'L': '5.0',
-                'N': '1000',
-                'shift': '0.0',
-                'p_left': '1.1e7',
-                'p_right': '8.9e6',
-                'T_left': '584.2360251538847',
-                'T_right': '576.5818015076865'
-            },
-        'setFieldsDict': {}
-
-
-
-
-
-    }
-
+    },
 constant = \
     {
+        'boundaryRegion':
+            {
+                'BoundaryType': 'outlet',
+                'Label': 'Outlet',
+                'BoundaryIndex': '5',
+                'size': '2174',
+            },
+        'cellTable':
+            {
+                'Label': 'Region_1',
+                'MaterialType': 'fluid',
+                'MaterialId': '2',
+                'GroupId': '1',
+            },
         'turbulenceProperties':
             {
                 'simulationType': 'laminar',
@@ -79,26 +111,18 @@ constant = \
         'thermophysicalProperties':
             {
                 'phases': 'vapour liquid',
-                'Tmin': '0.001',
-                'Tmax': '1000000',
-                'relTol': '1e-5',
-                'maxIter': '1000',
-                'logPSatFile': 'logPSat.dat',
-                'TSatFile': 'TSat.dat',
-                'rho1SatFile': 'rhovSat.dat',
-                'rho2SatFile': 'rholSat.dat',
-                'rho1SatDerFile': 'rhovSatDer.dat',
-                'rho2SatDerFile': 'rholSatDer.dat',
-                'gvFile': 'gv.dat',
-                'glFile': 'gl.dat',
-                'TstepFile': 'Tstep.dat',
+                'properties_rhoe': 'vapor_mass_fraction temperature pressure speed_of_sound viscosity thermal_conductivity',
+                'properties_TP': 'vapor_mass_fraction density internal_energy speed_of_sound viscosity thermal_conductivity',
+                'properties_TRho': '(vapor_volume_fraction)',
+                'name': 'alphav',
+                'type': 'AlphavTRho',
+                'mixture_calculation_method': 'volume_average',
             },
         'g':
             {
-                'g': ' 0 9.81 0',
-                'dimensions_g' : '[0 1 -2 0 0 0 0]',
+                'value': '0 0 0',
             },
-    }
+    },
 
 zero = \
     {
