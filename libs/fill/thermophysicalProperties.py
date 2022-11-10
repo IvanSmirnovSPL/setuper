@@ -1,14 +1,5 @@
 def fill_thermophysicalProperties(params):
-    return      r'FoamFile' + '\n' + \
-     r'{' + '\n' + \
-     r'    version     2.0;' + '\n' + \
-     r'    format      ascii;' + '\n' + \
-     r'    class       dictionary;' + '\n' + \
-     r'    location    "constant";' + '\n' + \
-     r'    object      thermophysicalProperties;' + '\n' + \
-     r'}' + '\n' + \
-     r'// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //' + '\n' + \
-     '' + '\n' + \
+    return  '' + '\n' + \
      r'phases ({});'.format(params['phases']) + '\n' + \
      '' + '\n' + \
      r'properties_rhoe ({});'.format(params['properties_rhoe']) + '\n' + \
