@@ -212,13 +212,13 @@ def generateCase1(src, dist):
     makeFile(d, 'filedata', Path(dist, 'parametres.py'))
     return d
 
-def generateCase2(d, src, dist):
+def generateCase2(d, dist):
     makeProgrammSettingsFunction(d, Path(dist, 'rez.txt'))
     makeDictFromUserFlags(d, Path(dist, 'rez1.txt'))
     makeFillFromUserDict(d, Path(dist, 'rez2.txt'))
     remake(rezPath=Path(dist, 'Egorych.txt'), propertiesPth=Path(dist, 'rez.txt'), skip=0)
 
 
-d = generateCase1(Path(Path.cwd().parent, 'srcCase'), Path(Path.cwd(), 'rez'))
+d = generateCase1('/home/ivan/Documents/TSAGI/newFaKTFoamCase/2D_Nozzel', Path(Path.cwd().parent, 'rez'))
 #before check parametres.py
-generateCase2(d, Path(Path.cwd().parent, 'srcCase'), Path(Path.cwd(), 'rez'))
+generateCase2(d, Path(Path.cwd().parent, 'rez'))
