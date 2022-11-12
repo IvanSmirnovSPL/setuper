@@ -2,14 +2,14 @@ system = \
     {
         'controlDict':
             {
-                'application': 'laplacianMesh',
-                'startFrom': 'startTime',
+                'application': 'FAKTFoam',
+                'startFrom': 'latestTime',
                 'startTime': '0',
                 'stopAt': 'endTime',
-                'endTime': '300',
-                'deltaT': '1e-8',
+                'endTime': '1e-2',
+                'deltaT': '1e-07',
                 'writeControl': 'timeStep',
-                'writeInterval': '10',
+                'writeInterval': '50',
                 'purgeWrite': '0',
                 'writeFormat': 'ascii',
                 'writePrecision': '6',

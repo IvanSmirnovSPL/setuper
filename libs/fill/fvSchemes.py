@@ -1,5 +1,5 @@
 def fill_fvSchemes(params):
-    return  r'' + '\n' + \
+    return r'' + '\n' + \
      r'compressible' + '\n' + \
      r'{' + '\n' + \
      r'    fluxScheme       AUSMPlusUp;' + '\n' + \
