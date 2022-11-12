@@ -93,14 +93,14 @@ def fillFromUserDict(userDict, files_data):
 
 
 def programmSettings(parser):
-    parser.add_argument('-application', '--application', metavar='', type=str, default='laplacianMesh', help='')
-    parser.add_argument('-startFrom', '--startFrom', metavar='', type=str, default='startTime', help='')
+    parser.add_argument('-application', '--application', metavar='', type=str, default='FAKTFoam', help='')
+    parser.add_argument('-startFrom', '--startFrom', metavar='', type=str, default='latestTime', help='')
     parser.add_argument('-startTime', '--startTime', metavar='', type=str, default='0', help='')
     parser.add_argument('-stopAt', '--stopAt', metavar='', type=str, default='endTime', help='')
-    parser.add_argument('-endTime', '--endTime', metavar='', type=str, default='300', help='')
-    parser.add_argument('-deltaT', '--deltaT', metavar='', type=str, default='1e-8', help='')
+    parser.add_argument('-endTime', '--endTime', metavar='', type=str, default='1e-2', help='')
+    parser.add_argument('-deltaT', '--deltaT', metavar='', type=str, default='1e-07', help='')
     parser.add_argument('-writeControl', '--writeControl', metavar='', type=str, default='timeStep', help='')
-    parser.add_argument('-writeInterval', '--writeInterval', metavar='', type=str, default='10', help='')
+    parser.add_argument('-writeInterval', '--writeInterval', metavar='', type=str, default='50', help='')
     parser.add_argument('-purgeWrite', '--purgeWrite', metavar='', type=str, default='0', help='')
     parser.add_argument('-writeFormat', '--writeFormat', metavar='', type=str, default='ascii', help='')
     parser.add_argument('-writePrecision', '--writePrecision', metavar='', type=str, default='6', help='')
