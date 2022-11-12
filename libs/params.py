@@ -80,29 +80,16 @@ constant = \
 
 zero = \
     {
-        'p':
+        'infConditions':
             {
-                'internal_value': '0',
-                'value': {'out_with_value': 'uniform $p_right', 'in_with_value': 'uniform $p_left'},
-                'boundary_types': ['empty', 'out_with_value', 'in_with_value'],
-            },
-        'T':
-            {
-                'internal_value': '1',
-                'value': {'out_with_value': 'uniform $T_right', 'in_with_value': 'uniform $T_left'},
-                'boundary_types': ['empty', 'out_with_value', 'in_with_value'],
-            },
-        'U':
-            {
-                'internal_value': '(0 0 0)',
-                'value': {'out_with_value': 'uniform (0 0 0)', 'in_with_value': 'uniform (0 0 0)'},
-                'boundary_types': ['empty', 'out_with_value', 'in_with_value'],
-            },
-        'alpha.vapour':
-            {
-
-                'internal_value': '1.0',
-                'boundary_types': ['empty', 'out_with_value', 'in_with_value'],
+                'U_inf': '(0 0 0)',
+                'p_inf': '300',
+                'T_inf': '300',
+                'alpha_inf': '1.0',
+                'T_wall': '300',
+                'p_nozzle': '3e+3',
+                'T_nozzle': '700',
+                'alpha_nozzle': '1.0'
             }
     }
 
