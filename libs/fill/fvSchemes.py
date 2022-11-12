@@ -1,46 +1,57 @@
 def fill_fvSchemes(params):
-    return      'compressible' + '\n' + \
-     '{' + '\n' + \
-     r'fluxScheme {};'.format(params['compressible_fluxScheme']) + '\n' + \
-     '}' + '\n' + \
-     '' + '\n' + \
-     'ddtSchemes' + '\n' + \
-     '{' + '\n' + \
-     r'default {};'.format(params['ddtSchemes_default']) + '\n' + \
-     r'fluxIntegrator {};'.format(params['ddtSchemes_fluxIntegrator']) + '\n' + \
-     '}' + '\n' + \
-     '' + '\n' + \
-     'gradSchemes' + '\n' + \
-     '{' + '\n' + \
-     r'default Gauss {};'.format(params['gradSchemes_default']) + '\n' + \
-     '}' + '\n' + \
-     '' + '\n' + \
-     'divSchemes' + '\n' + \
-     '{' + '\n' + \
-     r'default {};'.format(params['divSchemes_default']) + '\n' + \
-     r'    div(tauMC) Gauss {};'.format(params['divSchemes_div_tauMC_']) + '\n' + \
-     r'    div((S&U)) Gauss {};'.format(params['divSchemes_div_SU_']) + '\n' + \
-     '}' + '\n' + \
-     '' + '\n' + \
-     'laplacianSchemes' + '\n' + \
-     '{' + '\n' + \
-     r'default Gauss linear {};'.format(params['laplacianSchemes_default']) + '\n' + \
-     '}' + '\n' + \
-     '' + '\n' + \
-     'interpolationSchemes' + '\n' + \
-     '{' + '\n' + \
-     r'default {};'.format(params['interpolationSchemes_default']) + '\n' + \
-     r'scheme {};'.format(params['interpolationSchemes_scheme']) + '\n' + \
-     '    ' + '\n' + \
-     r'    reconstruct(thermo:rho) {};'.format(params['interpolationSchemes_reconstruct_thermorho_']) + '\n' + \
-     r'    reconstruct(rhoU) {};'.format(params['interpolationSchemes_reconstruct_rhoU_']) + '\n' + \
-     r'    reconstruct(rhoE) {};'.format(params['interpolationSchemes_reconstruct_rhoE_']) + '\n' + \
-     '}' + '\n' + \
-     '' + '\n' + \
-     'snGradSchemes' + '\n' + \
-     '{' + '\n' + \
-     r'default {};'.format(params['snGradSchemes_default']) + '\n' + \
-     '}' + '\n' + \
-     '' + '\n' + \
-     '' + '\n' + \
-     '// ************************************************************************* /' + '\n '
+    return  r'' + '\n' + \
+     r'compressible' + '\n' + \
+     r'{' + '\n' + \
+     r'    fluxScheme       AUSMPlusUp;' + '\n' + \
+     r'}' + '\n' + \
+     r'' + '\n' + \
+     r'ddtSchemes' + '\n' + \
+     r'{' + '\n' + \
+     r'    default          Euler;' + '\n' + \
+     r'    fluxIntegrator   RK2SSP;' + '\n' + \
+     r'}' + '\n' + \
+     r'' + '\n' + \
+     r'gradSchemes' + '\n' + \
+     r'{' + '\n' + \
+     r'    default         none;//cellLimited<Venkatakrishnan> leastSquares 1.0;' + '\n' + \
+     r'    a cellLimited<Venkatakrishnan> leastSquares 1.0;' + '\n' + \
+     r'    grad(thermo:rho) leastSquares;' + '\n' + \
+     r'    grad(magSqr(rhoU)) leastSquares;' + '\n' + \
+     r'    grad(rhoE) leastSquares;' + '\n' + \
+     r'    grad(U) leastSquares;' + '\n' + \
+     r'    grad(T) leastSquares;' + '\n' + \
+     r'}' + '\n' + \
+     r'' + '\n' + \
+     r'divSchemes' + '\n' + \
+     r'{' + '\n' + \
+     r'    default         none;' + '\n' + \
+     r'' + '\n' + \
+     r'    div(tauMC)      Gauss linear;//WENOUpwindFit 3 0;' + '\n' + \
+     r'    div((S&U))      Gauss linear;//WENOUpwindFit 3 0;' + '\n' + \
+     r'}' + '\n' + \
+     r'' + '\n' + \
+     r'laplacianSchemes' + '\n' + \
+     r'{' + '\n' + \
+     r'    default         Gauss linear corrected;' + '\n' + \
+     r'}' + '\n' + \
+     r'' + '\n' + \
+     r'interpolationSchemes' + '\n' + \
+     r'{' + '\n' + \
+     r'    default         none;' + '\n' + \
+     r'    flux(U)         linear;' + '\n' + \
+     r'    interpolate(thermo:c) linear;' + '\n' + \
+     r'    ' + '\n' + \
+     r'    scheme upwind;//vanLeer;//linearUpwind a;//vanLeer;//Minmod; //vanLeer;' + '\n' + \
+     r'    ' + '\n' + \
+     r'    reconstruct(thermo:rho) $scheme;' + '\n' + \
+     r'    reconstruct(rhoU) $scheme;' + '\n' + \
+     r'    reconstruct(rhoE) $scheme;' + '\n' + \
+     r'' + '\n' + \
+     r'}' + '\n' + \
+     r'' + '\n' + \
+     r'snGradSchemes' + '\n' + \
+     r'{' + '\n' + \
+     r'    default         corrected;' + '\n' + \
+     r'}' + '\n' + \
+     r'' + '\n' + \
+     r'// ************************************************************************* //' + '\n '

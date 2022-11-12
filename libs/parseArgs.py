@@ -34,9 +34,8 @@ def unpackArg(arg, sep='_'):
 
 def fillFromUserDict(userDict, files_data):
     for key in userDict.keys():
-        print(key, userDict[key], type(files_data['system']))
+        #print(key, userDict[key], type(files_data['system']))
         if key == 'application':
-            print(userDict[key])
             files_data['system']['controlDict']['application'] = str(userDict[key])
         elif key == 'startFrom':
             files_data['system']['controlDict']['startFrom'] = str(userDict[key])
@@ -72,73 +71,8 @@ def fillFromUserDict(userDict, files_data):
             files_data['system']['controlDict']['maxCo'] = str(userDict[key])
         elif key == 'maxDeltaT':
             files_data['system']['controlDict']['maxDeltaT'] = str(userDict[key])
-        elif key == 'compressible_fluxScheme':
-            files_data['system']['fvSchemes']['compressible_fluxScheme'] = str(userDict[key])
-        elif key == 'ddtSchemes_default':
-            files_data['system']['fvSchemes']['ddtSchemes_default'] = str(userDict[key])
-        elif key == 'ddtSchemes_fluxIntegrator':
-            files_data['system']['fvSchemes']['ddtSchemes_fluxIntegrator'] = str(userDict[key])
-        elif key == 'gradSchemes_default':
-            files_data['system']['fvSchemes']['gradSchemes_default'] = str(userDict[key])
-        elif key == 'divSchemes_default':
-            files_data['system']['fvSchemes']['divSchemes_default'] = str(userDict[key])
-        elif key == 'divSchemes_div_tauMC_':
-            files_data['system']['fvSchemes']['divSchemes_div_tauMC_'] = str(userDict[key])
-        elif key == 'divSchemes_div_SU_':
-            files_data['system']['fvSchemes']['divSchemes_div_SU_'] = str(userDict[key])
-        elif key == 'laplacianSchemes_default':
-            files_data['system']['fvSchemes']['laplacianSchemes_default'] = str(userDict[key])
-        elif key == 'interpolationSchemes_default':
-            files_data['system']['fvSchemes']['interpolationSchemes_default'] = str(userDict[key])
-        elif key == 'interpolationSchemes_scheme':
-            files_data['system']['fvSchemes']['interpolationSchemes_scheme'] = str(userDict[key])
-        elif key == 'interpolationSchemes_reconstruct_thermorho_':
-            files_data['system']['fvSchemes']['interpolationSchemes_reconstruct_thermorho_'] = str(userDict[key])
-        elif key == 'interpolationSchemes_reconstruct_rhoU_':
-            files_data['system']['fvSchemes']['interpolationSchemes_reconstruct_rhoU_'] = str(userDict[key])
-        elif key == 'interpolationSchemes_reconstruct_rhoE_':
-            files_data['system']['fvSchemes']['interpolationSchemes_reconstruct_rhoE_'] = str(userDict[key])
-        elif key == 'snGradSchemes_default':
-            files_data['system']['fvSchemes']['snGradSchemes_default'] = str(userDict[key])
-        elif key == 'numberOfSubdomains':
-            files_data['system']['decomposeParDict']['numberOfSubdomains'] = str(userDict[key])
-        elif key == 'method':
-            files_data['system']['decomposeParDict']['method'] = str(userDict[key])
-        elif key == 'E_solver':
             files_data['system']['fvSolution']['E_solver'] = str(userDict[key])
-        elif key == 'E_preconditioner':
-            files_data['system']['fvSolution']['E_preconditioner'] = str(userDict[key])
-        elif key == 'E_tolerance':
-            files_data['system']['fvSolution']['E_tolerance'] = str(userDict[key])
-        elif key == 'E_relTol':
-            files_data['system']['fvSolution']['E_relTol'] = str(userDict[key])
-        elif key == 'U_solver':
-            files_data['system']['fvSolution']['U_solver'] = str(userDict[key])
-        elif key == 'U_preconditioner':
-            files_data['system']['fvSolution']['U_preconditioner'] = str(userDict[key])
-        elif key == 'U_tolerance':
-            files_data['system']['fvSolution']['U_tolerance'] = str(userDict[key])
-        elif key == 'U_relTol':
-            files_data['system']['fvSolution']['U_relTol'] = str(userDict[key])
-        elif key == 'SIMPLE_nNonOrthogonalCorrectors':
-            files_data['system']['fvSolution']['SIMPLE_nNonOrthogonalCorrectors'] = str(userDict[key])
-        elif key == 'simulationType':
-            files_data['constant']['turbulenceProperties']['simulationType'] = str(userDict[key])
-        elif key == 'phases':
-            files_data['constant']['thermophysicalProperties']['phases'] = str(userDict[key])
-        elif key == 'properties_rhoe':
-            files_data['constant']['thermophysicalProperties']['properties_rhoe'] = str(userDict[key])
-        elif key == 'properties_TP':
-            files_data['constant']['thermophysicalProperties']['properties_TP'] = str(userDict[key])
-        elif key == 'properties_TRho':
-            files_data['constant']['thermophysicalProperties']['properties_TRho'] = str(userDict[key])
-        elif key == 'name':
-            files_data['constant']['thermophysicalProperties']['name'] = str(userDict[key])
-        elif key == 'type':
-            files_data['constant']['thermophysicalProperties']['type'] = str(userDict[key])
-        elif key == 'mixture_calculation_method':
-            files_data['constant']['thermophysicalProperties']['mixture_calculation_method'] = str(userDict[key])
-        if key == 'U_inf':
+        elif key == 'U_inf':
             files_data['0.orig']['infConditions']['U_inf'] = str(userDict[key])
         elif key == 'p_inf':
             files_data['0.orig']['infConditions']['p_inf'] = str(userDict[key])
@@ -177,57 +111,6 @@ def programmSettings(parser):
     parser.add_argument('-adjustTimeStep', '--adjustTimeStep', metavar='', type=str, default='yes', help='')
     parser.add_argument('-maxCo', '--maxCo', metavar='', type=str, default='0.5', help='')
     parser.add_argument('-maxDeltaT', '--maxDeltaT', metavar='', type=str, default='1', help='')
-    parser.add_argument('-compressible_fluxScheme', '--compressible_fluxScheme', metavar='', type=str,
-                        default='AUSMPlusUp', help='')
-    parser.add_argument('-ddtSchemes_default', '--ddtSchemes_default', metavar='', type=str, default='Euler', help='')
-    parser.add_argument('-ddtSchemes_fluxIntegrator', '--ddtSchemes_fluxIntegrator', metavar='', type=str,
-                        default='Euler', help='')
-    parser.add_argument('-gradSchemes_default', '--gradSchemes_default', metavar='', type=str, default='linear',
-                        help='')
-    parser.add_argument('-divSchemes_default', '--divSchemes_default', metavar='', type=str, default='none', help='')
-    parser.add_argument('-divSchemes_div_tauMC_', '--divSchemes_div_tauMC_', metavar='', type=str, default='linear',
-                        help='')
-    parser.add_argument('-divSchemes_div_SU_', '--divSchemes_div_SU_', metavar='', type=str, default='linear', help='')
-    parser.add_argument('-laplacianSchemes_default', '--laplacianSchemes_default', metavar='', type=str,
-                        default='corrected', help='')
-    parser.add_argument('-interpolationSchemes_default', '--interpolationSchemes_default', metavar='', type=str,
-                        default='linear', help='')
-    parser.add_argument('-interpolationSchemes_scheme', '--interpolationSchemes_scheme', metavar='', type=str,
-                        default='upwind', help='')
-    parser.add_argument('-interpolationSchemes_reconstruct_thermorho_', '--interpolationSchemes_reconstruct_thermorho_',
-                        metavar='', type=str, default='$scheme', help='')
-    parser.add_argument('-interpolationSchemes_reconstruct_rhoU_', '--interpolationSchemes_reconstruct_rhoU_',
-                        metavar='', type=str, default='$scheme', help='')
-    parser.add_argument('-interpolationSchemes_reconstruct_rhoE_', '--interpolationSchemes_reconstruct_rhoE_',
-                        metavar='', type=str, default='$scheme', help='')
-    parser.add_argument('-snGradSchemes_default', '--snGradSchemes_default', metavar='', type=str, default='corrected',
-                        help='')
-    parser.add_argument('-numberOfSubdomains', '--numberOfSubdomains', metavar='', type=str, default='8', help='')
-    parser.add_argument('-method', '--method', metavar='', type=str, default='scotch', help='')
-    parser.add_argument('-E_solver', '--E_solver', metavar='', type=str, default='PCG', help='')
-    parser.add_argument('-E_preconditioner', '--E_preconditioner', metavar='', type=str, default='DIC', help='')
-    parser.add_argument('-E_tolerance', '--E_tolerance', metavar='', type=str, default='1e-06', help='')
-    parser.add_argument('-E_relTol', '--E_relTol', metavar='', type=str, default='0', help='')
-    parser.add_argument('-U_solver', '--U_solver', metavar='', type=str, default='PCG', help='')
-    parser.add_argument('-U_preconditioner', '--U_preconditioner', metavar='', type=str, default='DIC', help='')
-    parser.add_argument('-U_tolerance', '--U_tolerance', metavar='', type=str, default='1e-06', help='')
-    parser.add_argument('-U_relTol', '--U_relTol', metavar='', type=str, default='0', help='')
-    parser.add_argument('-SIMPLE_nNonOrthogonalCorrectors', '--SIMPLE_nNonOrthogonalCorrectors', metavar='', type=str,
-                        default='2', help='')
-    parser.add_argument('-simulationType', '--simulationType', metavar='', type=str, default='laminar', help='')
-    parser.add_argument('-phases', '--phases', metavar='', type=str, default='vapour liquid', help='')
-    parser.add_argument('-properties_rhoe', '--properties_rhoe', metavar='', type=str,
-                        default='vapor_mass_fraction temperature pressure speed_of_sound viscosity thermal_conductivity',
-                        help='')
-    parser.add_argument('-properties_TP', '--properties_TP', metavar='', type=str,
-                        default='vapor_mass_fraction density internal_energy speed_of_sound viscosity thermal_conductivity',
-                        help='')
-    parser.add_argument('-properties_TRho', '--properties_TRho', metavar='', type=str,
-                        default='(vapor_volume_fraction)', help='')
-    parser.add_argument('-name', '--name', metavar='', type=str, default='alphav', help='')
-    parser.add_argument('-type', '--type', metavar='', type=str, default='AlphavTRho', help='')
-    parser.add_argument('-mixture_calculation_method', '--mixture_calculation_method', metavar='', type=str,
-                        default='volume_average', help='')
     parser.add_argument('-value', '--value', metavar='', type=str, default='0 0 0', help='')
     parser.add_argument('-U_inf', '--U_inf', metavar='', type=str, default='0 0 0', help='')
     parser.add_argument('-p_inf', '--p_inf', metavar='', type=str, default='300', help='')
@@ -259,39 +142,6 @@ def dictFromUserFlags(args):
     userDict['adjustTimeStep'] = args.adjustTimeStep
     userDict['maxCo'] = args.maxCo
     userDict['maxDeltaT'] = args.maxDeltaT
-    userDict['compressible_fluxScheme'] = args.compressible_fluxScheme
-    userDict['ddtSchemes_default'] = args.ddtSchemes_default
-    userDict['ddtSchemes_fluxIntegrator'] = args.ddtSchemes_fluxIntegrator
-    userDict['gradSchemes_default'] = args.gradSchemes_default
-    userDict['divSchemes_default'] = args.divSchemes_default
-    userDict['divSchemes_div_tauMC_'] = args.divSchemes_div_tauMC_
-    userDict['divSchemes_div_SU_'] = args.divSchemes_div_SU_
-    userDict['laplacianSchemes_default'] = args.laplacianSchemes_default
-    userDict['interpolationSchemes_default'] = args.interpolationSchemes_default
-    userDict['interpolationSchemes_scheme'] = args.interpolationSchemes_scheme
-    userDict['interpolationSchemes_reconstruct_thermorho_'] = args.interpolationSchemes_reconstruct_thermorho_
-    userDict['interpolationSchemes_reconstruct_rhoU_'] = args.interpolationSchemes_reconstruct_rhoU_
-    userDict['interpolationSchemes_reconstruct_rhoE_'] = args.interpolationSchemes_reconstruct_rhoE_
-    userDict['snGradSchemes_default'] = args.snGradSchemes_default
-    userDict['numberOfSubdomains'] = args.numberOfSubdomains
-    userDict['method'] = args.method
-    userDict['E_solver'] = args.E_solver
-    userDict['E_preconditioner'] = args.E_preconditioner
-    userDict['E_tolerance'] = args.E_tolerance
-    userDict['E_relTol'] = args.E_relTol
-    userDict['U_solver'] = args.U_solver
-    userDict['U_preconditioner'] = args.U_preconditioner
-    userDict['U_tolerance'] = args.U_tolerance
-    userDict['U_relTol'] = args.U_relTol
-    userDict['SIMPLE_nNonOrthogonalCorrectors'] = args.SIMPLE_nNonOrthogonalCorrectors
-    userDict['simulationType'] = args.simulationType
-    userDict['phases'] = '(' + unpackArg(args.phases) + ')'
-    userDict['properties_rhoe'] = '(' + unpackArg(args.properties_rhoe) + ')'
-    userDict['properties_TP'] = '(' + unpackArg(args.properties_TP) + ')'
-    userDict['properties_TRho'] = args.properties_TRho
-    userDict['name'] = args.name
-    userDict['type'] = args.type
-    userDict['mixture_calculation_method'] = args.mixture_calculation_method
     userDict['value'] = '(' + unpackArg(args.value) + ')'
     userDict['U_inf'] = '(' + unpackArg(args.U_inf) + ')'
     userDict['p_inf'] = args.p_inf

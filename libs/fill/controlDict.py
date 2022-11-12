@@ -1,5 +1,5 @@
 def fill_controlDict(params):
-    return     '' + '\n' + \
+    return      r'' + '\n' + \
      r'application {};'.format(params['application']) + '\n' + \
      '' + '\n' + \
      r'startFrom {};'.format(params['startFrom']) + '\n' + \
@@ -37,4 +37,4 @@ def fill_controlDict(params):
      r'maxDeltaT {};'.format(params['maxDeltaT']) + '\n' + \
      '' + '\n' + \
      '' + '\n' + \
-     '// ************************************************************************* /' + '\n '
+     '// ************************************************************************* //' + '\n '
