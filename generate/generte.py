@@ -76,8 +76,8 @@ def makeFillFile(rez, fd=None, fp=None):
     lines = lines[7:]
     bound = findStars(lines)
     for i, line in enumerate(lines):
-        if i < bound:
-            print('    ', r"r'" + line[:-1] + r"' + '\n' " + '+ \\', file=rez)
+        if i <= bound:
+            #print('    ', r"r'" + line[:-1] + r"' + '\n' " + '+ \\', file=rez)
             continue
         line = searchParam(line[:-1], d)
         if i == len(lines) - 1:

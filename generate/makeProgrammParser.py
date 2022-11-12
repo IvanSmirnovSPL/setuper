@@ -35,6 +35,7 @@ def makeDictFromUserFlags(d, rezPath):
                 print('\t' + r"userDict['" + key + r"'] = '(' + unpackArg(args." + key + r") + ')'", file=f)
             else:
                 print('\t' + r"userDict['" + key + r"'] = args." + key, file=f)
+        print('\treturn userDict', file=f)
 
 def makeFillFromUserDict(d, rezPath):
     keys = {}
@@ -52,10 +53,8 @@ def makeFillFromUserDict(d, rezPath):
             else:
                 tmp='elif'
             path = r"['" + "']['".join(path) + r"']"
-            print('\t' * 2 + tmp +r" key = '" + key_ + r"':", file=f)
+            print('\t' * 2 + tmp +r" key == '" + key_ + r"':", file=f)
             print('\t' * 3 + 'files_data' + path + r" = str(userDict[key])", file=f)
-
-d = {'a': {'b': 2}, 'e': {'c': 3., 'd': '0 0 0'}}
 
 
 def unpackDictionary(d, rez):
