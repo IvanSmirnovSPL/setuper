@@ -229,7 +229,7 @@ def programmSettings(parser):
     parser.add_argument('-mixture_calculation_method', '--mixture_calculation_method', metavar='', type=str,
                         default='volume_average', help='')
     parser.add_argument('-value', '--value', metavar='', type=str, default='0 0 0', help='')
-    parser.add_argument('-U_inf', '--U_inf', metavar='', type=str, default='(0 0 0)', help='')
+    parser.add_argument('-U_inf', '--U_inf', metavar='', type=str, default='0 0 0', help='')
     parser.add_argument('-p_inf', '--p_inf', metavar='', type=str, default='300', help='')
     parser.add_argument('-T_inf', '--T_inf', metavar='', type=str, default='300', help='')
     parser.add_argument('-alpha_inf', '--alpha_inf', metavar='', type=str, default='1.0', help='')
