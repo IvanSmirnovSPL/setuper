@@ -138,6 +138,22 @@ def fillFromUserDict(userDict, files_data):
             files_data['constant']['thermophysicalProperties']['type'] = str(userDict[key])
         elif key == 'mixture_calculation_method':
             files_data['constant']['thermophysicalProperties']['mixture_calculation_method'] = str(userDict[key])
+        if key == 'U_inf':
+            files_data['0.orig']['infConditions']['U_inf'] = str(userDict[key])
+        elif key == 'p_inf':
+            files_data['0.orig']['infConditions']['p_inf'] = str(userDict[key])
+        elif key == 'T_inf':
+            files_data['0.orig']['infConditions']['T_inf'] = str(userDict[key])
+        elif key == 'alpha_inf':
+            files_data['0.orig']['infConditions']['alpha_inf'] = str(userDict[key])
+        elif key == 'T_wall':
+            files_data['0.orig']['infConditions']['T_wall'] = str(userDict[key])
+        elif key == 'p_nozzle':
+            files_data['0.orig']['infConditions']['p_nozzle'] = str(userDict[key])
+        elif key == 'T_nozzle':
+            files_data['0.orig']['infConditions']['T_nozzle'] = str(userDict[key])
+        elif key == 'alpha_nozzle':
+            files_data['0.orig']['infConditions']['alpha_nozzle'] = str(userDict[key])
         elif key == 'value':
             files_data['constant']['g']['value'] = str(userDict[key])
 
@@ -213,6 +229,14 @@ def programmSettings(parser):
     parser.add_argument('-mixture_calculation_method', '--mixture_calculation_method', metavar='', type=str,
                         default='volume_average', help='')
     parser.add_argument('-value', '--value', metavar='', type=str, default='0 0 0', help='')
+    parser.add_argument('-U_inf', '--U_inf', metavar='', type=str, default='(0 0 0)', help='')
+    parser.add_argument('-p_inf', '--p_inf', metavar='', type=str, default='300', help='')
+    parser.add_argument('-T_inf', '--T_inf', metavar='', type=str, default='300', help='')
+    parser.add_argument('-alpha_inf', '--alpha_inf', metavar='', type=str, default='1.0', help='')
+    parser.add_argument('-T_wall', '--T_wall', metavar='', type=str, default='300', help='')
+    parser.add_argument('-p_nozzle', '--p_nozzle', metavar='', type=str, default='3e+3', help='')
+    parser.add_argument('-T_nozzle', '--T_nozzle', metavar='', type=str, default='700', help='')
+    parser.add_argument('-alpha_nozzle', '--alpha_nozzle', metavar='', type=str, default='1.0', help='')
 
 
 def dictFromUserFlags(args):
@@ -269,6 +293,14 @@ def dictFromUserFlags(args):
     userDict['type'] = args.type
     userDict['mixture_calculation_method'] = args.mixture_calculation_method
     userDict['value'] = '(' + unpackArg(args.value) + ')'
+    userDict['U_inf'] = '(' + unpackArg(args.U_inf) + ')'
+    userDict['p_inf'] = args.p_inf
+    userDict['T_inf'] = args.T_inf
+    userDict['alpha_inf'] = args.alpha_inf
+    userDict['T_wall'] = args.T_wall
+    userDict['p_nozzle'] = args.p_nozzle
+    userDict['T_nozzle'] = args.T_nozzle
+    userDict['alpha_nozzle'] = args.alpha_nozzle
     return userDict
 
 
