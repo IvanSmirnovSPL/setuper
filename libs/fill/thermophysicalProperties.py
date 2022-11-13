@@ -1,7 +1,6 @@
 def fill_thermophysicalProperties(params):
-    return     r'' + '\n' + \
+    return      r'' + '\n' + \
      r'phases (vapour liquid);' + '\n' + \
-     r'' + '\n' + \
      r'properties_rhoe (vapor_mass_fraction temperature pressure speed_of_sound viscosity thermal_conductivity);' + '\n' + \
      r'properties_TP (vapor_mass_fraction density internal_energy speed_of_sound viscosity thermal_conductivity);' + '\n' + \
      r'properties_TRho (vapor_volume_fraction);' + '\n' + \
@@ -12,31 +11,37 @@ def fill_thermophysicalProperties(params):
      r'    {' + '\n' + \
      r'        name    Q;' + '\n' + \
      r'        type    PropertyRhoeTable;' + '\n' + \
+     r'        upper_interpolation_method freeze;' + '\n' + \
      r'    }' + '\n' + \
      r'    temperature' + '\n' + \
      r'    {' + '\n' + \
      r'        name    T;' + '\n' + \
      r'        type    PropertyRhoeTable;' + '\n' + \
+     r'        upper_interpolation_method linear;' + '\n' + \
      r'    }' + '\n' + \
      r'    pressure' + '\n' + \
      r'    {' + '\n' + \
      r'        name    p;' + '\n' + \
      r'        type    PropertyRhoeTable;' + '\n' + \
+     r'        upper_interpolation_method linear;' + '\n' + \
      r'    }' + '\n' + \
      r'    speed_of_sound' + '\n' + \
      r'    {' + '\n' + \
      r'        name    c;' + '\n' + \
      r'        type    PropertyRhoeTable;' + '\n' + \
+     r'        upper_interpolation_method sqrt;' + '\n' + \
      r'    }' + '\n' + \
      r'    viscosity' + '\n' + \
      r'    {' + '\n' + \
      r'        name    mu;' + '\n' + \
      r'        type    PropertyRhoeTable;' + '\n' + \
+     r'        upper_interpolation_method freeze;' + '\n' + \
      r'    }' + '\n' + \
      r'    thermal_conductivity' + '\n' + \
      r'    {' + '\n' + \
      r'        name    kappa;' + '\n' + \
      r'        type    PropertyRhoeTable;' + '\n' + \
+     r'        upper_interpolation_method freeze;' + '\n' + \
      r'    }' + '\n' + \
      r'}' + '\n' + \
      r'' + '\n' + \

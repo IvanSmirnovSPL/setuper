@@ -90,6 +90,8 @@ def fillFromUserDict(userDict, files_data):
             files_data['0.orig']['infConditions']['alpha_nozzle'] = str(userDict[key])
         elif key == 'value':
             files_data['constant']['g']['value'] = str(userDict[key])
+        elif key == 'numberOfSubdomains':
+            files_data['system']['decomposeParDict']['numberOfSubdomains'] = str(userDict[key])
 
 
 def programmSettings(parser):
@@ -120,10 +122,12 @@ def programmSettings(parser):
     parser.add_argument('-p_nozzle', '--p_nozzle', metavar='', type=str, default='3e+3', help='')
     parser.add_argument('-T_nozzle', '--T_nozzle', metavar='', type=str, default='700', help='')
     parser.add_argument('-alpha_nozzle', '--alpha_nozzle', metavar='', type=str, default='1.0', help='')
+    parser.add_argument('-numberOfSubdomains', '--numberOfSubdomains', metavar='', type=int, default='1', help='')
 
 
 def dictFromUserFlags(args):
     userDict = {}
+    userDict['numberOfSubdomains'] = args.numberOfSubdomains
     userDict['application'] = args.application
     userDict['startFrom'] = args.startFrom
     userDict['startTime'] = args.startTime
