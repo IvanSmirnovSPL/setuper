@@ -38,21 +38,34 @@ dimensions = {'p': '[1 -1 -2 0 0 0 0]',
               'other': '[0 0 0 0 0 0 0]'}
 
 '''dictionary of boundary types, every boundary type is class Boundary()'''
+# boundaries_ = {
+#     'wall': Boundary('noSlip', "(wall|WALL|Wall|originalPatch|Created|walls|WALLS|Walls).*"),
+#     'wall_pressure': Boundary('fixedFluxPressure', "(wall|WALL|Wall|originalPatch|Created|walls|WALLS|Walls).*"),
+#     'wall_alpha': Boundary('zeroGradient', "(wall|WALL|Wall|originalPatch|Created|walls|WALLS|Walls).*"),
+#     'in_with_value_pressure': Boundary('zeroGradient', "(inlet).*"),
+#     'empty': Boundary('empty', "(empty|bottomEmpty|topEmpty).*"),
+#     'symmetry': Boundary('symmetry', "(symmetry).*"),
+#     'overset': Boundary('overset', "(overset).*"),
+#     'wedge': Boundary('wedge', "(wedge).*"),
+#     'slip': Boundary('slip', "(slip).*"),
+#     'symmetryPlane': Boundary('symmetryPlane', "(symmetryPlane).*"),
+#     'out': Boundary('zeroGradient', "(out|OUT|Out|sides).*"),
+#     'out_with_value': Boundary('fixedValue', "(outlet).*", value=True),
+#     'in': Boundary('zeroGradient', "(in|IN|In|otherSide).*"),
+#     'in_with_value': Boundary('fixedValue', "(inlet).*", value=True)
+# }
+
 boundaries = {
-    'wall': Boundary('noSlip', "(wall|WALL|Wall|originalPatch|Created|walls|WALLS|Walls).*"),
-    'wall_pressure': Boundary('fixedFluxPressure', "(wall|WALL|Wall|originalPatch|Created|walls|WALLS|Walls).*"),
+    'wall_velocity': Boundary('noSlip', "(wall|WALL|Wall|originalPatch|Created|walls|WALLS|Walls).*"),
     'wall_alpha': Boundary('zeroGradient', "(wall|WALL|Wall|originalPatch|Created|walls|WALLS|Walls).*"),
-    'in_with_value_pressure': Boundary('zeroGradient', "(inlet).*"),
-    'empty': Boundary('empty', "(empty|bottomEmpty|topEmpty).*"),
-    'symmetry': Boundary('symmetry', "(symmetry).*"),
-    'overset': Boundary('overset', "(overset).*"),
-    'wedge': Boundary('wedge', "(wedge).*"),
-    'slip': Boundary('slip', "(slip).*"),
-    'symmetryPlane': Boundary('symmetryPlane', "(symmetryPlane).*"),
-    'out': Boundary('zeroGradient', "(out|OUT|Out|sides).*"),
-    'out_with_value': Boundary('fixedValue', "(outlet).*", value=True),
-    'in': Boundary('zeroGradient', "(in|IN|In|otherSide).*"),
-    'in_with_value': Boundary('fixedValue', "(inlet).*", value=True)
+    'wall_pressure': Boundary('zeroGradient', "(wall|WALL|Wall|originalPatch|Created|walls|WALLS|Walls).*"),
+    'inlet_velocity': Boundary('fixedValue', "(inlet).*", value=True),
+    'inlet_alpha': Boundary('fixedValue', "(inlet).*", value=True),
+    'inlet_pressure': Boundary('zeroGradient', "(inlet).*"),
+    'outlet_velocity': Boundary('zeroGradient', "(outlet).*"),
+    'outlet_alpha': Boundary('zeroGradient', "(outlet).*"),
+    'outlet_pressure': Boundary('fixedValue', "(outlet).*", value=True),
+    'symmetry': Boundary('symmetry', "(symmetry).*")
 }
 
 

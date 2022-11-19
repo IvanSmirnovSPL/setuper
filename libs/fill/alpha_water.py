@@ -2,16 +2,16 @@ from libs.fields import Fields
 
 
 def fill_alpha_water(params, fn=None, fp=None):
-    BT = []
-    for B in params.get('boundary_types', None):
-        if B == 'wall':
-            B = 'wall_alpha'
-        BT.append(B)
+    # BT = []
+    # for B in params.get('boundary_types', None):
+    #     if B == 'wall':
+    #         B = 'wall_alpha'
+    #     BT.append(B)
     alpha_water = Fields(field_name='alpha.water', internal_value=params.get('internal_value', None),
-                         boundary_types=BT,
+                         boundary_types=params.get('boundary_types', None),
                          boundary_name=params.get('boundary_name', None),
                          value=params.get('value', None))
-    alpha_water.make_boundary_conditions(filename=fn, fp=fp, value_name={'out_with_value': 'inletValue'})
+    alpha_water.make_boundary_conditions(filename=fn, fp=fp)
 
 
 '''return ' dimensions      {}; '.format(params['dimensions_alpha']) + '\n' + \

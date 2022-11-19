@@ -26,11 +26,14 @@ def makeFilesInZeroDir(self):
         functions = {'p_rgh': fill_p_rgh, 'U': fill_U, 'alpha.water': fill_alpha_water}
         field = ['volScalarField', 'volVectorField']
         classes = {'p_rgh': field[0], 'U': field[1], 'alpha.water': field[0]}
-        types = refactorTypes(detectBTypes(self.grid_path))
-        if 'symmetry' not in types:
-            types.append('symmetry')
-        for f in functions.keys():
-            self.files_data['0.orig'][f]['boundary_types'] = types
+        #types = refactorTypes(detectBTypes(self.grid_path))
+        #types = detectBTypes(self.grid_path)
+        # types
+        # if 'symmetry' not in types:
+        #     types.append('symmetry')
+        # for f in functions.keys():
+        #     self.files_data['0.orig'][f]['boundary_types'] = types
+        # print(types)
 
         for file_ in files:
             path = Path(self.zero_dir_path, file_)

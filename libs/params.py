@@ -91,24 +91,24 @@ zero = \
         'p_rgh':
             {
                 'internal_value': '100000',
-                'boundary_types': ['in', 'out_with_value', 'symmetry', 'wall'],
-                'boundary_name': {'out_with_value': 'fixedValue', 'wall': 'fixedFluxPressure'},
-                'value': {'out_with_value': '$internalField', 'in_with_value': '$internalField'}
+                'boundary_types': ['wall_pressure', 'inlet_pressure', 'outlet_pressure'],
+                # 'boundary_name': {'out_with_value': 'fixedValue', 'wall': 'fixedFluxPressure'},
+                'value': {'outlet_pressure': '$internalField'}
             },
         'U':
             {
                 'internal_value': '(0 0 -20)',
-                'boundary_types': ['in_with_value', 'out_with_value', 'symmetry', 'wall'],
-                'boundary_name': {'out_with_value': 'pressureInletOutletVelocity'},
-                'value': {'in_with_value': '$internalField', 'out_with_value': '$internalField'}
+                'boundary_types': ['wall_velocity', 'inlet_velocity', 'outlet_velocity'],
+                # 'boundary_name': {'out_with_value': 'fixedValue', 'wall': 'fixedFluxPressure'},
+                'value': {'inlet_velocity': '$internalField'}
             },
         'alpha.water':
             {
 
                 'internal_value': '1',
-                'boundary_types': ['in_with_value', 'out_with_value', 'symmetry', 'wall'],
-                'boundary_name': {'wall': 'zeroGradient', 'out_with_value': 'inletOutlet'},
-                'value': {'in_with_value': '$internalField', 'out_with_value': '$internalField'}
+                'boundary_types': ['wall_alpha', 'inlet_alpha', 'outlet_alpha'],
+                # 'boundary_name': {'out_with_value': 'fixedValue', 'wall': 'fixedFluxPressure'},
+                'value': {'inlet_alpha': '$internalField'}
             }
     }
 
