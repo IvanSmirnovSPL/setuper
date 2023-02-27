@@ -13,7 +13,7 @@ def fill_p_rgh(params, fn=None, fp=None):
     p_rgh = Fields(field_name='p_rgh', internal_value=params.get('internal_value', None),
                    boundary_types=params.get('boundary_types', None),
                    boundary_name=params.get('boundary_name', None),
-                   value=params.get('value', None))
+                   value=params.get('value', None), advantageBC=params)
     p_rgh.make_boundary_conditions(filename=fn, fp=fp)
 
 

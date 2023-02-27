@@ -142,7 +142,7 @@ Output: nothing
 class Fields:
 
     def __init__(self, field_name, internal_value, boundary_types=None,
-                 boundary_name=None, value=None):
+                 boundary_name=None, value=None, advantageBC=None):
         self.dimensions = dimensions
         self.boundaries = boundaries
         self.field_name = field_name
@@ -150,6 +150,7 @@ class Fields:
         self.boundary_types = boundary_types
         self.boundary_name = boundary_name
         self.value = value
+        self.advantageBC = advantageBC
 
     def write_field_type(self, field):
         if field in self.dimensions:

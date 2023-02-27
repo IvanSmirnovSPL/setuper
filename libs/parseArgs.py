@@ -91,6 +91,32 @@ def fillFromUserDict(userDict, files_data):
             files_data['constant']['g']['g'] = str(userDict[key])
         elif key == 'pSat':
             files_data['constant']['transportProperties']['pSat'] = str(userDict[key])
+        elif key == 'U_LBC':
+            files_data['0.orig']['U']['linearBC'] = userDict[key]
+            print('here', key, userDict[key])
+        elif key == 'U_LBC_faces':
+            files_data['0.orig']['U']['faces'] = userDict[key].split('_')
+        elif key == 'U_LBC_to':
+            files_data['0.orig']['U']['to'] = userDict[key]
+        elif key == 'U_LBC_tf':
+            files_data['0.orig']['U']['tf'] = userDict[key]
+        elif key == 'U_LBC_vo':
+            files_data['0.orig']['U']['vo'] = userDict[key]
+        elif key == 'U_LBC_vf':
+            files_data['0.orig']['U']['vf'] = userDict[key]
+        elif key == 'p_LBC':
+            files_data['0.orig']['p_rgh']['linearBC'] = userDict[key]
+        elif key == 'p_LBC_faces':
+            files_data['0.orig']['p_rgh']['faces'] = userDict[key].split('_')
+        elif key == 'p_LBC_to':
+            files_data['0.orig']['p_rgh']['to'] = userDict[key]
+        elif key == 'p_LBC_tf':
+            files_data['0.orig']['p_rgh']['tf'] = userDict[key]
+        elif key == 'p_LBC_vo':
+            files_data['0.orig']['p_rgh']['vo'] = userDict[key]
+        elif key == 'p_LBC_vf':
+            files_data['0.orig']['p_rgh']['vf'] = userDict[key]
+
 
 
 def programmSettings(parser):
@@ -126,6 +152,20 @@ def programmSettings(parser):
     parser.add_argument('-g', '--g', metavar='', type=str, default='0_-9.81_0', help="g")
     parser.add_argument('-pSat', '--pSat', metavar='', type=str, default='2300', help="Saturation pressure")
 
+    parser.add_argument('-U_LBC', '--U_LBC', metavar='', type=bool, default=False, help="linearBC")
+    parser.add_argument('-U_LBC_faces', '--U_LBC_faces', metavar='', type=str, default='', help="linearBC_faces")
+    parser.add_argument('-U_LBC_to', '--U_LBC_to', metavar='', type=str, default=0, help="linearBC_to")
+    parser.add_argument('-U_LBC_tf', '--U_LBC_tf', metavar='', type=str, default=0, help="linearBC_tf")
+    parser.add_argument('-U_LBC_vo', '--U_LBC_vo', metavar='', type=str, default=0, help="linearBC_vo")
+    parser.add_argument('-U_LBC_vf', '--U_LBC_vf', metavar='', type=str, default=0, help="linearBC_vf")
+
+    parser.add_argument('-p_LBC', '--p_LBC', metavar='', type=bool, default=False, help="linearBC")
+    parser.add_argument('-p_LBC_faces', '--p_LBC_faces', metavar='', type=str, default='', help="linearBC_faces")
+    parser.add_argument('-p_LBC_to', '--p_LBC_to', metavar='', type=str, default=0, help="linearBC_to")
+    parser.add_argument('-p_LBC_tf', '--p_LBC_tf', metavar='', type=str, default=0, help="linearBC_tf")
+    parser.add_argument('-p_LBC_vo', '--p_LBC_vo', metavar='', type=str, default=0, help="linearBC_vo")
+    parser.add_argument('-p_LBC_vf', '--p_LBC_vf', metavar='', type=str, default=0, help="linearBC_vf")
+
 
 def dictFromUserFlags(args):
     userDict = {}
@@ -157,6 +197,20 @@ def dictFromUserFlags(args):
     userDict['timeFormat'] = args.timeFormat
     userDict['runTimeModifiable'] = args.runTimeModifiable
     userDict['maxCo'] = args.maxCo
+
+    userDict['U_LBC'] = args.U_LBC
+    userDict['U_LBC_faces'] = args.U_LBC_faces
+    userDict['U_LBC_to'] = args.U_LBC_to
+    userDict['U_LBC_tf'] = args.U_LBC_tf
+    userDict['U_LBC_vo'] = args.U_LBC_vo
+    userDict['U_LBC_vf'] = args.U_LBC_vf
+
+    userDict['p_LBC'] = args.p_LBC
+    userDict['p_LBC_faces'] = args.p_LBC_faces
+    userDict['p_LBC_to'] = args.p_LBC_to
+    userDict['p_LBC_tf'] = args.p_LBC_tf
+    userDict['p_LBC_vo'] = args.p_LBC_vo
+    userDict['p_LBC_vf'] = args.p_LBC_vf
 
     return userDict
 
