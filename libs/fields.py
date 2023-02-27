@@ -23,10 +23,15 @@ class Boundary() have information of specific boundary_type:
 
 
 class Boundary:
-    def __init__(self, name='', parse_name='', value=False):
+    def __init__(self, name='', parse_name='', linearBC=False, t0=0, tf=0, v0=0, vf=0,  value=False):
         self.name = name
         self.value = value
         self.parse_name = parse_name
+        self.linearBC = linearBC
+        self.t0 = t0
+        self.tf = tf
+        self.v0 = v0
+        self.vf = vf
 
 
 '''dictionary of fields and its' dimensions'''
@@ -66,7 +71,7 @@ boundaries = {
     'outlet_alpha': Boundary('zeroGradient', "(outlet).*"),
     'outlet_pressure': Boundary('fixedValue', "(outlet).*", value=True),
     'symmetry': Boundary('symmetry', "(symmetry).*"),
-    'wedge': Boundary('wedge', "(wedge).*")
+    'wedge': Boundary('wedge', "(wedge).*"),
 }
 
 
@@ -158,6 +163,8 @@ class Fields:
 
     def write_condition(self, boundary_type, boundary_name=None, value=None, value_name='value'):
         tmp = copy.copy(self.boundaries[boundary_type])
+        if tmp.linearBC is True:
+            return '\{\n \t type            uniformFixedValue; \n \t uniformValue    table ' + f'(({tmp.t0} {tmp.v0}) ({tmp.tf} {tmp.vf}));'' + '' \n}'
         if boundary_name is not None:
             tmp.name = boundary_name
         if value is not None:
