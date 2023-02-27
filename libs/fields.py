@@ -65,7 +65,8 @@ boundaries = {
     'outlet_velocity': Boundary('zeroGradient', "(outlet).*"),
     'outlet_alpha': Boundary('zeroGradient', "(outlet).*"),
     'outlet_pressure': Boundary('fixedValue', "(outlet).*", value=True),
-    'symmetry': Boundary('symmetry', "(symmetry).*")
+    'symmetry': Boundary('symmetry', "(symmetry).*"),
+    'wedge': Boundary('wedge', "(wedge).*")
 }
 
 

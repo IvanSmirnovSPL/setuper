@@ -91,14 +91,14 @@ zero = \
         'p_rgh':
             {
                 'internal_value': '100000',
-                'boundary_types': ['wall_pressure', 'inlet_pressure', 'outlet_pressure'],
+                'boundary_types': ['wall_pressure', 'inlet_pressure', 'outlet_pressure', 'symmetry', 'wedge'],
                 # 'boundary_name': {'out_with_value': 'fixedValue', 'wall': 'fixedFluxPressure'},
                 'value': {'outlet_pressure': '$internalField'}
             },
         'U':
             {
                 'internal_value': '(0 0 -20)',
-                'boundary_types': ['wall_velocity', 'inlet_velocity', 'outlet_velocity'],
+                'boundary_types': ['wall_velocity', 'inlet_velocity', 'outlet_velocity', 'symmetry', 'wedge'],
                 # 'boundary_name': {'out_with_value': 'fixedValue', 'wall': 'fixedFluxPressure'},
                 'value': {'inlet_velocity': '$internalField'}
             },
@@ -106,7 +106,7 @@ zero = \
             {
 
                 'internal_value': '1',
-                'boundary_types': ['wall_alpha', 'inlet_alpha', 'outlet_alpha'],
+                'boundary_types': ['wall_alpha', 'inlet_alpha', 'outlet_alpha', 'symmetry', 'wedge'],
                 # 'boundary_name': {'out_with_value': 'fixedValue', 'wall': 'fixedFluxPressure'},
                 'value': {'inlet_alpha': '$internalField'}
             }
