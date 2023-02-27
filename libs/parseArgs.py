@@ -93,7 +93,6 @@ def fillFromUserDict(userDict, files_data):
             files_data['constant']['transportProperties']['pSat'] = str(userDict[key])
         elif key == 'U_LBC':
             files_data['0.orig']['U']['linearBC'] = userDict[key]
-            print('here', key, userDict[key])
         elif key == 'U_LBC_faces':
             files_data['0.orig']['U']['faces'] = userDict[key].split('_')
         elif key == 'U_LBC_to':

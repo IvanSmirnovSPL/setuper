@@ -164,8 +164,11 @@ class Fields:
 
     def write_condition(self, boundary_type, boundary_name=None, value=None, value_name='value'):
         tmp = copy.copy(self.boundaries[boundary_type])
-        if tmp.linearBC is True:
-            return '\{\n \t type            uniformFixedValue; \n \t uniformValue    table ' + f'(({tmp.t0} {tmp.v0}) ({tmp.tf} {tmp.vf}));'' + '' \n}'
+        if self.advantageBC is not None and self.advantageBC['linearBC'] is True and self.boundaries[boundary_type].name in self.advantageBC['faces']:
+            print('here')
+            foo = self.advantageBC
+            #uniformNormalFixedValue
+            return '\n' + str(tmp.parse_name) + '\n{\n \t type            uniformFixedValue; \n \t uniformValue    table ' + f"(({foo['to']} {foo['vo']}) ({foo['tf']} {foo['vf']}));" + ' \n}\n'
         if boundary_name is not None:
             tmp.name = boundary_name
         if value is not None:
