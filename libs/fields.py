@@ -164,11 +164,18 @@ class Fields:
 
     def write_condition(self, boundary_type, boundary_name=None, value=None, value_name='value'):
         tmp = copy.copy(self.boundaries[boundary_type])
-        if self.advantageBC is not None and self.advantageBC['linearBC'] is True and self.boundaries[boundary_type].name in self.advantageBC['faces']:
-            print('here')
-            foo = self.advantageBC
-            #uniformNormalFixedValue
-            return '\n' + str(tmp.parse_name) + '\n{\n \t type            uniformFixedValue; \n \t uniformValue    table ' + f"(({foo['to']} {foo['vo']}) ({foo['tf']} {foo['vf']}));" + ' \n}\n'
+        if boundary_type.find('_') != -1:
+            name = boundary_type[:boundary_type.find('_')]
+            print(name)
+            if self.advantageBC is not None and self.advantageBC['linearBC'] is True and name in self.advantageBC['faces']:
+                foo = self.advantageBC
+                if str(foo['vo']).find('_') == -1:
+                    return '\n' + str(
+                        tmp.parse_name) + '\n{\n \t type            uniformFixedValue; \n \t uniformValue    table ' + f"(({foo['to']} {foo['vo']}) ({foo['tf']} {foo['vf']}));" + ' \n}\n'
+                else:
+                    vo = '(' + str(foo['vo']).replace('_', ' ') + ')'
+                    vf = '(' + str(foo['vf']).replace('_', ' ') + ')'
+                    return '\n' + str(tmp.parse_name) + '\n{\n \t type            uniformNormalFixedValue; \n \t uniformValue    table ' + f"(({foo['to']} {vo}) ({foo['tf']} {vf}));" + ' \n}\n'
         if boundary_name is not None:
             tmp.name = boundary_name
         if value is not None:
