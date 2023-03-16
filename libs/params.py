@@ -111,6 +111,19 @@ zero = \
                 'boundary_types': ['wall_alpha', 'inlet_alpha', 'outlet_alpha', 'symmetry', 'wedge'],
                 # 'boundary_name': {'out_with_value': 'fixedValue', 'wall': 'fixedFluxPressure'},
                 'value': {'inlet_alpha': '$internalField'}
+            },
+        'k':
+            {
+                'k': 10,
+                'intensity': 0.05,
+            },
+        'nut':
+            {
+
+            },
+        'omega':
+            {
+                'omega': 80000
             }
     }
 

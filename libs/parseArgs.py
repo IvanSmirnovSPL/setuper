@@ -1,4 +1,5 @@
 import argparse
+import numpy as np
 
 # 'alpha'
 # 'U'
@@ -117,6 +118,15 @@ def fillFromUserDict(userDict, files_data):
             files_data['0.orig']['p_rgh']['vf'] = userDict[key]
         elif key == 'turbulence':
             files_data['constant']['turbulenceProperties']['turbulence'] = userDict[key]
+        elif key == 'intensity':
+            files_data['0.orig']['k']['intensity'] = userDict[key]
+        elif key == 'omega':
+            files_data['0.orig']['omega']['omega'] = userDict[key]
+        elif key == 'k':
+            u = np.linalg.norm(list(map(lambda t: float(t), files_data['0.orig']['U']['internal_value'][1:-1].split(' '))))
+            files_data['0.orig']['k']['k'] = 1.5 * (float(files_data['0.orig']['k']['intensity']) * u) ** 2
+
+
 
 
 
@@ -169,6 +179,9 @@ def programmSettings(parser):
 
     parser.add_argument('-turbulence', '--turbulence', metavar='', type=int, default=0, help="turbulence")
 
+    parser.add_argument('-intensity', '--intensity', metavar='', type=str, default='0.05', help="intensity")
+    parser.add_argument('-omega', '--omega', metavar='', type=str, default='80000', help="omega")
+
 def dictFromUserFlags(args):
     userDict = {}
     userDict['pSat'] = args.pSat
@@ -215,6 +228,10 @@ def dictFromUserFlags(args):
     userDict['p_LBC_vf'] = args.p_LBC_vf
 
     userDict['turbulence'] = bool(args.turbulence)
+
+    userDict['intensity'] = args.intensity
+    userDict['omega'] = args.omega
+    userDict['k'] = 10
 
     return userDict
 

@@ -12,7 +12,9 @@ from libs.makeZeroFromMesh import detectBTypes
 from libs.fill.p_rgh import fill_p_rgh
 from libs.fill.alpha_water import fill_alpha_water
 from libs.fill.U import fill_U
-
+from libs.fill.k import fill_k
+from libs.fill.nut import fill_nut
+from libs.fill.omega import fill_omega
 
 def makeFilesInZeroDir(self):
     if self.zero_dir_flag is not None:
@@ -23,9 +25,23 @@ def makeFilesInZeroDir(self):
 
         files = list(self.files_data['0.orig'].keys())  # p_rgh, U, alpha.water
         data = self.files_data['0.orig']
-        functions = {'p_rgh': fill_p_rgh, 'U': fill_U, 'alpha.water': fill_alpha_water}
+        functions = {
+            'p_rgh': fill_p_rgh,
+            'U': fill_U,
+            'alpha.water': fill_alpha_water,
+            'k': fill_k,
+            'nut': fill_nut,
+            'omega': fill_omega
+        }
         field = ['volScalarField', 'volVectorField']
-        classes = {'p_rgh': field[0], 'U': field[1], 'alpha.water': field[0]}
+        classes = {
+            'p_rgh': field[0],
+            'U': field[1],
+            'alpha.water': field[0],
+            'k': field[0],
+            'nut': field[0],
+            'omega': field[0]
+        }
         #types = refactorTypes(detectBTypes(self.grid_path))
         #types = detectBTypes(self.grid_path)
         # types
