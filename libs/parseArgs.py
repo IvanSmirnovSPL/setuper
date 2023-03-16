@@ -36,9 +36,9 @@ def fillFromUserDict(userDict, files_data):
         if key == 'alpha':
             files_data['0.orig']['alpha.water']['internal_value'] = str(userDict[key])
         elif key == 'U':
-            files_data['0.orig']['U']['internal_value'] = str(userDict[key])
+            files_data['0.orig']['U']['internal_value'] = '(' + str(unpackArg(userDict['U_LBC_vo'])) + ')'
         elif key == 'p':
-            files_data['0.orig']['p_rgh']['internal_value'] = str(userDict[key])
+            files_data['0.orig']['p_rgh']['internal_value'] = userDict['p_LBC_vo']
         elif key == 'np':
             files_data['system']['decomposeParDict']['numberOfSubdomains'] = str(userDict[key])
         elif key == 'tolerance':
@@ -115,6 +115,8 @@ def fillFromUserDict(userDict, files_data):
             files_data['0.orig']['p_rgh']['vo'] = userDict[key]
         elif key == 'p_LBC_vf':
             files_data['0.orig']['p_rgh']['vf'] = userDict[key]
+        elif key == 'turbulence':
+            files_data['constant']['turbulenceProperties']['turbulence'] = userDict[key]
 
 
 
@@ -151,20 +153,21 @@ def programmSettings(parser):
     parser.add_argument('-g', '--g', metavar='', type=str, default='0_-9.81_0', help="g")
     parser.add_argument('-pSat', '--pSat', metavar='', type=str, default='2300', help="Saturation pressure")
 
-    parser.add_argument('-U_LBC', '--U_LBC', metavar='', type=bool, default=False, help="linearBC")
-    parser.add_argument('-U_LBC_faces', '--U_LBC_faces', metavar='', type=str, default='', help="linearBC_faces")
+    parser.add_argument('-U_LBC', '--U_LBC', metavar='', type=bool, default=True, help="linearBC")
+    parser.add_argument('-U_LBC_faces', '--U_LBC_faces', metavar='', type=str, default='inlet', help="linearBC_faces")
     parser.add_argument('-U_LBC_to', '--U_LBC_to', metavar='', type=str, default=0, help="linearBC_to")
     parser.add_argument('-U_LBC_tf', '--U_LBC_tf', metavar='', type=str, default=0, help="linearBC_tf")
-    parser.add_argument('-U_LBC_vo', '--U_LBC_vo', metavar='', type=str, default=0, help="linearBC_vo")
-    parser.add_argument('-U_LBC_vf', '--U_LBC_vf', metavar='', type=str, default=0, help="linearBC_vf")
+    parser.add_argument('-U_LBC_vo', '--U_LBC_vo', metavar='', type=str, default='0_0_0', help="linearBC_vo")
+    parser.add_argument('-U_LBC_vf', '--U_LBC_vf', metavar='', type=str, default='0_0_0', help="linearBC_vf")
 
-    parser.add_argument('-p_LBC', '--p_LBC', metavar='', type=bool, default=False, help="linearBC")
-    parser.add_argument('-p_LBC_faces', '--p_LBC_faces', metavar='', type=str, default='', help="linearBC_faces")
+    parser.add_argument('-p_LBC', '--p_LBC', metavar='', type=bool, default=True, help="linearBC")
+    parser.add_argument('-p_LBC_faces', '--p_LBC_faces', metavar='', type=str, default='inlet', help="linearBC_faces")
     parser.add_argument('-p_LBC_to', '--p_LBC_to', metavar='', type=str, default=0, help="linearBC_to")
     parser.add_argument('-p_LBC_tf', '--p_LBC_tf', metavar='', type=str, default=0, help="linearBC_tf")
     parser.add_argument('-p_LBC_vo', '--p_LBC_vo', metavar='', type=str, default=0, help="linearBC_vo")
     parser.add_argument('-p_LBC_vf', '--p_LBC_vf', metavar='', type=str, default=0, help="linearBC_vf")
 
+    parser.add_argument('-turbulence', '--turbulence', metavar='', type=int, default=0, help="turbulence")
 
 def dictFromUserFlags(args):
     userDict = {}
@@ -210,6 +213,8 @@ def dictFromUserFlags(args):
     userDict['p_LBC_tf'] = args.p_LBC_tf
     userDict['p_LBC_vo'] = args.p_LBC_vo
     userDict['p_LBC_vf'] = args.p_LBC_vf
+
+    userDict['turbulence'] = bool(args.turbulence)
 
     return userDict
 

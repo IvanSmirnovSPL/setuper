@@ -166,7 +166,6 @@ class Fields:
         tmp = copy.copy(self.boundaries[boundary_type])
         if boundary_type.find('_') != -1:
             name = boundary_type[:boundary_type.find('_')]
-            print(name)
             if self.advantageBC is not None and self.advantageBC['linearBC'] is True and name in self.advantageBC['faces']:
                 foo = self.advantageBC
                 if str(foo['vo']).find('_') == -1:

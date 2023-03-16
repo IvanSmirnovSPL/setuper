@@ -77,7 +77,7 @@ constant = \
             },
         'turbulenceProperties':
             {
-                'simulationType': 'laminar'
+                'turbulence': True
             },
         'g':
             {

@@ -1,3 +1,15 @@
+
 def fill_turbulenceProperties(params):
-    return '  ' + '\n' + \
-           ' simulationType {}; '.format(params['simulationType']) + '\n'
+    turbulence_prop = '' + '\n' + \
+                      'RAS' + '\n' + \
+                      '{' + '\n' + \
+                      '    RASModel        kOmegaSST;' + '\n' + \
+                      '' + '\n' + \
+                      '    turbulence      on;' + '\n' + \
+                      '' + '\n' + \
+                      '    printCoeffs     on;' + '\n' + \
+                      '}' + '\n'
+    if not params["turbulence"]:
+        return 'simulationType      laminar;' + '\n'
+    else:
+        return 'simulationType      RAS;' + '\n' + turbulence_prop
