@@ -6,7 +6,7 @@ def fill_omega(params, fn=None, fp=None):
           '' + '\n' + \
           'boundaryField' + '\n' + \
           '{' + '\n' + \
-          '    inlet' + '\n' + \
+          r'"(inlet).*" ' + '\n' + \
           '    {' + '\n' + \
           '        type            turbulentMixingLengthFrequencyInlet;' + '\n' + \
           '        mixingLength    0.0005;' + '\n' + \
@@ -14,21 +14,25 @@ def fill_omega(params, fn=None, fp=None):
           '        value           uniform {};'.format(params['omega']) + '\n' + \
           '    }' + '\n' + \
           '' + '\n' + \
-          '    outlet' + '\n' + \
+          r'"(outlet).*" ' + '\n' + \
           '    {' + '\n' + \
           '        type            zeroGradient;' + '\n' + \
           '    }' + '\n' + \
           '' + '\n' + \
-          '    walls' + '\n' + \
+          r' "(wall|WALL|Wall|originalPatch|Created|walls|WALLS|Walls).*" ' + '\n' + \
           '    {' + '\n' + \
           '        type            omegaWallFunction;' + '\n' + \
           '        value           uniform {};'.format(params['omega']) + '\n' + \
           '    }' + '\n' + \
           '' + '\n' + \
-          '    frontBack' + '\n' + \
-          '    {' + '\n' + \
-          '        type            empty;' + '\n' + \
-          '    }' + '\n' + \
+          '"(symmetry).*" ' + '\n' + \
+          '{ ' + '\n' + \
+          '  type      symmetry;' + '\n' + \
+          '}' + '\n' + \
+          '"(wedge).*" ' + '\n' + \
+          '{ ' + '\n' + \
+          '  type      wedge;' + '\n' + \
+          '}' + '\n' + \
           '}' + '\n' + \
           '' + '\n' + \
           '' + '\n' + \

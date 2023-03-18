@@ -6,28 +6,32 @@ def fill_k(params, fn=None, fp=None):
           '' + '\n' + \
           'boundaryField' + '\n' + \
           '{' + '\n' + \
-          '    inlet' + '\n' + \
+          r'"(inlet).*" ' + '\n' + \
           '    {' + '\n' + \
           '        type            turbulentIntensityKineticEnergyInlet;' + '\n' + \
           '        intensity       {}; // egorych Intensity'.format(params['intensity']) + '\n' + \
           '        value           uniform 0.05;' + '\n' + \
           '    }' + '\n' + \
           '' + '\n' + \
-          '    outlet' + '\n' + \
+          r'"(outlet).*" ' + '\n' + \
           '    {' + '\n' + \
           '        type            zeroGradient;' + '\n' + \
           '    }' + '\n' + \
           '' + '\n' + \
-          '    walls' + '\n' + \
+          r' "(wall|WALL|Wall|originalPatch|Created|walls|WALLS|Walls).*" ' + '\n' + \
           '    {' + '\n' + \
           '        type            fixedValue; //kqRWallFunction;' + '\n' + \
           '        value           uniform 0;' + '\n' + \
           '    }' + '\n' + \
           '' + '\n' + \
-          '    frontBack' + '\n' + \
-          '    {' + '\n' + \
-          '        type            empty;' + '\n' + \
-          '    }' + '\n' + \
+          '"(symmetry).*" ' + '\n' + \
+          '{ ' + '\n' + \
+          '  type      symmetry;' + '\n' + \
+          '}' + '\n' + \
+          '"(wedge).*" ' + '\n' + \
+          '{ ' + '\n' + \
+          '  type      wedge;' + '\n' + \
+          '}' + '\n' + \
           '}' + '\n' + \
           '' + '\n' + \
           '' + '\n' + \
