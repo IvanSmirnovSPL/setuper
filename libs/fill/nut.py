@@ -1,6 +1,6 @@
 def fill_nut(params, fn=None, fp=None):
     res = '' + '\n' + \
-          'dimensions     [0 2 - 1 0 0 0 0];' + '\n' + \
+          'dimensions     [0 2 -1 0 0 0 0];' + '\n' + \
           '' + '\n' + \
           'internalField   uniform 0;' + '\n' + \
           '' + '\n' + \
