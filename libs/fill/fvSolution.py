@@ -62,9 +62,30 @@ def fill_fvSolution(params):
            '        $p_rgh;' + '\n' + \
            '        relTol          {};'.format(params['relTol']) + '\n' + \
            '    };' + '\n' + \
-           '}' + '\n' + \
            ' ' + '\n' + \
-           'PIMPLE' + '\n' + \
+		'    "(k|kFinal|epsilon|omega|omegaFinal|nuTilda|phit)"\n'  + \
+		'    {\n'  + \
+		'        solver          PBiCGStab;\n'  + \
+		'        preconditioner  DILU;\n'  + \
+		'        tolerance       1e-8;\n'  + \
+		'        relTol          0;\n'  + \
+		'    }\n'  + \
+		'\n'  + \
+		'    f\n'  + \
+		'    {\n'  + \
+		'        solver          PBiCGStab;\n'  + \
+		'        preconditioner  DIC;\n'  + \
+		'        tolerance       1e-8;\n'  + \
+		'        relTol          0;\n'  + \
+		'    }\n'  + \
+		'}\n'  + \
+		'\n'  + \
+		'potentialFlow\n'  + \
+		'{\n'  + \
+		'    nNonOrthogonalCorrectors   3;\n'  + \
+		'}\n'  + \
+		'\n'  + \
+		'PIMPLE' + '\n' + \
            '{' + '\n' + \
            '    momentumPredictor           {};'.format(params['momentumPredictor']) + '\n' + \
            '    nOuterCorrectors            {};'.format(params['nOuterCorrectors']) + '\n' + \
@@ -79,3 +100,6 @@ def fill_fvSolution(params):
            '        "U.*"                   {};'.format(params['U.*']) + '\n' + \
            '    }' + '\n' + \
            '}'
+'\n'  + \
+'\n'  + \
+'// ************************************************************************* //\n'
